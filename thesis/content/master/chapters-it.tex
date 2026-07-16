@@ -1,71 +1,86 @@
-\chapter{Introduzione}
-\section{Contesto di ricerca}
-I sistemi cyber-fisici combinano acquisizione, calcolo, comunicazione e attuazione. L'apprendimento multimodale pu\`o migliorare la consapevolezza situazionale, ma introduce anche questioni di robustezza, interpretabilit\`a, privacy e riproducibilit\`a \cite{goodfellow2016deep,nist2023airmf}.
+\chapter{Introduzione}\label{ch:m-introduction}
+\section{Caso guida e lacuna di ricerca}
+Un sistema cyber-fisico di monitoraggio riceve flussi video, audio e vibrazionali. Durante un evento critico, la telecamera e parzialmente occlusa e il flusso audio è in ritardo. Un modello di fusione convenzionale può comunque produrre una previsione molto sicura anche quando due ingressi sono inaffidabili. Il problema di ricerca non consiste quindi soltanto nel migliorare l'accuratezza nominale, ma nel preservare un comportamento utile e un'incertezza calibrata quando cambia la qualità delle modalità.
+
+L'apprendimento multimodale offre meccanismi per combinare informazioni eterogenee \cite{goodfellow2016deep}, mentre un deployment affidabile richiede un trattamento esplicito di affidabilità, trasparenza e rischio \cite{nist2023airmf}. La tesi affronta la distanza tra prestazioni elevate con dati completi e comportamento affidabile con modalità mancanti o degradate.
 
 \begin{researchquestion}[RQ1 -- Robustezza]
-Come pu\`o un modello multimodale rimanere affidabile quando un flusso sensoriale \`e rumoroso, ritardato o non disponibile?
+Quanta prestazione predittiva può conservare un modello di fusione consapevole dell'affidabilità quando un flusso sensoriale e rumoroso, ritardato o assente?
 \end{researchquestion}
 
 \begin{researchquestion}[RQ2 -- Fiducia]
-Quali scelte progettuali e di valutazione rendono il comportamento del sistema pi\`u trasparente per operatori e auditor?
+Quali scelte di progettazione e valutazione rendono trasparenti a operatori e auditor la confidenza, le condizioni di fallimento e il costo computazionale del modello?
 \end{researchquestion}
 
-\section{Contributi}
-\begin{keypoint}[Contributi]
-\begin{enumerate}
-  \item Un'architettura di fusione modulare per flussi sensoriali eterogenei.
-  \item Una funzione obiettivo consapevole dell'affidabilit\`a e un protocollo per modalit\`a mancanti.
-  \item Una suite di valutazione riproducibile per accuratezza, calibrazione, latenza e robustezza.
-\end{enumerate}
-\end{keypoint}
+\section{Tesi centrale e contributi}
+\begin{resultbox}[Tesi centrale]
+Stimare l'affidabilità delle modalità prima della fusione può migliorare robustezza e calibrazione in condizioni controllate di degradazione dei sensori, senza superare il vincolo di latenza della piattaforma obiettivo.
+\end{resultbox}
 
-\chapter{Fondamenti e stato dell'arte}
-\section{Apprendimento di rappresentazioni multimodali}
-Organizzare lo stato dell'arte per domanda di ricerca, evitando un semplice catalogo di articoli. Confrontare ipotesi, dataset, metriche e limiti. Una tabella di sintesi pu\`o aiutare il lettore a comprendere la lacuna affrontata dalla tesi.
+La tesi presenta quattro contributi verificabili:
+\begin{enumerate}
+  \item una formulazione del problema con ipotesi, condizioni di degradazione e criteri di successo espliciti nel Capitolo~\ref{ch:m-problem};
+  \item un'architettura modulare consapevole dell'affidabilità e una funzione obiettivo nel Capitolo~\ref{ch:m-methodology};
+  \item una valutazione riproducibile di accuratezza, calibrazione, latenza, robustezza, incertezza e casi di fallimento nel Capitolo~\ref{ch:m-results};
+  \item una sintesi che confronta le ipotesi con i lavori precedenti e verifica ogni affermazione centrale rispetto alle evidenze nei Capitoli~\ref{ch:m-related} e~\ref{ch:m-discussion}.
+\end{enumerate}
+
+\chapter{Formulazione del problema e caso guida}\label{ch:m-problem}
+\section{Ingressi, degradazione e comportamento desiderato}
+Il sistema riceve modalità $x_1,\ldots,x_M$. Ogni modalità può essere disponibile, mancante, ritardata o corrotta secondo una condizione di test definita. Il modello produce una previsione e una stima di incertezza. Il comportamento desiderato è una degradazione graduale: la confidenza deve diminuire quando diminuisce la qualità dell'evidenza, evitando un crollo ampio e non spiegato delle prestazioni.
+
+\section{Criteri di successo e ambito}
+L'esempio valuta quattro proprietà: macro F1, expected calibration error, robustezza a modalità mancanti e latenza mediana end-to-end. Assume etichette sincronizzate, un insieme fisso di sensori e condizioni di degradazione generate da un protocollo documentato. Non dichiara robustezza a ogni manipolazione avversaria o a tipi di sensore mai osservati.
 
 \begin{table}[htbp]
 \centering
-\caption{Confronto illustrativo tra approcci correlati.}
-\begin{tabularx}{\textwidth}{Ycccc}
+\caption{Criteri illustrativi per l'esempio di tesi magistrale.}
+\label{tab:m-criteria}
+\begin{tabularx}{\textwidth}{YYY}
 \toprule
-Approccio & Fusione & Dati mancanti & Calibrazione & Adatto all'edge\\
+Proprieta & Criterio di esempio & Evidenza\\
 \midrule
-Fusione anticipata & Ingresso & Limitata & No & Parziale\\
-Fusione tardiva & Decisione & Moderata & Opzionale & S\`i\\
-Metodo proposto & Ibrida & Esplicita & S\`i & S\`i\\
+Qualita nominale & Macro F1 sopra la baseline migliore & Valutazione ripetuta su test set\\
+Robustezza & Perdita relativa sotto 15\% con 30\% di ingressi mancanti & Dropout controllato delle modalità\\
+Calibrazione & Expected calibration error sotto 0.05 & Diagramma di affidabilità e metrica\\
+Latenza & Mediana sotto 35~ms & Misura end-to-end sull'hardware obiettivo\\
 \bottomrule
 \end{tabularx}
 \end{table}
 
-\section{Intelligenza artificiale affidabile}
-L'affidabilit\`a \`e multidimensionale. In questa tesi, le definizioni operative devono essere collegate a propriet\`a misurabili, come errore di calibrazione, robustezza alle perturbazioni, limiti di latenza e configurazioni sperimentali tracciabili.
-
-\chapter{Metodologia}\label{ch:m-methodology}
-\section{Architettura del sistema}
-La Figura~\ref{fig:m-architecture} mostra una pipeline di ricerca leggera. Utilizza box LaTeX nativi invece di un motore grafico.
+\chapter{Metodo proposto}\label{ch:m-methodology}
+\section{Intuizione a livello di lavagna}
+Ogni encoder sensoriale propone una rappresentazione e riporta un punteggio di affidabilità. Il modulo di fusione riduce l'influenza di una modalità assente o incoerente con le altre. La testa di previsione restituisce decisione e informazione di incertezza. L'intuizione precede le equazioni, in modo che il lettore sappia quale comportamento devono realizzare i termini formali.
 
 \begin{figure}[htbp]
 \centering
-\pipelinebox{Validazione della\\qualit\`a}\pipelinearrow
-\pipelinebox{Encoder per\\modalit\`a}\pipelinearrow
-\pipelinebox{Fusione basata\\sull'affidabilit\`a}\pipelinearrow
-\pipelinebox{Predizione e\\spiegazione}
-\caption{Architettura multimodale illustrativa.}
+\pipelinebox{Validazione\\qualità dati}\pipelinearrow
+\pipelinebox{Encoder delle\\modalità}\pipelinearrow
+\pipelinebox{Fusione consapevole\\dell'affidabilità}\pipelinearrow
+\pipelinebox{Previsione e\\incertezza}
+\caption{Architettura multimodale illustrativa consapevole dell'affidabilità.}
 \label{fig:m-architecture}
 \end{figure}
 
-\section{Funzione obiettivo}
-Una funzione obiettivo semplificata combina la perdita sul task, la regolarizzazione della calibrazione e la consistenza in presenza di dropout delle modalit\`a:
+\section{Obiettivo formale}
+Per la rappresentazione $z_m=f_m(x_m)$ e la stima di affidabilità $r_m$, la funzione di fusione combina evidenze pesate prima della previsione. Un obiettivo semplificato combina loss del compito, regolarizzazione della calibrazione e consistenza con dropout delle modalità:
 \begin{equation}
 \mathcal{L}=\mathcal{L}_{\mathrm{task}}+\lambda_{c}\mathcal{L}_{\mathrm{cal}}+\lambda_{m}\mathcal{L}_{\mathrm{missing}}.
 \end{equation}
+Definire ogni termine, dichiarare come vengono scelti gli iperparametri e separare le decisioni prese durante l'esplorazione dal protocollo confermativo finale.
 
-\begin{keypoint}[Riproducibilit\`a]
-Dichiarare versioni dei dataset, preprocessing, iperparametri, seed casuali, hardware, librerie software e criteri di arresto. Distinguere gli esperimenti esplorativi dalla valutazione confermativa.
+\section{Implementazione riproducibile}
+Registrare versioni dei dataset, preprocessing, generazione degli split, iperparametri, seed casuali, hardware, librerie software, criteri di arresto e regole di selezione del modello. Conservare le configurazioni finali e un comando capace di rigenerare tabelle e figure principali.
+
+\begin{keypoint}[Evidenza per il metodo]
+Un diagramma architetturale spiega la struttura ma non dimostra l'affermazione progettuale. Aggiungere ablazioni che rimuovono pesatura dell'affidabilità, regolarizzazione della calibrazione e dropout delle modalità, in modo che ogni meccanismo dichiarato abbia un'evidenza corrispondente.
 \end{keypoint}
 
-\chapter{Risultati e discussione}\label{ch:m-results}
-\section{Risultati principali}
+\chapter{Evidenza sperimentale}\label{ch:m-results}
+\section{Protocollo}
+Confrontare le baseline con identici split dei dati e budget di valutazione. Riportare esecuzioni ripetute e incertezza. Definire in anticipo le condizioni di modalità mancanti, includendo perdita completa, dropout casuale, ritardo e rumore, invece di selezionare soltanto le condizioni favorevoli al metodo proposto.
+
+\section{Osservazioni principali}
 \begin{center}
 \begin{minipage}{0.30\textwidth}\metric{94.2\%}{macro F1}{ISISBlue}\end{minipage}\hfill
 \begin{minipage}{0.30\textwidth}\metric{0.031}{errore di calibrazione}{ISISLightBlue}\end{minipage}\hfill
@@ -75,23 +90,72 @@ Dichiarare versioni dei dataset, preprocessing, iperparametri, seed casuali, har
 \begin{figure}[htbp]
 \centering
 \begin{minipage}{0.84\textwidth}
-{\sffamily\bfseries\color{ISISDeepBlue}Macro F1 con il 30\% di modalit\`a mancanti\par\vspace{3mm}}
+{\sffamily\bfseries\color{ISISDeepBlue}Macro F1 con il 30\% di modalità mancanti\par\vspace{3mm}}
 \demobar{Baseline}{55mm}{69.0\%}{ISISMuted}
 \demobar{Proposto}{68mm}{85.1\%}{ISISBlue}
 \end{minipage}
-\caption{Confronto di robustezza illustrativo senza PGFPlots.}
+\caption{Confronto illustrativo di robustezza; sostituire con stime reali e incertezza.}
 \label{fig:m-results}
 \end{figure}
 
-\begin{resultbox}[Risultato principale]
-Il modello proposto conserva una quota maggiore delle prestazioni nominali al diminuire della disponibilit\`a delle modalit\`a. Sostituire questo testo con un'interpretazione statisticamente fondata degli esperimenti reali.
+\section{Evidenza dalle ablazioni}
+\begin{table}[htbp]
+\centering
+\caption{Tabella di ablazione illustrativa che collega meccanismi e affermazioni.}
+\label{tab:m-ablation}
+\begin{tabularx}{0.88\textwidth}{Yrrr}
+\toprule
+Configurazione & Macro F1 & F1 con 30\% mancanti & Errore di calibrazione\\
+\midrule
+Metodo completo & 94.2\% & 85.1\% & 0.031\\
+Senza pesi di affidabilità & 93.8\% & 77.4\% & 0.058\\
+Senza termine di calibrazione & 94.0\% & 84.8\% & 0.091\\
+Senza dropout delle modalità & 94.3\% & 73.2\% & 0.046\\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\begin{resultbox}[Interpretazione principale]
+Le ablazioni illustrative suggeriscono che pesatura dell'affidabilità e dropout delle modalità contribuiscano soprattutto alla robustezza, mentre la regolarizzazione della calibrazione influenzi principalmente la qualità della confidenza. Una tesi reale deve riportare l'incertezza e verificare che le differenze non dipendano da un solo split o seed.
 \end{resultbox}
 
-\section{Minacce alla validit\`a}
-Discutere validit\`a interna, di costrutto, esterna e delle conclusioni. Riportare risultati negativi e casi di fallimento quando migliorano la qualit\`a del resoconto scientifico.
+\section{Casi di fallimento e incertezza}
+Analizzare esempi in cui il modello sbaglia con confidenza elevata, i punteggi di affidabilità non corrispondono alla qualità reale del sensore o la latenza supera il budget. Riportare frequenza e condizioni di ogni fallimento. I risultati negativi definiscono l'ambito della tesi centrale e possono motivare un meccanismo di astensione più sicuro.
+
+\chapter{Stato dell'arte e posizionamento}\label{ch:m-related}
+Il confronto dettagliato appare dopo il metodo, cosi che le differenze tecniche abbiano uno scopo chiaro. Organizzare la letteratura per ipotesi, modello di degradazione, trattamento dell'incertezza e vincoli di deployment, invece di presentare un catalogo cronologico.
+
+\begin{table}[htbp]
+\centering
+\caption{Confronto illustrativo tra approcci multimodali.}
+\label{tab:m-related}
+\begin{tabularx}{\textwidth}{Ycccc}
+\toprule
+Approccio & Fusione & Dati mancanti & Calibrazione & Edge-ready\\
+\midrule
+Fusione anticipata & Input & Limitata & No & Parziale\\
+Fusione tardiva & Decisione & Moderata & Facoltativa & Sì\\
+Fusione con reliability gate & Ibrida & Esplicita & Facoltativa & Parziale\\
+Esempio della tesi & Ibrida & Esplicita & Richiesta & Sì\\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+Descrivere accuratamente i metodi precedenti e riconoscerne i punti di forza. Dichiarare se la tesi modifica il modello, il protocollo di valutazione, il contesto di deployment o soltanto la combinazione di tali elementi. Evitare di dichiarare novità sulla sola base di una ricerca bibliografica incompleta.
+
+\chapter{Discussione e validità}\label{ch:m-discussion}
+\section{Verifica affermazione-evidenza}
+L'affermazione di robustezza è sostenuta da esperimenti controllati di perdita delle modalità e ablazioni. L'affermazione sulla calibrazione è sostenuta da errore scalare e diagrammi di affidabilità. L'affermazione sulla latenza vale soltanto sull'hardware specificato. L'affermazione sulla trasparenza richiede documentazione, configurazioni tracciabili e analisi dei fallimenti oltre alle metriche del modello.
+
+\section{Minacce alla validità}
+\textbf{Validita interna:} bug, budget di tuning diseguali o leakage possono spiegare il risultato. \textbf{Validita di costrutto:} il dropout sintetico può non rappresentare i guasti reali. \textbf{Validita esterna:} un solo dataset e una sola piattaforma limitano la generalizzazione. \textbf{Validita delle conclusioni:} poche esecuzioni o reporting selettivo possono amplificare le differenze. Dichiarare la mitigazione usata per ogni minaccia e il rischio residuo.
+
+\begin{keypoint}[Separare evidenza e inferenza]
+Scrivere prima le osservazioni misurate, poi l'interpretazione e infine le implicazioni più ampie. Indicare come ipotesi le proposte per il lavoro futuro, invece di presentarle come conclusioni dimostrate dagli esperimenti correnti.
+\end{keypoint}
 
 \chapter{Conclusioni e prospettive}
-Rispondere esplicitamente a ciascuna domanda di ricerca, riassumere i contributi originali e collegare i risultati al contesto scientifico pi\`u ampio. Separare le conclusioni supportate dalle evidenze dalle ipotesi per lavori futuri.
+La RQ1 riceve una risposta condizionata: nelle condizioni di degradazione documentate, il metodo illustrativo conserva più macro F1 della baseline. La RQ2 viene affrontata mediante confidenza calibrata, progettazione modulare, configurazioni riproducibili e analisi esplicita dei fallimenti, ma la fiducia degli operatori richiede ancora una valutazione centrata sulle persone.
 
-\section{Sviluppi futuri}
-Possibili estensioni includono adattamento online, garanzie formali sull'incertezza, apprendimento rispettoso della privacy, sperimentazione sul campo e valutazione human-centred con gli operatori.
+\section{Limiti e sviluppi futuri}
+L'esempio non dimostra robustezza a manipolazioni avversarie, nuovi tipi di sensore, cambiamenti di distribuzione a lungo termine, attacchi alla privacy o interazione sul campo con gli operatori. Sviluppi futuri includono adattamento online, garanzie formali sull'incertezza, apprendimento rispettoso della privacy, deployment su più dispositivi e valutazione con utenti di spiegazioni e astensioni.

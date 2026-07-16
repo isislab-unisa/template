@@ -1,0 +1,63 @@
+% =============================================================================
+% ESEMPIO DI APPENDICE FACOLTATIVA - ITALIANO
+% Disabilitarla in configuration.tex con:
+% \providecommand{\ISISAppendixChoice}{disabled}
+% Sostituire il contenuto dimostrativo con materiale di supporto utile ma non
+% essenziale per comprendere il corpo principale della tesi.
+% =============================================================================
+
+\chapter{Materiale sperimentale aggiuntivo}\label{app:additional-material}
+
+\begin{keypoint}[Appendice facoltativa]
+Questa appendice \`e facoltativa e va mantenuta solo quando aggiunge dettagli
+di supporto utili. Pu\`o contenere dimostrazioni complete, tabelle estese,
+questionari, note implementative, figure aggiuntive, dizionari dei dati e
+istruzioni per la riproduzione degli esperimenti.
+\end{keypoint}
+
+\section{Protocollo sperimentale esteso}
+Riportare il protocollo completo necessario a ripetere la valutazione. In una
+tesi reale, sostituire i valori seguenti con la versione esatta del dataset, la
+procedura di suddivisione, il preprocessing, i seed casuali, l'ambiente software
+e i criteri di arresto.
+
+\begin{table}[htbp]
+\centering
+\caption{Esempio di configurazione sperimentale.}
+\label{tab:appendix-config}
+\begin{tabularx}{\textwidth}{lY}
+\toprule
+Voce & Valore di esempio\\
+\midrule
+Versione del dataset & Versione 2.1, scaricata il 15 marzo 2026\\
+Suddivisione dei dati & 70\% training, 15\% validation, 15\% test; stratificata per classe\\
+Seed casuali & 11, 23, 47, 71 e 101\\
+Software & Python 3.12; versioni di framework e librerie salvate in un lock file\\
+Hardware & Una GPU con 24 GB di memoria; 16 core CPU; 64 GB di RAM\\
+Criterio di arresto & Early stopping sulla loss di validation con patience 12\\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{Esempio di comando di riproduzione}
+Un comando compatto \`e utile quando il repository contiene uno script capace
+di rigenerare i risultati principali.
+
+\begin{verbatim}
+python reproduce.py \
+  --config configs/final.yaml \
+  --seeds 11 23 47 71 101 \
+  --output results/final
+\end{verbatim}
+
+\section{Risultati aggiuntivi}
+Utilizzare questa sezione per analisi secondarie che supportano la discussione
+senza interrompere la narrazione principale. Distinguere chiaramente le analisi
+confermative da quelle esplorative e motivare eventuali deviazioni dal
+protocollo originario.
+
+\begin{resultbox}[Esempio di interpretazione]
+Nelle cinque esecuzioni illustrative, l'ordinamento principale dei metodi
+confrontati rimane invariato. Sostituire questo testo con la stima reale,
+l'intervallo di incertezza e il riferimento alla tabella o figura pertinente.
+\end{resultbox}

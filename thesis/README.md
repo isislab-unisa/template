@@ -26,7 +26,29 @@ The direct command form remains available:
 \thesislanguage{english}
 ```
 
-Changing the language selects the matching demo front matter, chapters, cover labels, headings, declaration, acknowledgements, bibliography title, and interface text.
+## Optional research-writing guide, appendix, and reproducibility checklist
+
+The template-only research-writing chapter, appendix, and checklist are independently optional. Set them in `configuration.tex`:
+
+```latex
+\providecommand{\ISISResearchWritingGuideChoice}{enabled}     % enabled | disabled
+\providecommand{\ISISAppendixChoice}{enabled}                  % enabled | disabled
+\providecommand{\ISISReproducibilityChecklistChoice}{enabled} % enabled | disabled
+```
+
+The research-writing chapter is enabled in the demo so that the example pages appear in the compiled PDF. Disable it before turning the project into a final thesis. It adapts Simon Peyton Jones's Microsoft Research guidance to a longer thesis: one central claim, a concrete problem, refutable contributions, claim-to-evidence links, intuition before formal detail, fair related-work positioning, direct language, limitations, and reader feedback.
+
+The selected language automatically loads:
+
+- `content/writing-guide/research-thesis-guide-en.tex` or `research-thesis-guide-it.tex`;
+- `content/appendix/appendix-en.tex` or `appendix-it.tex`;
+- `content/reproducibility/checklist-en.tex` or `checklist-it.tex`.
+
+The checklist is a thesis-oriented adaptation of the common NeurIPS format: **Yes / No / N/A**, followed by evidence or a short justification. It is explicitly optional, supports non-applicable items, and is not the official NeurIPS submission form. Its item groups cover claims, limitations, theory, reproducibility, code/data access, experimental detail, uncertainty, compute, ethics, impact, safeguards, licences, released artefacts, human participants, institutional review, and material use of generative AI or LLMs.
+
+Recommended order in the PDF is: thesis body, references, optional technical appendix, optional reproducibility checklist. This follows the common conference convention that supporting appendices precede the checklist.
+
+Changing the language selects the matching demo front matter, research-writing example chapter, thesis chapters, appendix example, reproducibility checklist, cover labels, headings, declaration, acknowledgements, bibliography title, and interface text.
 
 The second-page ISISLab research profile is also translated automatically. It contains three concise lines based on the official ISISLab website: the laboratory's UniSA affiliation and founding year, its three main research areas, and its participation in more than 20 national and European projects.
 
@@ -71,11 +93,14 @@ The bibliography uses the official ACM BibTeX style `ACM-Reference-Format` with 
 ## Project structure
 
 - `main.tex` - normal Overleaf entry point;
-- `configuration.tex` - degree, language, and accent selection;
+- `configuration.tex` - degree, language, optional-content switches, and accent selection;
 - `metadata.tex` - thesis and student data;
 - `isislab-thesis.sty` - lightweight visual system;
+- `content/writing-guide/` - optional thesis-writing chapter and example pages in both languages;
 - `content/bachelor/` - Bachelor demo content in both languages;
 - `content/master/` - Master demo content in both languages;
+- `content/appendix/` - optional English/Italian appendix examples;
+- `content/reproducibility/` - optional English/Italian reproducibility checklist examples;
 - `assets/` - optimized UniSA and ISISLab logos;
 - `references.bib` - BibTeX database;
 - `variant-*.tex` - optional fixed preview entry points.
@@ -83,3 +108,13 @@ The bibliography uses the official ACM BibTeX style `ACM-Reference-Format` with 
 ## Submission note
 
 Before submission, verify the official University of Salerno cover wording, declarations, degree-course name, roles, and formatting requirements required by the current programme.
+
+
+## Checklist provenance
+
+The checklist structure is adapted for thesis use from the NeurIPS Paper Checklist Guidelines (`https://neurips.cc/public/guides/PaperChecklist`). It is provided as an editable example, not as an official or complete compliance statement for NeurIPS, KDD, the University of Salerno, or any degree programme. Always verify the current institutional submission rules.
+
+
+## Research-writing guide provenance
+
+The optional bilingual guide is a thesis-oriented adaptation of Simon Peyton Jones, *How to Write a Great Research Paper*, Microsoft Research. The template paraphrases the principles and does not reproduce the slide deck. See `RESEARCH-WRITING-GUIDE-SOURCE.txt` for the source URL and adaptation notes. University and degree-programme requirements always take precedence.

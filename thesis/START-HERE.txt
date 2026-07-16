@@ -6,10 +6,24 @@ ISISLab FAST THESIS TEMPLATE
 4. Edit configuration.tex:
      master or bachelor
      italian or english
+     research-writing guide enabled or disabled
+     appendix enabled or disabled
+     reproducibility checklist enabled or disabled
 5. Edit metadata.tex with the real thesis information.
+6. Read or disable the template-only writing chapter in:
+     content/writing-guide/
+7. Replace the example files in:
+     content/appendix/
+     content/reproducibility/
+
+The appendix and reproducibility checklist are optional and bilingual.
+Checklist answers use Yes / No / N/A (Sì / No / N/A) plus evidence or
+a short justification. Remove non-applicable items or mark them N/A.
 
 This project intentionally has no TikZ, PGFPlots, tcolorbox, minted,
 Biber, shell escape, custom fonts, or custom compilation command.
 
 BIBLIOGRAPHY: ACM-Reference-Format via standard BibTeX.
 The ISISLab affiliation page is automatically available in English and Italian.
+
+The research-writing chapter contains bilingual example pages adapted for a thesis from Simon Peyton Jones's Microsoft Research presentation. Disable it before final submission.

@@ -1,0 +1,269 @@
+% =============================================================================
+% GUIDA ALLA SCRITTURA DELLA RICERCA - SOLO PER IL MODELLO - ITALIANO
+% Disabilitarla in configuration.tex con:
+% \providecommand{\ISISResearchWritingGuideChoice}{disabled}
+% Il capitolo adatta indicazioni generali per articoli scientifici a una tesi
+% più estesa. E materiale didattico e non deve apparire nella tesi finale.
+% =============================================================================
+
+\chapter{Guida del modello: scrivere una tesi di ricerca efficace}\label{ch:writing-guide-it}
+
+\begin{keypoint}[Capitolo presente solo nel modello]
+Questo capitolo mostra come trasformare un'idea di ricerca in una tesi leggibile.
+Non appartiene al progetto scientifico di esempio. Prima della consegna,
+disabilitarlo in \texttt{configuration.tex} impostando
+\texttt{\textbackslash ISISResearchWritingGuideChoice} su \texttt{disabled}.
+\end{keypoint}
+
+Le indicazioni adattano alla tesi la presentazione di Simon Peyton Jones per
+Microsoft Research, \emph{How to Write a Great Research Paper}. La fonte e
+consultabile sul sito di
+\href{https://www.microsoft.com/en-us/research/wp-content/uploads/2016/07/How-to-write-a-great-research-paper.pdf}{Microsoft Research}.
+Una tesi è più lunga di un articolo da conferenza e può includere diversi studi,
+ma beneficia comunque di una tesi centrale, una narrazione esplicita,
+contributi verificabili, esempi concreti ed evidenze collegate a ogni
+affermazione importante.
+
+\section{Partire da una tesi centrale}
+Una tesi efficace può normalmente essere riassunta in una frase che dichiara
+che cosa è stato appreso, costruito, dimostrato o spiegato. Piu contributi
+possono sostenere la frase, ma non devono apparire come progetti scollegati.
+
+\begin{researchquestion}[Tesi centrale -- esempio]
+Un'architettura Edge-AI modulare può ridurre il tempo di risposta e l'uso delle
+risorse, mantenendo prestazioni predittive utili, se acquisizione, inferenza,
+politica di sicurezza e presentazione vengono valutate come componenti separati.
+\end{researchquestion}
+
+\begin{keypoint}[Adattamento dall'articolo alla tesi]
+Per un articolo può bastare un'unica idea molto netta. Per una tesi, mantenere
+una tesi centrale e organizzare attorno ad essa da due a quattro contributi
+secondari. Ogni contributo deve essere abbastanza specifico da consentire al
+lettore di verificare se e stato effettivamente realizzato.
+\end{keypoint}
+
+Una possibile narrazione per una tesi tecnica è:
+\begin{enumerate}
+  \item un problema concreto che il lettore possa immaginare;
+  \item la ragione per cui il problema conta e il requisito ancora insoddisfatto;
+  \item l'idea della tesi e le ipotesi entro cui si applica;
+  \item il metodo o il sistema che realizza l'idea;
+  \item le evidenze che sostengono o limitano l'affermazione;
+  \item un confronto corretto con gli approcci precedenti;
+  \item conclusioni, limiti e domande aperte.
+\end{enumerate}
+
+\section{Pagina di esempio: un sommario in quattro frasi}
+Il sommario deve permettere di ricostruire problema, approccio, evidenza
+principale e contributo senza aprire il resto della tesi. L'esempio seguente usa
+quattro frasi; i valori numerici sono segnaposto.
+
+\begin{frontmatterbox}
+\textbf{Problema.} I dispositivi edge negli ambienti intelligenti devono
+rispondere rapidamente, pur operando con memoria limitata e con un confine di
+sicurezza chiaramente definito. \textbf{Approccio.} Questa tesi progetta un
+prototipo modulare che separa acquisizione, inferenza locale, applicazione delle
+politiche e presentazione, e valuta ogni componente con un protocollo
+riproducibile. \textbf{Evidenza.} Nella valutazione di esempio, la configurazione
+ottimizzata raggiunge il 91.0\% di accuratezza con latenza mediana di 29~ms e
+241~MB di memoria, rispetto a 72.0\%, 84~ms e 410~MB della baseline.
+\textbf{Contributo.} I risultati mostrano come un'architettura collegata alle
+evidenze renda espliciti i compromessi tra prestazioni, risorse e sicurezza;
+tutti i valori devono essere sostituiti con i risultati reali dello studente.
+\end{frontmatterbox}
+
+\begin{keypoint}[Test del sommario]
+Dopo aver letto solo il sommario, il relatore dovrebbe poter sottolineare un
+problema, un metodo, un risultato principale e un contributo. Eliminare frasi
+generiche come ``la tecnologia e sempre più importante'' quando non definiscono
+direttamente il problema di ricerca.
+\end{keypoint}
+
+\section{Pagina di esempio: introdurre il problema con un caso guida}
+Iniziare con un caso piccolo invece che con una rassegna molto ampia. Il caso
+dona uno scopo ai termini tecnici e aiuta il lettore a ricordare la tensione
+centrale.
+
+\begin{resultbox}[Esempio di paragrafo iniziale]
+Alle 02:14, una telecamera in un locale industriale rileva un movimento vicino a
+un armadio riservato. Il collegamento di rete è temporaneamente assente, quindi
+un sistema esclusivamente cloud non può restituire una decisione entro il
+vincolo di 50~ms. Un modello locale può rispondere in tempo, ma solo se usa meno
+di 300~MB e mantiene il tasso di falsi allarmi entro il limite operativo. La
+tesi chiede se una pipeline edge modulare possa soddisfare insieme i tre
+vincoli.
+\end{resultbox}
+
+Il paragrafo svolge quattro funzioni: presenta una situazione concreta, rende
+visibile il vincolo, identifica la lacuna e conduce a una domanda di ricerca.
+Non apre con molte pagine di affermazioni generiche sull'importanza
+dell'intelligenza artificiale.
+
+\section{Pagina di esempio: dichiarare contributi verificabili}
+Scrivere presto l'elenco dei contributi e usarlo per decidere che cosa appartiene
+alla tesi. Evitare contributi che si limitano a dire che un sistema viene
+descritto o che un tema viene studiato. Preferire affermazioni che indicano un
+artefatto, una proprietà, un confronto o un risultato misurato.
+
+\begin{keypoint}[Esempio di elenco dei contributi]
+\begin{enumerate}
+  \item Definiamo un requisito misurabile che combina latenza, memoria e vincoli
+        di sicurezza, documentandone le ipotesi nel capitolo di formulazione del
+        problema.
+  \item Implementiamo un'architettura a quattro stadi i cui componenti possono
+        essere verificati separatamente, fornendo interfacce e configurazioni
+        necessarie alla ricostruzione.
+  \item Confrontiamo il prototipo con una baseline dichiarata mediante prove
+        ripetute e riportiamo accuratezza, latenza, memoria, incertezza e casi di
+        fallimento.
+  \item Identifichiamo le condizioni operative in cui l'approccio non raggiunge
+        il requisito, invece di presentare soltanto la configurazione migliore.
+\end{enumerate}
+\end{keypoint}
+
+\subsection{Collegare ogni affermazione a un'evidenza}
+L'introduzione formula promesse; il corpo della tesi deve fornire evidenze per
+ciascuna promessa. Una matrice affermazione-evidenza è uno strumento semplice di
+pianificazione.
+
+\begin{table}[htbp]
+\centering
+\caption{Esempio di mappa affermazione-evidenza per una tesi.}
+\label{tab:guide-claim-evidence-it}
+\begin{tabularx}{\textwidth}{p{0.23\textwidth}Yp{0.27\textwidth}}
+\toprule
+Affermazione & Evidenza richiesta & Collocazione prevista\\
+\midrule
+Il prototipo rispetta il vincolo di latenza & Misure ripetute, distribuzione e
+confronto con la baseline & Protocollo, figura sulla latenza e risultati grezzi
+in appendice\\
+L'architettura e modulare & Definizione delle interfacce, test dei componenti ed
+esperimento di sostituzione & Capitolo di progettazione e test a livello di
+componente\\
+Il metodo è robusto a un ingresso mancante & Condizioni di corruzione definite
+prima dei test, perdita di prestazione e incertezza & Esperimento di robustezza e
+analisi dei fallimenti\\
+Il risultato è riproducibile & Dati, codice, parametri, seed, hardware e comando
+di riproduzione versionati & Metodologia, appendice e checklist facoltativa\\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+Usare riferimenti in avanti da ogni contributo alla sezione, tabella,
+dimostrazione, caso di studio o esperimento che lo sostiene. Un paragrafo
+meccanico che elenca l'ordine dei capitoli è meno utile di una narrazione che
+collega affermazioni ed evidenze.
+
+\section{Pagina di esempio: intuizione prima dei dettagli formali}
+Spiegare l'idea come se venisse disegnata su una lavagna. Introdurre la notazione
+solo dopo che il lettore ha compreso il ruolo dei componenti e la ragione per
+cui sono necessari.
+
+\begin{figure}[htbp]
+\centering
+\pipelinebox{Osserva la\\qualità}
+\pipelinearrow
+\pipelinebox{Stima la\\affidabilità}
+\pipelinearrow
+\pipelinebox{Pesa le\\evidenze}
+\pipelinearrow
+\pipelinebox{Predice e\\dichiara i limiti}
+\caption{Spiegazione a livello di lavagna prima di equazioni e dettagli implementativi.}
+\label{fig:guide-intuition-it}
+\end{figure}
+
+\begin{keypoint}[Prima e dopo]
+\textbf{Troppo presto:} ``Sia $z_m=f_m(x_m)$ e si ottimizzi un obiettivo
+multimodale regolarizzato.'' La notazione arriva prima del problema.\par
+\textbf{Meglio:} ``Ogni sensore propone una risposta e indica quanto e affidabile
+il segnale corrente. Il modulo di fusione riduce il peso di un sensore rumoroso
+o assente. Formalizziamo questo comportamento dopo il caso guida.''
+\end{keypoint}
+
+Quando l'intuizione è stabile, definire simboli, ipotesi, algoritmi e
+dimostrazioni con precisione. Gli esempi non sostituiscono il rigore; preparano
+il lettore a comprenderlo.
+
+\section{Usare frasi attive e dirette}
+Preferire frasi che dichiarano chi compie l'azione. Per esempio, scrivere
+``Abbiamo eseguito 30 prove indipendenti'' invece di ``Sono state eseguite 30
+prove'', e ``Il modello ottimizzato ha usato 241~MB'' invece di ``E stata
+osservata una riduzione nell'utilizzo della memoria''. Usare la forma passiva
+quando l'attore e davvero irrilevante, non come stile predefinito.
+
+\clearpage
+\section{Pagina di esempio: collocare lo stato dell'arte dove aiuta}
+Una tesi richiede spesso più contesto di un articolo e il corso di laurea può
+imporre una rassegna iniziale. All'inizio mantenere soltanto i concetti necessari
+per comprendere il problema. Collocare il confronto dettagliato con le
+alternative dopo che il lettore ha capito l'idea proposta, oppure ritornare
+sulla letteratura in un capitolo successivo di posizionamento.
+
+\begin{table}[htbp]
+\centering
+\caption{Esempio di sintesi: confrontare le ipotesi invece di elencare articoli.}
+\label{tab:guide-related-it}
+\begin{tabularx}{\textwidth}{Ycccc}
+\toprule
+Approccio & Decisione locale & Ingresso mancante & Calibrazione & Risorse\\
+\midrule
+Baseline solo cloud & No & Servizio interrotto & Facoltativa & Solo server\\
+Fusione anticipata & Sì & Limitata & Rara & Talvolta\\
+Fusione tardiva & Sì & Moderata & Facoltativa & Spesso\\
+Approccio della tesi & Sì & Esplicito & Richiesta & Device e server\\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+Descrivere i lavori precedenti in modo generoso e accurato. Dichiarare che cosa
+un approccio realizza bene, le ipotesi entro cui funziona e la dimensione precisa
+in cui la tesi lo estende o se ne differenzia. Riconoscere i limiti del nuovo
+approccio rende il confronto più credibile.
+
+\section{Pagina di esempio: riportare evidenze, non soltanto il valore migliore}
+Il capitolo dei risultati deve separare osservazione e interpretazione.
+
+\begin{resultbox}[Osservazione]
+Su cinque seed illustrativi, la latenza mediana diminuisce da 84~ms a 29~ms.
+L'intervallo interquartile diminuisce da 12~ms a 5~ms. Una configurazione
+hardware supera il limite quando il throttling termico inizia dopo 20 minuti.
+\end{resultbox}
+
+\begin{keypoint}[Interpretazione]
+La mediana più bassa e la dispersione ridotta sostengono l'affermazione sulla
+reattività nell'hardware testato. Il fallimento dovuto al throttling limita
+l'affermazione ai carichi e alle condizioni di raffreddamento rappresentati dal
+protocollo. La tesi non deve estendere il risultato a dispositivi non testati.
+\end{keypoint}
+
+Riportare incertezza, risultati negativi, deviazioni dal protocollo e
+spiegazioni alternative. Distinguere le analisi esplorative dai test pianificati
+in anticipo. Un limite non è una scusa: definisce il confine del risultato.
+
+\clearpage
+\section{Pagina di revisione: verificare il percorso del lettore}
+Il lettore dovrebbe poter seguire la tesi centrale leggendo titolo, sommario,
+introduzione, aperture dei capitoli, didascalie, sintesi dei risultati e
+conclusioni. Eseguire la seguente revisione prima di perfezionare la tipografia.
+
+\begin{enumerate}
+  \item Scrivere la tesi centrale in una sola frase.
+  \item Verificare che il sommario dichiari problema, approccio, risultato e contributo.
+  \item Sostituire un'apertura troppo ampia con un caso guida concreto.
+  \item Rendere ogni contributo verificabile e indicare la relativa evidenza.
+  \item Spiegare l'intuizione prima di notazione, algoritmi e dettagli implementativi.
+  \item Spostare il confronto dettagliato con lo stato dell'arte dopo l'idea della
+        tesi, salvo diversi requisiti istituzionali.
+  \item Separare osservazioni misurate, interpretazione e speculazione.
+  \item Riportare incertezza, limiti, risultati negativi e condizioni di validità.
+  \item Preferire linguaggio attivo e diretto e figure informative.
+  \item Chiedere a un lettore esperto e a uno non esperto dove si sono persi,
+        quindi correggere il testo invece di attribuire il problema al lettore.
+\end{enumerate}
+
+\begin{keypoint}[Verifica finale specifica per la tesi]
+La presentazione di Microsoft Research riguarda articoli scientifici, non i
+regolamenti universitari. Conservare capitoli obbligatori, dichiarazioni,
+formattazione, requisiti etici e criteri di valutazione del corso di laurea.
+Applicare i principi narrativi entro tali vincoli istituzionali.
+\end{keypoint}

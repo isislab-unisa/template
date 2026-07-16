@@ -3,10 +3,20 @@
 % Overleaf: main.tex as Main document, pdfLaTeX as Compiler.
 % =============================================================================
 \providecommand{\ISISDegreeChoice}{bachelor}      % bachelor | master
-\providecommand{\ISISLanguageChoice}{english}  % english  | italian
+\providecommand{\ISISLanguageChoice}{italian}    % english  | italian
+
+% Optional template material and end matter. Use enabled or disabled.
+% The research-writing chapter is a template-only teaching example; disable it
+% before turning the project into the final thesis.
+\providecommand{\ISISResearchWritingGuideChoice}{enabled}
+\providecommand{\ISISAppendixChoice}{enabled}
+\providecommand{\ISISReproducibilityChecklistChoice}{enabled}
 
 \thesisdegree{\ISISDegreeChoice}
 \thesislanguage{\ISISLanguageChoice}
+\thesiswritingguide{\ISISResearchWritingGuideChoice}
+\thesisappendix{\ISISAppendixChoice}
+\thesisreproducibilitychecklist{\ISISReproducibilityChecklistChoice}
 
 % Accent options: ISISBlue, ISISLightBlue, ISISDeepBlue, ISISCyan, ISISRed.
 \thesisaccent{ISISBlue}

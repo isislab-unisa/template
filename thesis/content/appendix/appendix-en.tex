@@ -1,0 +1,61 @@
+% =============================================================================
+% OPTIONAL APPENDIX EXAMPLE - ENGLISH
+% Disable it in configuration.tex with:
+% \providecommand{\ISISAppendixChoice}{disabled}
+% Replace this demo material with supporting content that is useful but not
+% essential to understanding the main thesis.
+% =============================================================================
+
+\chapter{Additional Experimental Material}\label{app:additional-material}
+
+\begin{keypoint}[Optional appendix]
+This appendix is optional and should be retained only when it adds useful
+supporting detail. Typical content includes complete proofs, extended tables,
+questionnaires, implementation notes, additional figures, data dictionaries,
+and reproducibility instructions.
+\end{keypoint}
+
+\section{Extended experimental protocol}
+Report the complete protocol needed to repeat the evaluation. In a real thesis,
+replace the values below with the exact dataset release, split procedure,
+preprocessing steps, random seeds, software environment, and stopping criteria.
+
+\begin{table}[htbp]
+\centering
+\caption{Example experimental configuration.}
+\label{tab:appendix-config}
+\begin{tabularx}{\textwidth}{lY}
+\toprule
+Item & Example value\\
+\midrule
+Dataset release & Version 2.1, downloaded on 15 March 2026\\
+Data split & 70\% training, 15\% validation, 15\% test; stratified by class\\
+Random seeds & 11, 23, 47, 71, and 101\\
+Software & Python 3.12; framework and library versions recorded in a lock file\\
+Hardware & One GPU with 24 GB memory; 16 CPU cores; 64 GB RAM\\
+Stopping rule & Early stopping on validation loss with patience 12\\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{Example reproduction command}
+A compact command is useful when the repository contains a script that rebuilds
+the main results.
+
+\begin{verbatim}
+python reproduce.py \
+  --config configs/final.yaml \
+  --seeds 11 23 47 71 101 \
+  --output results/final
+\end{verbatim}
+
+\section{Additional results}
+Use this section for secondary analyses that support the discussion without
+interrupting the main narrative. Clearly distinguish confirmatory analyses from
+exploratory ones, and explain any deviations from the original protocol.
+
+\begin{resultbox}[Example interpretation]
+Across the five illustrative runs, the main ranking of the compared methods
+remained unchanged. Replace this placeholder with the actual estimate,
+uncertainty interval, and a reference to the corresponding table or figure.
+\end{resultbox}

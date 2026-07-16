@@ -27,6 +27,8 @@
 \RequirePackage{array}
 \RequirePackage{framed}
 \RequirePackage{scrlayer-scrpage}
+\setlength{\footheight}{32pt}
+\RequirePackage{zref-totpages}
 \RequirePackage{etoolbox}
 % ACM-Reference-Format.bst is designed for natbib-compatible citations.
 % Numeric, sorted, compressed citations match the common ACM presentation.
@@ -70,6 +72,12 @@
 % -----------------------------------------------------------------------------
 \def\ISIS@degree{master}
 \def\ISIS@language{italian}
+\newtoggle{ISIS@writingguide}
+\newtoggle{ISIS@appendix}
+\newtoggle{ISIS@reproducibility}
+\toggletrue{ISIS@writingguide}
+\toggletrue{ISIS@appendix}
+\toggletrue{ISIS@reproducibility}
 
 \newcommand{\thesisdegree}[1]{%
   \edef\ISIS@choice{#1}%
@@ -87,6 +95,46 @@
       \ifdefstring{\ISIS@choice}{italian}{\def\ISIS@language{italian}}{%
         \ifdefstring{\ISIS@choice}{it}{\def\ISIS@language{italian}}{%
           \PackageError{isislab-thesis}{Unknown language '\ISIS@choice'}{Use english or italian.}%
+        }%
+      }%
+    }%
+  }%
+}
+
+
+\newcommand{\thesiswritingguide}[1]{%
+  \edef\ISIS@choice{#1}%
+  \ifdefstring{\ISIS@choice}{enabled}{\toggletrue{ISIS@writingguide}}{%
+    \ifdefstring{\ISIS@choice}{disabled}{\togglefalse{ISIS@writingguide}}{%
+      \ifdefstring{\ISIS@choice}{true}{\toggletrue{ISIS@writingguide}}{%
+        \ifdefstring{\ISIS@choice}{false}{\togglefalse{ISIS@writingguide}}{%
+          \PackageError{isislab-thesis}{Unknown research-writing guide option '\ISIS@choice'}{Use enabled or disabled.}%
+        }%
+      }%
+    }%
+  }%
+}
+
+\newcommand{\thesisappendix}[1]{%
+  \edef\ISIS@choice{#1}%
+  \ifdefstring{\ISIS@choice}{enabled}{\toggletrue{ISIS@appendix}}{%
+    \ifdefstring{\ISIS@choice}{disabled}{\togglefalse{ISIS@appendix}}{%
+      \ifdefstring{\ISIS@choice}{true}{\toggletrue{ISIS@appendix}}{%
+        \ifdefstring{\ISIS@choice}{false}{\togglefalse{ISIS@appendix}}{%
+          \PackageError{isislab-thesis}{Unknown appendix option '\ISIS@choice'}{Use enabled or disabled.}%
+        }%
+      }%
+    }%
+  }%
+}
+
+\newcommand{\thesisreproducibilitychecklist}[1]{%
+  \edef\ISIS@choice{#1}%
+  \ifdefstring{\ISIS@choice}{enabled}{\toggletrue{ISIS@reproducibility}}{%
+    \ifdefstring{\ISIS@choice}{disabled}{\togglefalse{ISIS@reproducibility}}{%
+      \ifdefstring{\ISIS@choice}{true}{\toggletrue{ISIS@reproducibility}}{%
+        \ifdefstring{\ISIS@choice}{false}{\togglefalse{ISIS@reproducibility}}{%
+          \PackageError{isislab-thesis}{Unknown reproducibility checklist option '\ISIS@choice'}{Use enabled or disabled.}%
         }%
       }%
     }%
@@ -192,7 +240,72 @@
 \clearpairofpagestyles
 \ihead{\sffamily\small\textcolor{ISISMuted}{\headmark}}
 \ohead{\sffamily\small\textcolor{ISISBlue}{\@thesislevel}}
-\cfoot{\textcolor{ThesisAccent}{\rule{12mm}{1.1pt}}\textcolor{ISISLine}{\rule{22mm}{1.1pt}}\quad\sffamily\bfseries\textcolor{ISISDeepBlue}{\thepage}}
+
+
+% Width of the complete progress bar
+\newlength{\ISISProgressWidth}
+\setlength{\ISISProgressWidth}{34mm}
+
+% Pages not included in the progress calculation:
+% 1 University cover + 1 ISISLab affiliation page
+\newcommand{\ISISProgressOffset}{0}
+
+\newcommand{\ISISProgressBar}{%
+  \begingroup
+  \dimen0=0pt
+
+  % The total number of pages becomes available after the first compilation
+  \ifnum\ztotpages>0\relax
+
+    % Current physical PDF page, excluding the two title pages
+    \count@=\numexpr
+      \value{abspage}+1-\ISISProgressOffset
+    \relax
+
+    % Total PDF pages, excluding the two title pages
+    \@tempcnta=\numexpr
+      \ztotpages-\ISISProgressOffset
+    \relax
+
+    % Safety checks
+    \ifnum\count@<1
+      \count@=1
+    \fi
+
+    \ifnum\@tempcnta<1
+      \@tempcnta=1
+    \fi
+
+    % Filled width = total width × current page / total pages
+    \dimen0=\dimexpr
+      \ISISProgressWidth*\count@/\@tempcnta
+    \relax
+  \fi
+
+  % Prevent the filled bar from exceeding its maximum width
+  \ifdim\dimen0>\ISISProgressWidth
+    \dimen0=\ISISProgressWidth
+  \fi
+
+  % Remaining unfilled part
+  \dimen2=\dimexpr
+    \ISISProgressWidth-\dimen0
+  \relax
+
+  % Draw filled and unfilled sections
+  \textcolor{ThesisAccent}{\rule{\dimen0}{1.1pt}}%
+  \textcolor{ISISLine}{\rule{\dimen2}{1.1pt}}%
+  \endgroup
+}
+
+\cfoot{%
+  \ISISProgressBar
+  \quad
+  \sffamily\bfseries
+  \textcolor{ISISDeepBlue}{\thepage}%
+}
+
+
 \pagestyle{scrheadings}
 \renewcommand*{\chapterpagestyle}{scrheadings}
 \automark[section]{chapter}
@@ -376,6 +489,60 @@
 \newcommand{\acknowledgementspage}[1]{%
 \IfItalianTF{\chapter*{Ringraziamenti}\addcontentsline{toc}{chapter}{Ringraziamenti}}{\chapter*{Acknowledgements}\addcontentsline{toc}{chapter}{Acknowledgements}}%
 \begin{frontmatterbox}#1\end{frontmatterbox}
+}
+
+% -----------------------------------------------------------------------------
+% Optional appendix and reproducibility-checklist support
+% -----------------------------------------------------------------------------
+\newcommand{\ISISCheckBox}{%
+  \begingroup
+  \setlength{\fboxsep}{1pt}%
+  \fbox{\rule{0pt}{1.25ex}\hspace{1.25ex}}%
+  \endgroup
+}
+\newcommand{\ISISChecklistOptions}{%
+  \ISISCheckBox\ \LangText{Yes}{S\`i}\qquad
+  \ISISCheckBox\ \LangText{No}{No}\qquad
+  \ISISCheckBox\ \LangText{N/A}{N/A}%
+}
+\newenvironment{reproducibilitychecklist}{%
+  \begin{enumerate}
+  \setlength{\itemsep}{1.05em}
+  \setlength{\parsep}{0.25em}
+  \setlength{\topsep}{0.4em}
+}{%
+  \end{enumerate}
+}
+\newcommand{\reproitem}[3]{%
+  \item {\sffamily\bfseries\color{ISISDeepBlue}#1}\par
+  #2\par
+  {\small\color{ISISMuted}\textit{#3}}\par\smallskip
+  {\small\textbf{\LangText{Answer}{Risposta}:} \ISISChecklistOptions}\par
+  {\small\textbf{\LangText{Evidence or justification}{Evidenza o giustificazione}:} \hrulefill}\par
+  \vspace{0.35em}\hrule
+}
+
+\newcommand{\beginthesissupplements}{%
+  \ifboolexpr{togl {ISIS@appendix} or togl {ISIS@reproducibility}}{\appendix}{}%
+}
+\newcommand{\inputdemoappendix}{%
+  \iftoggle{ISIS@appendix}{%
+    \IfItalianTF{\input{content/appendix/appendix-it.tex}}{\input{content/appendix/appendix-en.tex}}%
+  }{}%
+}
+\newcommand{\inputdemoreproducibilitychecklist}{%
+  \iftoggle{ISIS@reproducibility}{%
+    \IfItalianTF{\input{content/reproducibility/checklist-it.tex}}{\input{content/reproducibility/checklist-en.tex}}%
+  }{}%
+}
+
+% -----------------------------------------------------------------------------
+% Optional bilingual research-writing example chapter
+% -----------------------------------------------------------------------------
+\newcommand{\inputdemoresearchwritingguide}{%
+  \iftoggle{ISIS@writingguide}{%
+    \IfItalianTF{\input{content/writing-guide/research-thesis-guide-it.tex}}{\input{content/writing-guide/research-thesis-guide-en.tex}}%
+  }{}%
 }
 
 % -----------------------------------------------------------------------------

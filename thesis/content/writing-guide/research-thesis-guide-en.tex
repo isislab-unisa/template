@@ -1,0 +1,260 @@
+% =============================================================================
+% TEMPLATE-ONLY RESEARCH WRITING GUIDE - ENGLISH
+% Disable it in configuration.tex with:
+% \providecommand{\ISISResearchWritingGuideChoice}{disabled}
+% This chapter adapts general research-paper advice to a longer thesis. It is
+% teaching material for the template and should not appear in the final thesis.
+% =============================================================================
+
+\chapter{Template Guide: Writing a Strong Research Thesis}\label{ch:writing-guide-en}
+
+\begin{keypoint}[Template-only chapter]
+This chapter demonstrates how to turn a research idea into a readable thesis.
+It is not part of the example research project. Disable it in
+\texttt{configuration.tex} before submission by setting
+\texttt{\textbackslash ISISResearchWritingGuideChoice} to \texttt{disabled}.
+\end{keypoint}
+
+The guidance is a thesis-oriented adaptation of Simon Peyton Jones's Microsoft
+Research presentation \emph{How to Write a Great Research Paper}. The source
+presentation is available from
+\href{https://www.microsoft.com/en-us/research/wp-content/uploads/2016/07/How-to-write-a-great-research-paper.pdf}{Microsoft Research}.
+A thesis is longer than a conference paper and may contain several studies, but
+it still benefits from one central claim, an explicit narrative, refutable
+contributions, concrete examples, and evidence linked to every important claim.
+
+\section{Start from one central thesis claim}
+A strong thesis can usually be summarised as one sentence that states what was
+learned, built, demonstrated, or explained. Several contributions may support
+that sentence, but they should not feel like unrelated projects.
+
+\begin{researchquestion}[Central thesis claim -- example]
+A modular edge-AI design can reduce response time and resource use while
+preserving useful predictive performance, provided that sensing, inference,
+security policy, and presentation are evaluated as separate components.
+\end{researchquestion}
+
+\begin{keypoint}[Adaptation from paper to thesis]
+For a paper, a single sharp idea may be enough. For a thesis, keep one central
+claim and organise two to four subordinate contributions around it. Each
+contribution should be specific enough that a reader could test whether the
+thesis actually delivered it.
+\end{keypoint}
+
+A useful narrative for a technical thesis is:
+\begin{enumerate}
+  \item a concrete problem that the reader can picture;
+  \item why the problem matters and which requirement is unmet;
+  \item the thesis idea and the assumptions under which it applies;
+  \item the method or system that realises the idea;
+  \item evidence that supports or limits the claim;
+  \item a fair comparison with previous approaches;
+  \item conclusions, limitations, and next questions.
+\end{enumerate}
+
+\section{Example page: a four-sentence abstract}
+The abstract should let a reader recover the problem, the approach, the main
+evidence, and the contribution without opening the rest of the thesis. The
+following example uses four sentences; the numbers are placeholders.
+
+\begin{frontmatterbox}
+\textbf{Problem.} Edge devices used in smart environments must respond quickly
+while operating with limited memory and a clearly defined security boundary.
+\textbf{Approach.} This thesis designs a modular prototype that separates
+sensing, local inference, policy enforcement, and presentation, and evaluates
+each component under a reproducible protocol. \textbf{Evidence.} In the example
+evaluation, the optimised configuration reaches 91.0\% accuracy with a median
+latency of 29~ms and 241~MB of memory, compared with 72.0\%, 84~ms, and 410~MB
+for the baseline. \textbf{Contribution.} The results show how an evidence-linked
+architecture can make performance, resource, and security trade-offs explicit;
+all values must be replaced with the student's real findings.
+\end{frontmatterbox}
+
+\begin{keypoint}[Abstract test]
+After reading only the abstract, a supervisor should be able to underline one
+problem, one method, one principal result, and one contribution. Remove generic
+claims such as ``technology is increasingly important'' unless they directly
+establish the research problem.
+\end{keypoint}
+
+\section{Example page: introduce the problem with a running case}
+Start with a small case rather than a broad survey. The case gives technical
+terms a purpose and helps the reader remember the central tension.
+
+\begin{resultbox}[Example opening paragraph]
+At 02:14, a camera in an industrial room detects motion near a restricted
+cabinet. The network link is temporarily unavailable, so a cloud-only system
+cannot return a decision within the 50~ms response budget. A local model can
+respond in time, but only if its memory use remains below 300~MB and its false
+alarm rate stays within the operational limit. This thesis asks whether a
+modular edge pipeline can satisfy those three constraints together.
+\end{resultbox}
+
+The paragraph does four jobs: it presents a concrete situation, exposes the
+constraint, identifies the gap, and leads naturally to a research question. It
+does not begin with several pages of general statements about the importance of
+artificial intelligence.
+
+\section{Example page: state refutable contributions}
+Write the contribution list early, then use it to decide what belongs in the
+thesis. Avoid contributions that merely say that a system is described or that
+an issue is studied. Prefer claims that identify an artefact, property,
+comparison, or measured outcome.
+
+\begin{keypoint}[Example contribution list]
+\begin{enumerate}
+  \item We define a measurable requirement that combines latency, memory, and
+        security constraints, and we document its assumptions in the problem
+        formulation chapter.
+  \item We implement a four-stage architecture whose components can be tested
+        independently, and we provide the interface and configuration details
+        needed to rebuild it.
+  \item We compare the prototype with a stated baseline over repeated trials
+        and report accuracy, latency, memory, uncertainty, and failure cases.
+  \item We identify the operating conditions in which the approach does not
+        meet the target, rather than presenting only the best configuration.
+\end{enumerate}
+\end{keypoint}
+
+\subsection{Link every claim to evidence}
+The introduction makes promises; the body must provide evidence for each one.
+A claim-evidence matrix is a simple planning device.
+
+\begin{table}[htbp]
+\centering
+\caption{Example claim-evidence map for a thesis.}
+\label{tab:guide-claim-evidence-en}
+\begin{tabularx}{\textwidth}{p{0.23\textwidth}Yp{0.27\textwidth}}
+\toprule
+Claim & Required evidence & Planned location\\
+\midrule
+The prototype meets the latency target & Repeated measurements, distribution,
+comparison with the baseline & Evaluation protocol, latency figure, and raw
+results in the appendix\\
+The architecture is modular & Interface definition, component tests, and a
+replacement experiment & Design chapter and component-level tests\\
+The method is robust to one missing input & Predefined corruption conditions,
+performance loss, and uncertainty & Robustness experiment and failure analysis\\
+The result is reproducible & Versioned data, code, parameters, seeds, hardware,
+and a reproduction command & Method chapter, appendix, and optional checklist\\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+Use forward references from each contribution to the section, table, theorem,
+case study, or experiment that supports it. A mechanical paragraph listing the
+order of chapters is less useful than a narrative that connects claims to
+evidence.
+
+\section{Example page: intuition before formal detail}
+Explain the idea as if drawing it on a whiteboard. Introduce notation only after
+the reader understands what the components do and why they are needed.
+
+\begin{figure}[htbp]
+\centering
+\pipelinebox{Observe\\quality}
+\pipelinearrow
+\pipelinebox{Estimate\\reliability}
+\pipelinearrow
+\pipelinebox{Weight\\evidence}
+\pipelinearrow
+\pipelinebox{Predict and\\report limits}
+\caption{A whiteboard-level explanation before equations or implementation details.}
+\label{fig:guide-intuition-en}
+\end{figure}
+
+\begin{keypoint}[Before and after]
+\textbf{Too early:} ``Let $z_m=f_m(x_m)$ and optimise a regularised multimodal
+objective.'' The notation arrives before the reader knows the problem.\par
+\textbf{Better:} ``Each sensor proposes an answer and reports how trustworthy
+its current signal is. The fusion module gives less influence to a sensor that
+is noisy or absent. We formalise that behaviour after the running example.''
+\end{keypoint}
+
+Once the intuition is stable, define symbols, assumptions, algorithms, and
+proofs precisely. Examples do not replace rigour; they prepare the reader to
+understand it.
+
+\section{Use active, direct sentences}
+Prefer a sentence that names the actor and action. For example, write ``We ran
+30 independent trials'' rather than ``Thirty trials were run'', and write ``The
+optimised model used 241~MB'' rather than ``A reduction in memory utilisation
+was observed''. Use the passive voice when the actor is genuinely irrelevant,
+not as the default style.
+
+\clearpage
+\section{Example page: place related work where it helps}
+A thesis often needs more background than a paper, and a degree programme may
+require an early literature review. Keep only the concepts needed to understand
+the problem near the beginning. Place the dense comparison with alternatives
+after the reader understands the proposed idea, or revisit the literature in a
+later positioning chapter.
+
+\begin{table}[htbp]
+\centering
+\caption{Example synthesis table: compare assumptions rather than listing papers.}
+\label{tab:guide-related-en}
+\begin{tabularx}{\textwidth}{Ycccc}
+\toprule
+Approach & Local decision & Missing input & Calibration & Resource report\\
+\midrule
+Cloud-only baseline & No & Service failure & Optional & Server-side only\\
+Early fusion & Yes & Limited & Rare & Sometimes\\
+Late fusion & Yes & Moderate & Optional & Often\\
+Thesis approach & Yes & Explicit & Required & Device and server\\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+Describe previous work generously and accurately. State what an approach does
+well, the assumptions under which it succeeds, and the precise dimension on
+which the thesis extends or differs from it. Acknowledging weaknesses in the
+new approach makes the comparison more credible.
+
+\section{Example page: report evidence, not only winning numbers}
+A results chapter should separate observation from interpretation.
+
+\begin{resultbox}[Observation]
+Across five illustrative seeds, median latency decreased from 84~ms to 29~ms.
+The interquartile range decreased from 12~ms to 5~ms. One hardware configuration
+exceeded the target when thermal throttling began after 20 minutes.
+\end{resultbox}
+
+\begin{keypoint}[Interpretation]
+The lower median and narrower spread support the responsiveness claim on the
+tested hardware. The throttling failure limits the claim to workloads and
+cooling conditions represented by the protocol. The thesis should not infer
+performance on untested devices.
+\end{keypoint}
+
+Report uncertainty, negative results, protocol deviations, and alternative
+explanations. Distinguish exploratory findings from tests that were planned in
+advance. A limitation is not an apology; it defines the boundary of the result.
+
+\clearpage
+\section{Revision page: test the reader's route through the thesis}
+A reader should be able to follow the central claim by reading the title,
+abstract, introduction, chapter openings, figure captions, result summaries,
+and conclusions. Use the following review pass before polishing typography.
+
+\begin{enumerate}
+  \item Write the central thesis claim in one sentence.
+  \item Check that the abstract states problem, approach, result, and contribution.
+  \item Replace a broad opening with one concrete running example.
+  \item Make every contribution refutable and point it to evidence.
+  \item Explain the intuition before notation, algorithms, or implementation detail.
+  \item Move dense related-work comparison until the reader knows the thesis idea,
+        unless institutional rules require a different order.
+  \item Separate measured observations from interpretation and speculation.
+  \item Report uncertainty, limitations, negative results, and scope conditions.
+  \item Prefer active, direct language and informative figures.
+  \item Ask both an expert and a non-expert reader where they became lost, then
+        revise the text rather than blaming the reader.
+\end{enumerate}
+
+\begin{keypoint}[Thesis-specific final check]
+The Microsoft Research presentation addresses papers, not university
+regulations. Preserve required chapters, declarations, formatting, ethics
+statements, and assessment criteria from the degree programme. Use the narrative
+principles here inside those institutional constraints.
+\end{keypoint}

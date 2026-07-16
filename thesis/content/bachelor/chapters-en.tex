@@ -1,30 +1,56 @@
-\chapter{Introduction}
-\section{Motivation}
-Intelligent connected devices are increasingly deployed in homes, laboratories, and industrial spaces. Their usefulness grows with their ability to interpret data locally, yet resource constraints and security requirements make design decisions non-trivial \cite{shi2016edge,roman2018mobile}.
+\chapter{Introduction}\label{ch:b-introduction}
+\section{A concrete problem}
+At 02:14, a camera in an industrial room detects movement near a restricted cabinet. The network link is temporarily unavailable, so a cloud-only service cannot return a decision within the 50~ms response budget. A local model can respond in time, but only if memory use remains below 300~MB and the false alarm rate stays within the operational limit. This running example turns a broad topic into a measurable research problem.
+
+Edge computing offers a useful foundation for local decision making, while its security boundary and resource constraints remain important design concerns \cite{shi2016edge,roman2018mobile}. The thesis therefore studies the combined performance, resource, and security requirement rather than optimising one metric in isolation.
 
 \begin{researchquestion}
-How can a compact edge device deliver useful inference performance while preserving responsiveness and a clear security boundary?
+Can a compact edge device deliver an accurate decision within 50~ms and 300~MB while keeping inference and security policy as independently testable components?
 \end{researchquestion}
 
-\section{Objectives}
-The bachelor project follows four practical objectives:
-\begin{itemize}
-  \item define a measurable system requirement;
-  \item implement a modular prototype;
-  \item evaluate latency, accuracy, and resource use;
-  \item discuss limitations and future improvements.
-\end{itemize}
+\section{Central claim and contributions}
+\begin{resultbox}[Central thesis claim]
+A four-stage edge pipeline can satisfy the illustrative response and memory targets while preserving useful predictive performance, provided that each stage is measured separately and its assumptions are recorded.
+\end{resultbox}
 
-\begin{keypoint}[Template guidance]
-Use the opening chapter to establish context, define the problem, state objectives, and preview the thesis structure. Avoid implementation details that belong in later chapters.
+The thesis makes four refutable contributions:
+\begin{enumerate}
+  \item it defines the scenario, assumptions, and success criteria in Chapter~\ref{ch:b-problem};
+  \item it implements a modular architecture with explicit interfaces in Chapter~\ref{ch:b-design};
+  \item it evaluates accuracy, latency, memory, uncertainty, and failure cases against a baseline in Chapter~\ref{ch:b-evaluation};
+  \item it positions the result against edge-computing and security literature and states the limits of the comparison in Chapter~\ref{ch:b-related}.
+\end{enumerate}
+
+\chapter{Problem and Running Example}\label{ch:b-problem}
+\section{Operational scenario}
+The prototype receives an image or sensor sample, computes a local score, applies a security policy, and displays an alert. The design must still produce a safe outcome when the cloud link is unavailable. The running example exposes three competing goals: a low response time, bounded resource use, and a defensible policy boundary.
+
+\section{Assumptions and success criteria}
+A claim is meaningful only when its scope is visible. This example assumes a fixed edge device, a versioned test dataset, a warmed-up model, and an isolated local network. It does not claim performance on every device or under adversarial physical manipulation.
+
+\begin{table}[htbp]
+\centering
+\caption{Illustrative requirements for the running example.}
+\label{tab:b-requirements}
+\begin{tabularx}{0.9\textwidth}{YYY}
+\toprule
+Requirement & Target & Evidence\\
+\midrule
+Decision latency & Median below 50~ms & Repeated end-to-end timing\\
+Memory footprint & Peak below 300~MB & Process-level monitoring\\
+Predictive quality & Accuracy above 85\% & Held-out labelled test set\\
+Security separation & Policy replaceable without retraining & Interface and component test\\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\begin{keypoint}[Reader-first problem formulation]
+Introduce notation only after the scenario and requirements are understandable. State excluded conditions explicitly: they are boundaries of the claim, not hidden weaknesses.
 \end{keypoint}
 
-\section{Document structure}
-Chapter~\ref{ch:b-design} presents the design, Chapter~\ref{ch:b-evaluation} reports the evaluation, and the final chapter summarises the main findings.
-
-\chapter{System Design}\label{ch:b-design}
-\section{Architecture}
-The demonstrator separates sensing, inference, policy, and presentation. Figure~\ref{fig:b-architecture} uses only native LaTeX boxes, so it compiles quickly and can be replaced with a project-specific image.
+\chapter{Proposed System}\label{ch:b-design}
+\section{Idea before detail}
+The system follows a simple intuition: each stage should perform one responsibility and expose enough information to test it independently. The sensor stage acquires data, the inference stage estimates a class score, the policy stage converts the score into an authorised action, and the presentation stage records the result.
 
 \begin{figure}[htbp]
 \centering
@@ -32,12 +58,12 @@ The demonstrator separates sensing, inference, policy, and presentation. Figure~
 \pipelinebox{Edge inference\\engine}\pipelinearrow
 \pipelinebox{Security\\policy}\pipelinearrow
 \pipelinebox{Dashboard\\and alerts}
-\caption{Lightweight demo architecture for the bachelor thesis.}
+\caption{Whiteboard-level architecture for the bachelor thesis example.}
 \label{fig:b-architecture}
 \end{figure}
 
-\section{Implementation notes}
-Describe hardware, software modules, interfaces, and key engineering choices. Keep reproducibility in mind by recording versions and configuration parameters.
+\section{Interfaces and implementation}
+The inference component receives a validated sample and returns both a decision and a score. The policy component can therefore change thresholds or access rules without retraining the model. Record hardware, operating-system version, library versions, model checksum, configuration parameters, and the command used to start each component.
 
 \begin{verbatim}
 def classify(sample, model, threshold=0.75):
@@ -45,13 +71,13 @@ def classify(sample, model, threshold=0.75):
     return int(score >= threshold), float(score)
 \end{verbatim}
 
-\begin{resultbox}[Design decision]
-The prototype uses a modular pipeline so that the inference model and the security policy can be tested independently.
+\begin{resultbox}[Design evidence]
+A component-replacement test should show that the policy can be changed while the inference output remains identical. This test supports the modularity claim more directly than an architecture diagram alone.
 \end{resultbox}
 
-\chapter{Experimental Evaluation}\label{ch:b-evaluation}
-\section{Protocol}
-Report the dataset or workload, train/test split, baseline, metrics, hardware, and repeated trials. The demo values below are placeholders.
+\chapter{Experimental Evidence}\label{ch:b-evaluation}
+\section{Claims and protocol}
+The evaluation tests the requirements in Table~\ref{tab:b-requirements}. Report the dataset release, split procedure, preprocessing, baseline, metrics, hardware, repeated trials, random seeds, warm-up procedure, and stopping rule. The values below are intentionally illustrative.
 
 \begin{figure}[htbp]
 \centering
@@ -60,31 +86,57 @@ Report the dataset or workload, train/test split, baseline, metrics, hardware, a
 \demobar{Prototype}{69mm}{86\%}{ISISBlue}
 \demobar{Optimised}{73mm}{91\%}{ISISDeepBlue}
 \end{minipage}
-\caption{Illustrative evaluation result drawn with simple rules.}
+\caption{Illustrative predictive result; replace bars and values with real evidence.}
 \label{fig:b-results}
 \end{figure}
 
 \begin{table}[htbp]
 \centering
-\caption{Example performance summary.}
-\begin{tabularx}{0.82\textwidth}{Yrrr}
+\caption{Example performance summary with the evidence needed for the central claim.}
+\label{tab:b-results}
+\begin{tabularx}{0.88\textwidth}{Yrrr}
 \toprule
-Configuration & Accuracy & Latency & Memory\\
+Configuration & Accuracy & Median latency & Peak memory\\
 \midrule
 Baseline & 72.0\% & 84 ms & 410 MB\\
 Prototype & 86.0\% & 41 ms & 286 MB\\
 Optimised & \textbf{91.0\%} & \textbf{29 ms} & \textbf{241 MB}\\
 \bottomrule
 \end{tabularx}
-\label{tab:b-results}
 \end{table}
 
-\begin{keypoint}[Interpretation]
-Discuss effect size, uncertainty, practical relevance, threats to validity, and any discrepancy between expected and observed behaviour.
+\section{Observation, interpretation, and uncertainty}
+Across five illustrative runs, the optimised configuration meets all three numerical targets. A real thesis should also report dispersion or confidence intervals, not only point estimates. Explain whether the measured difference is large enough to matter in the operational scenario.
+
+\begin{keypoint}[Example interpretation]
+The latency and memory measurements support the claim on the tested hardware. They do not establish performance on other processors, thermal conditions, or workloads. Predictive accuracy supports the quality target only for the stated test distribution.
 \end{keypoint}
 
-\chapter{Conclusions}
-The project demonstrates a complete path from problem definition to implementation and evaluation. Summarise the contribution without repeating the abstract, then state limitations and concrete next steps.
+\section{Failure case}
+During a 20-minute run, an uncooled device may throttle and miss the latency target. Report the failure and restrict the claim to suitable operating conditions.
 
-\section{Future work}
-Potential extensions include a broader dataset, additional threat models, deployment on alternative hardware, and a user study of the alert interface.
+\chapter{Related Work and Positioning}\label{ch:b-related}
+The reader now knows the problem and the proposed idea, so comparisons can focus on meaningful assumptions. Edge-computing literature motivates local processing and latency-sensitive applications \cite{shi2016edge}; security surveys show that moving computation towards devices changes the attack surface and trust boundary \cite{roman2018mobile}.
+
+\begin{table}[htbp]
+\centering
+\caption{Illustrative positioning of the bachelor project.}
+\label{tab:b-related}
+\begin{tabularx}{\textwidth}{Ycccc}
+\toprule
+Approach & Local inference & Offline operation & Policy separation & Device resources\\
+\midrule
+Cloud-only service & No & No & Server-side & Not reported\\
+Embedded monolith & Yes & Yes & Limited & Reported\\
+This thesis example & Yes & Yes & Explicit & Measured\\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+A fair comparison should state what previous approaches do well and the assumptions under which they operate. The contribution here is not that all earlier systems are inadequate; it is the combination of explicit policy separation and a compact, reproducible evaluation for the running scenario.
+
+\chapter{Conclusions}
+The example research question can be answered conditionally: on the tested device and workload, the modular prototype reaches the illustrative latency, memory, and accuracy targets. The component-replacement test supports the separation claim, while the thermal failure case limits the responsiveness claim to suitable operating conditions.
+
+\section{Limitations and future work}
+The example does not cover adversarial inputs, long-term field deployment, energy consumption, accessibility of the alert interface, or generalisation to other hardware. Concrete next steps are a broader dataset, an explicit threat model, energy measurement, deployment on alternative devices, and a user study of the alert workflow.

@@ -1,0 +1,116 @@
+% =============================================================================
+% OPTIONAL REPRODUCIBILITY CHECKLIST - ENGLISH
+% Thesis-oriented adaptation of the NeurIPS Paper Checklist format:
+% Yes / No / N/A plus evidence or a short justification.
+% Source format: https://neurips.cc/public/guides/PaperChecklist
+% This is not the official NeurIPS form and does not imply conference compliance.
+% Disable it in configuration.tex with:
+% \providecommand{\ISISReproducibilityChecklistChoice}{disabled}
+% =============================================================================
+
+\chapter{Reproducibility Checklist}\label{app:reproducibility-checklist}
+
+\begin{keypoint}[Optional and applicability-aware]
+This checklist is an optional thesis aid. Keep only the items relevant to the
+work and mark \textbf{N/A} when an item is not applicable or the requested
+information is not available. For each answer, cite a thesis section, appendix,
+repository file, dataset record, or provide a brief justification. The format
+is adapted from the NeurIPS paper checklist; it is not an official conference
+submission form.
+\end{keypoint}
+
+\noindent\textbf{Suggested use.}
+Complete the checklist after the references and any technical appendix. Review
+it with the supervisor before submission, and remove confidential links or
+information that should not appear in the public thesis.
+
+\begin{reproducibilitychecklist}
+
+\reproitem{Claims and scope}
+{Do the abstract and introduction accurately describe the contribution, scope,
+assumptions, and level of generality supported by the results?}
+{Point to the abstract, contribution list, and the sections containing the main evidence.}
+
+\reproitem{Limitations}
+{Are important limitations, strong assumptions, expected failure modes, and
+boundaries of validity discussed?}
+{Reference a limitations or threats-to-validity section and explain any omitted limitations.}
+
+\reproitem{Theory, assumptions, and proofs}
+{When theoretical results are included, are all assumptions stated and are
+complete proofs or proof references provided?}
+{Mark N/A for work without theoretical claims; otherwise cite theorem and appendix locations.}
+
+\reproitem{Reproducibility path}
+{Is there a practical route for another researcher to reproduce or independently
+verify the main contribution?}
+{Identify the appendix, repository, model access route, protocol, or other verification mechanism.}
+
+\reproitem{Access to code and data}
+{When experiments were performed, are code, data, model artefacts, and execution
+instructions available, or is any restriction explained?}
+{Give persistent links or repository paths, versions, access conditions, and the reason for any restriction.}
+
+\reproitem{Experimental setting}
+{Are datasets, splits, preprocessing, baselines, hyperparameters, selection
+procedures, random seeds, stopping rules, and software versions specified?}
+{Cite the methodology, appendix table, configuration files, and environment or lock file.}
+
+\reproitem{Uncertainty and statistical evidence}
+{Are repeated runs, error bars, confidence intervals, statistical tests, or
+other appropriate uncertainty information reported and correctly defined?}
+{State what varies across runs, the number of repetitions, and how uncertainty was calculated.}
+
+\reproitem{Compute resources}
+{Are the hardware type, memory, run time, storage, and approximate total compute
+needed for the reported experiments documented?}
+{Reference the environment description and distinguish reported runs from exploratory compute when relevant.}
+
+\reproitem{Research ethics}
+{Has the work been checked against applicable research-integrity, safety,
+privacy, and professional-ethics requirements?}
+{Cite the relevant declaration, review procedure, institutional rule, or explain why the item is not applicable.}
+
+\reproitem{Societal impact}
+{Where relevant, are potential harmful uses, fairness concerns, privacy risks,
+security risks, and likely deployment consequences discussed?}
+{Reference the impact or risk discussion and any mitigation measures.}
+
+\reproitem{Safeguards}
+{For artefacts with meaningful misuse or dual-use risk, are proportionate
+release safeguards, usage conditions, or access controls described?}
+{Mark N/A when no elevated release risk exists; otherwise describe the safeguard and residual risk.}
+
+\reproitem{Licences and terms of use}
+{Are third-party datasets, code, models, and other assets properly cited, versioned,
+and used in accordance with their licences and terms?}
+{List the licence or terms for each important asset and identify any unresolved uncertainty.}
+
+\reproitem{Documentation of new artefacts}
+{If the thesis releases new code, data, models, or benchmarks, are they documented
+with purpose, contents, provenance, limitations, licence, and maintenance information?}
+{Mark N/A when no new artefact is released; otherwise cite the README, data card, or model card.}
+
+\reproitem{Human participants or crowdsourcing}
+{If people contributed data or participated in a study, are recruitment,
+instructions, consent, compensation, and study procedures documented?}
+{Mark N/A when no human participants or crowd workers were involved.}
+
+\reproitem{Ethical or institutional approval}
+{When required, were participant risks assessed and approval or exemption
+obtained from the appropriate ethics or institutional review process?}
+{Provide the non-confidential approval reference, or explain why approval was not required.}
+
+\reproitem{Use of generative AI or LLMs}
+{When generative AI or an LLM is an important, original, or non-standard part of
+the research method, is its role, version, configuration, and verification described?}
+{Mark N/A for ordinary writing or formatting assistance that does not affect the research method or evidence.}
+
+\end{reproducibilitychecklist}
+
+\begin{keypoint}[Final review]
+A ``No'' answer is not automatically a defect: it should be accompanied by a
+clear explanation and, where possible, a mitigation or future-action note.
+Remove placeholder answers and verify that every cited section, file, and link
+exists in the submitted version.
+\end{keypoint}

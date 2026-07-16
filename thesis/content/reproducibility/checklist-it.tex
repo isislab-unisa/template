@@ -1,0 +1,117 @@
+% =============================================================================
+% CHECKLIST DI RIPRODUCIBILITA FACOLTATIVA - ITALIANO
+% Adattamento per tesi del formato della NeurIPS Paper Checklist:
+% Si / No / N/A con evidenza o breve giustificazione.
+% Formato di riferimento: https://neurips.cc/public/guides/PaperChecklist
+% Non e il modulo ufficiale NeurIPS e non implica conformita alla conferenza.
+% Disabilitarla in configuration.tex con:
+% \providecommand{\ISISReproducibilityChecklistChoice}{disabled}
+% =============================================================================
+
+\chapter{Checklist di riproducibilit\`a}\label{app:reproducibility-checklist}
+
+\begin{keypoint}[Facoltativa e basata sull'applicabilit\`a]
+Questa checklist \`e uno strumento facoltativo per la tesi. Conservare solo le
+voci pertinenti e indicare \textbf{N/A} quando una voce non \`e applicabile o
+l'informazione richiesta non \`e disponibile. Per ogni risposta, citare una
+sezione della tesi, un'appendice, un file del repository, una scheda del dataset
+oppure fornire una breve giustificazione. Il formato \`e adattato dalla checklist
+NeurIPS e non costituisce un modulo ufficiale di sottomissione a una conferenza.
+\end{keypoint}
+
+\noindent\textbf{Uso suggerito.}
+Compilare la checklist dopo la bibliografia e l'eventuale appendice tecnica.
+Rivederla con il relatore prima della consegna e rimuovere collegamenti o
+informazioni riservate che non devono comparire nella versione pubblica.
+
+\begin{reproducibilitychecklist}
+
+\reproitem{Affermazioni e ambito}
+{Il sommario e l'introduzione descrivono correttamente contributo, ambito,
+ipotesi e livello di generalit\`a supportato dai risultati?}
+{Citare il sommario, l'elenco dei contributi e le sezioni contenenti le evidenze principali.}
+
+\reproitem{Limiti}
+{Sono discussi i limiti importanti, le ipotesi forti, i possibili casi di
+fallimento e i confini di validit\`a?}
+{Citare una sezione sui limiti o sulle minacce alla validit\`a e motivare eventuali omissioni.}
+
+\reproitem{Teoria, ipotesi e dimostrazioni}
+{Quando sono presenti risultati teorici, tutte le ipotesi sono dichiarate e le
+dimostrazioni complete o i relativi riferimenti sono forniti?}
+{Indicare N/A per lavori senza affermazioni teoriche; altrimenti citare teoremi e appendici.}
+
+\reproitem{Percorso di riproduzione}
+{Esiste un percorso pratico che consenta a un altro ricercatore di riprodurre o
+verificare in modo indipendente il contributo principale?}
+{Indicare appendice, repository, accesso al modello, protocollo o altro meccanismo di verifica.}
+
+\reproitem{Accesso a codice e dati}
+{Quando sono stati eseguiti esperimenti, codice, dati, artefatti del modello e
+istruzioni di esecuzione sono disponibili, oppure le restrizioni sono spiegate?}
+{Fornire link persistenti o percorsi, versioni, condizioni di accesso e motivo delle restrizioni.}
+
+\reproitem{Configurazione sperimentale}
+{Sono specificati dataset, split, preprocessing, baseline, iperparametri,
+procedure di selezione, seed casuali, criteri di arresto e versioni software?}
+{Citare metodologia, tabella in appendice, file di configurazione e ambiente o lock file.}
+
+\reproitem{Incertezza ed evidenza statistica}
+{Sono riportate esecuzioni ripetute, barre di errore, intervalli di confidenza,
+test statistici o altre misure appropriate di incertezza, definite correttamente?}
+{Indicare cosa varia tra le esecuzioni, il numero di ripetizioni e il metodo di calcolo.}
+
+\reproitem{Risorse di calcolo}
+{Sono documentati tipo di hardware, memoria, tempo di esecuzione, storage e
+stima del calcolo totale necessario per gli esperimenti riportati?}
+{Citare la descrizione dell'ambiente e distinguere, se rilevante, esperimenti finali ed esplorativi.}
+
+\reproitem{Etica della ricerca}
+{Il lavoro \`e stato verificato rispetto ai requisiti applicabili di integrit\`a
+scientifica, sicurezza, privacy ed etica professionale?}
+{Citare dichiarazione, procedura di revisione o regola istituzionale, oppure motivare la non applicabilit\`a.}
+
+\reproitem{Impatto sociale}
+{Quando pertinente, sono discussi usi dannosi, equit\`a, privacy, sicurezza e
+possibili conseguenze del deployment?}
+{Citare la discussione di impatto o rischio e le eventuali misure di mitigazione.}
+
+\reproitem{Misure di salvaguardia}
+{Per artefatti con rischio significativo di abuso o duplice uso, sono descritte
+misure proporzionate di rilascio, condizioni d'uso o controlli di accesso?}
+{Indicare N/A se non esiste un rischio elevato; altrimenti descrivere salvaguardie e rischio residuo.}
+
+\reproitem{Licenze e condizioni d'uso}
+{Dataset, codice, modelli e altri asset di terzi sono citati, versionati e usati
+nel rispetto delle licenze e delle condizioni applicabili?}
+{Elencare licenza o condizioni per ogni asset importante e segnalare incertezze irrisolte.}
+
+\reproitem{Documentazione dei nuovi artefatti}
+{Se la tesi rilascia nuovo codice, dati, modelli o benchmark, sono documentati
+scopo, contenuto, provenienza, limiti, licenza e informazioni di manutenzione?}
+{Indicare N/A se non vengono rilasciati artefatti; altrimenti citare README, data card o model card.}
+
+\reproitem{Partecipanti umani o crowdsourcing}
+{Se persone hanno fornito dati o partecipato allo studio, reclutamento,
+istruzioni, consenso, compenso e procedure sono documentati?}
+{Indicare N/A se non sono stati coinvolti partecipanti umani o crowd worker.}
+
+\reproitem{Approvazione etica o istituzionale}
+{Quando richiesto, i rischi per i partecipanti sono stati valutati ed \`e stata
+ottenuta l'approvazione o l'esenzione dall'organo competente?}
+{Fornire il riferimento non riservato dell'approvazione o motivare perch\'e non era necessaria.}
+
+\reproitem{Uso di IA generativa o LLM}
+{Quando un sistema generativo o un LLM costituisce una parte importante,
+originale o non standard del metodo, ruolo, versione, configurazione e verifica
+sono descritti?}
+{Indicare N/A per semplice assistenza di scrittura o formattazione che non modifica metodo o evidenze.}
+
+\end{reproducibilitychecklist}
+
+\begin{keypoint}[Revisione finale]
+Una risposta ``No'' non \`e automaticamente un difetto: deve essere accompagnata
+da una spiegazione chiara e, quando possibile, da una mitigazione o da un'azione
+futura. Rimuovere le risposte segnaposto e verificare che ogni sezione, file e
+collegamento citato esista nella versione consegnata.
+\end{keypoint}

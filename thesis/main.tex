@@ -21,6 +21,10 @@
 \listoftables
 
 \mainmatter
+
+% Optional template-only chapter with bilingual examples of research writing.
+% Disable it in configuration.tex before using the project for a final thesis.
+\inputdemoresearchwritingguide
 \inputdemochapters
 
 % Official ACM reference formatting via standard BibTeX.
@@ -28,12 +32,11 @@
 \bibliographystyle{ACM-Reference-Format}
 \bibliography{references}
 
-\appendix
-\IfItalianTF{\chapter{Checklist di riproducibilit\`a}}{\chapter{Reproducibility Checklist}}
-\begin{keypoint}[\IfItalianTF{Prima della consegna}{Before submission}]
-\LangText
-  {Replace all sample metadata, verify the official University of Salerno cover wording, check every citation, and compile the bibliography with BibTeX.}
-  {Sostituire tutti i metadati di esempio, verificare la formulazione ufficiale del frontespizio dell'Universit\`a degli Studi di Salerno, controllare ogni citazione e compilare la bibliografia con BibTeX.}
-\end{keypoint}
+% Both items are optional and controlled in configuration.tex.
+
+% When enabled, the appendix comes first and the checklist follows it.
+\beginthesissupplements
+\inputdemoappendix
+\inputdemoreproducibilitychecklist
 
 \end{document}

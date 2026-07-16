@@ -1,30 +1,56 @@
-\chapter{Introduzione}
-\section{Motivazione}
-I dispositivi connessi intelligenti sono sempre pi\`u diffusi in abitazioni, laboratori e spazi industriali. La loro utilit\`a aumenta quando riescono a interpretare i dati localmente; tuttavia, i vincoli di risorse e i requisiti di sicurezza rendono non banali le scelte progettuali \cite{shi2016edge,roman2018mobile}.
+\chapter{Introduzione}\label{ch:b-introduction}
+\section{Un problema concreto}
+Alle 02:14, una telecamera in un locale industriale rileva un movimento vicino a un armadio riservato. Il collegamento di rete è temporaneamente assente, quindi un servizio esclusivamente cloud non può restituire una decisione entro il vincolo di 50~ms. Un modello locale può rispondere in tempo, ma solo se l'uso della memoria rimane sotto 300~MB e il tasso di falsi allarmi rispetta il limite operativo. Il caso guida trasforma un tema ampio in un problema di ricerca misurabile.
+
+L'edge computing offre una base utile per le decisioni locali, mentre il confine di sicurezza e i vincoli di risorse rimangono scelte progettuali importanti \cite{shi2016edge,roman2018mobile}. La tesi studia quindi il requisito congiunto di prestazioni, risorse e sicurezza, invece di ottimizzare una sola metrica.
 
 \begin{researchquestion}
-Come pu\`o un dispositivo edge compatto offrire prestazioni di inferenza utili, mantenendo reattivit\`a e un confine di sicurezza chiaramente definito?
+Un dispositivo edge compatto può produrre una decisione accurata entro 50~ms e 300~MB, mantenendo inferenza e politica di sicurezza come componenti verificabili in modo indipendente?
 \end{researchquestion}
 
-\section{Obiettivi}
-Il progetto di laurea segue quattro obiettivi pratici:
-\begin{itemize}
-  \item definire un requisito di sistema misurabile;
-  \item implementare un prototipo modulare;
-  \item valutare latenza, accuratezza e uso delle risorse;
-  \item discutere limiti e possibili miglioramenti.
-\end{itemize}
+\section{Tesi centrale e contributi}
+\begin{resultbox}[Tesi centrale]
+Una pipeline edge a quattro stadi può soddisfare i vincoli illustrativi di risposta e memoria, mantenendo prestazioni predittive utili, se ogni stadio viene misurato separatamente e le relative ipotesi vengono registrate.
+\end{resultbox}
 
-\begin{keypoint}[Indicazioni per il modello]
-Utilizzare il capitolo iniziale per presentare il contesto, definire il problema, dichiarare gli obiettivi e anticipare la struttura della tesi. Evitare dettagli implementativi che appartengono ai capitoli successivi.
+La tesi presenta quattro contributi verificabili:
+\begin{enumerate}
+  \item definisce scenario, ipotesi e criteri di successo nel Capitolo~\ref{ch:b-problem};
+  \item implementa un'architettura modulare con interfacce esplicite nel Capitolo~\ref{ch:b-design};
+  \item valuta accuratezza, latenza, memoria, incertezza e casi di fallimento rispetto a una baseline nel Capitolo~\ref{ch:b-evaluation};
+  \item posiziona il risultato rispetto alla letteratura su edge computing e sicurezza e dichiara i limiti del confronto nel Capitolo~\ref{ch:b-related}.
+\end{enumerate}
+
+\chapter{Problema e caso guida}\label{ch:b-problem}
+\section{Scenario operativo}
+Il prototipo riceve un'immagine o un campione sensoriale, calcola un punteggio locale, applica una politica di sicurezza e mostra un avviso. Il progetto deve produrre un esito sicuro anche quando il collegamento cloud non e disponibile. Il caso guida rende visibili tre obiettivi in tensione: risposta rapida, uso limitato delle risorse e confine di politica difendibile.
+
+\section{Ipotesi e criteri di successo}
+Un'affermazione è significativa solo quando il suo ambito è visibile. L'esempio assume un dispositivo edge fisso, un dataset di test versionato, un modello già inizializzato e una rete locale isolata. Non dichiara prestazioni su ogni dispositivo o in presenza di manipolazioni fisiche avversarie.
+
+\begin{table}[htbp]
+\centering
+\caption{Requisiti illustrativi per il caso guida.}
+\label{tab:b-requirements}
+\begin{tabularx}{0.9\textwidth}{YYY}
+\toprule
+Requisito & Obiettivo & Evidenza\\
+\midrule
+Latenza di decisione & Mediana sotto 50~ms & Tempi end-to-end ripetuti\\
+Memoria & Picco sotto 300~MB & Monitoraggio del processo\\
+Qualita predittiva & Accuratezza sopra 85\% & Test set etichettato separato\\
+Separazione di sicurezza & Politica sostituibile senza riaddestramento & Interfaccia e test del componente\\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\begin{keypoint}[Formulazione orientata al lettore]
+Introdurre la notazione solo dopo aver reso comprensibili scenario e requisiti. Dichiarare esplicitamente le condizioni escluse: sono confini dell'affermazione, non debolezze nascoste.
 \end{keypoint}
 
-\section{Struttura del documento}
-Il Capitolo~\ref{ch:b-design} presenta la progettazione, il Capitolo~\ref{ch:b-evaluation} descrive la valutazione e il capitolo finale riassume i risultati principali.
-
-\chapter{Progettazione del sistema}\label{ch:b-design}
-\section{Architettura}
-Il dimostratore separa acquisizione, inferenza, politiche di sicurezza e presentazione. La Figura~\ref{fig:b-architecture} usa soltanto box LaTeX nativi, quindi viene compilata rapidamente e pu\`o essere sostituita con un'immagine specifica del progetto.
+\chapter{Sistema proposto}\label{ch:b-design}
+\section{Idea prima dei dettagli}
+Il sistema segue un'intuizione semplice: ogni stadio svolge una responsabilità ed espone informazioni sufficienti per una verifica indipendente. L'acquisizione raccoglie i dati, l'inferenza stima un punteggio di classe, la politica converte il punteggio in un'azione autorizzata e la presentazione registra il risultato.
 
 \begin{figure}[htbp]
 \centering
@@ -32,12 +58,12 @@ Il dimostratore separa acquisizione, inferenza, politiche di sicurezza e present
 \pipelinebox{Inferenza\\edge}\pipelinearrow
 \pipelinebox{Politica di\\sicurezza}\pipelinearrow
 \pipelinebox{Dashboard\\e avvisi}
-\caption{Architettura dimostrativa leggera per la tesi di laurea.}
+\caption{Architettura a livello di lavagna per l'esempio di tesi di laurea.}
 \label{fig:b-architecture}
 \end{figure}
 
-\section{Note implementative}
-Descrivere hardware, moduli software, interfacce e principali scelte ingegneristiche. Per favorire la riproducibilit\`a, registrare versioni e parametri di configurazione.
+\section{Interfacce e implementazione}
+Il componente di inferenza riceve un campione validato e restituisce decisione e punteggio. Il componente di politica può quindi cambiare soglie o regole di accesso senza riaddestrare il modello. Registrare hardware, versione del sistema operativo, versioni delle librerie, checksum del modello, parametri di configurazione e comando di avvio di ogni componente.
 
 \begin{verbatim}
 def classify(sample, model, threshold=0.75):
@@ -45,13 +71,13 @@ def classify(sample, model, threshold=0.75):
     return int(score >= threshold), float(score)
 \end{verbatim}
 
-\begin{resultbox}[Scelta progettuale]
-Il prototipo adotta una pipeline modulare, cos\`i da poter verificare in modo indipendente il modello di inferenza e la politica di sicurezza.
+\begin{resultbox}[Evidenza progettuale]
+Un test di sostituzione del componente dovrebbe mostrare che la politica può cambiare mentre l'uscita dell'inferenza rimane identica. Questo test sostiene l'affermazione di modularita in modo più diretto del solo diagramma architetturale.
 \end{resultbox}
 
-\chapter{Valutazione sperimentale}\label{ch:b-evaluation}
-\section{Protocollo}
-Descrivere dataset o carico di lavoro, suddivisione train/test, baseline, metriche, hardware e prove ripetute. I valori riportati di seguito sono segnaposto.
+\chapter{Evidenza sperimentale}\label{ch:b-evaluation}
+\section{Affermazioni e protocollo}
+La valutazione verifica i requisiti della Tabella~\ref{tab:b-requirements}. Riportare versione del dataset, procedura di suddivisione, preprocessing, baseline, metriche, hardware, prove ripetute, seed casuali, riscaldamento e criterio di arresto. I valori seguenti sono volutamente illustrativi.
 
 \begin{figure}[htbp]
 \centering
@@ -60,31 +86,57 @@ Descrivere dataset o carico di lavoro, suddivisione train/test, baseline, metric
 \demobar{Prototipo}{69mm}{86\%}{ISISBlue}
 \demobar{Ottimizzato}{73mm}{91\%}{ISISDeepBlue}
 \end{minipage}
-\caption{Risultato illustrativo disegnato con semplici regole LaTeX.}
+\caption{Risultato predittivo illustrativo; sostituire barre e valori con evidenze reali.}
 \label{fig:b-results}
 \end{figure}
 
 \begin{table}[htbp]
 \centering
-\caption{Esempio di sintesi delle prestazioni.}
-\begin{tabularx}{0.82\textwidth}{Yrrr}
+\caption{Sintesi di esempio con le evidenze necessarie alla tesi centrale.}
+\label{tab:b-results}
+\begin{tabularx}{0.88\textwidth}{Yrrr}
 \toprule
-Configurazione & Accuratezza & Latenza & Memoria\\
+Configurazione & Accuratezza & Latenza mediana & Memoria di picco\\
 \midrule
 Baseline & 72.0\% & 84 ms & 410 MB\\
 Prototipo & 86.0\% & 41 ms & 286 MB\\
 Ottimizzato & \textbf{91.0\%} & \textbf{29 ms} & \textbf{241 MB}\\
 \bottomrule
 \end{tabularx}
-\label{tab:b-results}
 \end{table}
 
-\begin{keypoint}[Interpretazione]
-Discutere dimensione dell'effetto, incertezza, rilevanza pratica, minacce alla validit\`a e ogni discrepanza tra comportamento atteso e osservato.
+\section{Osservazione, interpretazione e incertezza}
+In cinque esecuzioni illustrative, la configurazione ottimizzata soddisfa i tre obiettivi numerici. Una tesi reale deve riportare anche dispersione o intervalli di confidenza, non soltanto stime puntuali. Spiegare se la differenza misurata è abbastanza grande da essere rilevante nello scenario operativo.
+
+\begin{keypoint}[Esempio di interpretazione]
+Le misure di latenza e memoria sostengono l'affermazione sull'hardware testato. Non stabiliscono le prestazioni su altri processori, condizioni termiche o carichi. L'accuratezza sostiene il requisito di qualità soltanto per la distribuzione di test dichiarata.
 \end{keypoint}
 
-\chapter{Conclusioni}
-Il progetto dimostra un percorso completo dalla definizione del problema all'implementazione e alla valutazione. Riassumere il contributo senza ripetere il sommario, quindi indicare limiti e sviluppi concreti.
+\section{Caso di fallimento}
+Durante una prova di 20 minuti, un dispositivo senza raffreddamento può entrare in throttling e superare il limite di latenza. Riportare il fallimento e limitare l'affermazione a condizioni operative adeguate.
 
-\section{Sviluppi futuri}
-Possibili estensioni includono un dataset pi\`u ampio, ulteriori modelli di minaccia, il deployment su hardware alternativo e uno studio con utenti sull'interfaccia di allerta.
+\chapter{Stato dell'arte e posizionamento}\label{ch:b-related}
+Il lettore conosce ora il problema e l'idea proposta, quindi il confronto può concentrarsi su ipotesi significative. La letteratura sull'edge computing motiva l'elaborazione locale e le applicazioni sensibili alla latenza \cite{shi2016edge}; le rassegne sulla sicurezza mostrano che spostare il calcolo verso i dispositivi modifica superficie di attacco e confine di fiducia \cite{roman2018mobile}.
+
+\begin{table}[htbp]
+\centering
+\caption{Posizionamento illustrativo del progetto di laurea.}
+\label{tab:b-related}
+\begin{tabularx}{\textwidth}{Ycccc}
+\toprule
+Approccio & Inferenza locale & Funziona offline & Politica separata & Risorse device\\
+\midrule
+Servizio cloud & No & No & Sul server & Non riportate\\
+Monolite embedded & Sì & Si & Limitata & Riportate\\
+Esempio della tesi & Sì & Si & Esplicita & Misurate\\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+Un confronto corretto deve dichiarare che cosa gli approcci precedenti realizzano bene e le ipotesi in cui operano. Il contributo non è che tutti i sistemi precedenti siano inadeguati, ma la combinazione tra separazione esplicita della politica e valutazione compatta e riproducibile per il caso guida.
+
+\chapter{Conclusioni}
+Alla domanda di ricerca si può rispondere in modo condizionato: sul dispositivo e sul carico testati, il prototipo modulare raggiunge i vincoli illustrativi di latenza, memoria e accuratezza. Il test di sostituzione sostiene l'affermazione di separazione, mentre il fallimento termico limita l'affermazione sulla reattività a condizioni operative adeguate.
+
+\section{Limiti e sviluppi futuri}
+L'esempio non copre ingressi avversari, deployment a lungo termine, consumo energetico, accessibilità dell'interfaccia o generalizzazione ad altro hardware. Sviluppi concreti sono un dataset più ampio, un modello di minaccia esplicito, la misura dell'energia, il deployment su dispositivi alternativi e uno studio con utenti sul flusso di allerta.
