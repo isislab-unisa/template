@@ -28,7 +28,7 @@
   <img src="https://img.shields.io/badge/LaTeX-pdfLaTeX-008080?style=flat-square&logo=latex&logoColor=white" alt="pdfLaTeX">
   <img src="https://img.shields.io/badge/Overleaf-ready-47A141?style=flat-square&logo=overleaf&logoColor=white" alt="Overleaf ready">
   <img src="https://img.shields.io/badge/languages-English%20%7C%20Italian-0B62C4?style=flat-square" alt="English and Italian">
-  <img src="https://img.shields.io/badge/made%20for-students-F4D21E?style=flat-square" alt="Made for ALL">
+  <img src="https://img.shields.io/badge/made%20for-ALL-F4D21E?style=flat-square" alt="Made for ALL">
 </p>
 
 <p align="center">
