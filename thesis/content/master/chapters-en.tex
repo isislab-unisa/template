@@ -1,6 +1,6 @@
 \chapter{Introduction}
 \section{Research context}
-Cyber-physical systems combine sensing, computation, networking, and actuation. Multimodal learning can improve situational awareness, but it also raises questions about robustness, interpretability, privacy, and reproducibility \cite{goodfellow2016deep,nist2023airmf}.
+Cyber-physical systems combine sensing, computation, communication, and actuation. Multimodal learning can improve situational awareness, but it also introduces questions of robustness, explainability, privacy, and reproducibility \cite{goodfellow2016deep,nist2023airmf}.
 
 \begin{researchquestion}[RQ1 -- Robustness]
 How can a multimodal model remain reliable when one sensor stream is noisy, delayed, or unavailable?
@@ -12,16 +12,16 @@ Which design and evaluation choices make system behaviour more transparent to op
 
 \section{Contributions}
 \begin{keypoint}[Contributions]
-\begin{enumerate}[label=\textcolor{ISISBlue}{\sffamily\bfseries C\arabic*.},leftmargin=2.2em]
+\begin{enumerate}
   \item A modular fusion architecture for heterogeneous sensor streams.
-  \item A reliability-aware training objective and missing-modality protocol.
-  \item A reproducible evaluation suite covering accuracy, calibration, latency, and robustness.
+  \item A reliability-aware objective and a protocol for missing modalities.
+  \item A reproducible evaluation suite for accuracy, calibration, latency, and robustness.
 \end{enumerate}
 \end{keypoint}
 
 \chapter{Background and Related Work}
 \section{Multimodal representation learning}
-Organise related work by research question rather than as a catalogue of papers. Compare assumptions, datasets, metrics, and limitations. Use a synthesis table when it helps the reader understand the gap addressed by the thesis.
+Organise related work by research question rather than as a catalogue of papers. Compare assumptions, datasets, metrics, and limitations. A synthesis table helps the reader understand the gap addressed by the thesis.
 
 \begin{table}[htbp]
 \centering
@@ -37,34 +37,19 @@ Proposed method & Hybrid & Explicit & Yes & Yes\\
 \end{tabularx}
 \end{table}
 
-\section{Trustworthy AI}
-Trustworthiness is multidimensional. In this thesis, operational definitions should be linked to measurable properties such as calibration error, robustness under perturbation, latency bounds, and traceable experiment configurations.
+\section{Trustworthy artificial intelligence}
+Trustworthiness is multidimensional. In this thesis, operational definitions should be linked to measurable properties such as calibration error, robustness to perturbations, latency bounds, and traceable experimental configurations.
 
 \chapter{Methodology}\label{ch:m-methodology}
 \section{System architecture}
-\Cref{fig:m-architecture} shows a demo research pipeline with data validation, modality-specific encoders, reliability-aware fusion, and an auditable decision layer.
+Figure~\ref{fig:m-architecture} shows a lightweight research pipeline. It uses native LaTeX boxes instead of a drawing engine.
 
 \begin{figure}[htbp]
 \centering
-\resizebox{0.98\textwidth}{!}{%
-\begin{tikzpicture}[node distance=10mm and 7mm, every node/.style={font=\sffamily\small}]
-\tikzset{
- source/.style={rounded corners=3pt,minimum width=27mm,minimum height=11mm,align=center,fill=ISISLightBlue!12,draw=ISISLightBlue!60,text=ISISDeepBlue,font=\sffamily\bfseries},
- core/.style={rounded corners=3pt,minimum width=34mm,minimum height=14mm,align=center,fill=ISISBlue!8,draw=ISISBlue!55,text=ISISDeepBlue,font=\sffamily\bfseries},
- outputblock/.style={rounded corners=3pt,minimum width=29mm,minimum height=12mm,align=center,fill=UNISAGold!16,draw=UNISAGold!80!ISISDeepBlue,text=ISISDeepBlue,font=\sffamily\bfseries}}
-\node[source] (vision) {Visual stream};
-\node[source,below=of vision] (telemetry) {Telemetry};
-\node[source,below=of telemetry] (context) {Context};
-\node[core,right=18mm of telemetry] (validation) {Validation and\\quality scoring};
-\node[core,right=of validation] (encoders) {Modality-specific\\encoders};
-\node[core,right=of encoders] (fusion) {Reliability-aware\\fusion};
-\node[outputblock,right=of fusion] (decision) {Prediction and\\explanation};
-\foreach \s in {vision,telemetry,context}{\draw[-{Latex[length=2.7mm]},ISISLightBlue,line width=1.1pt] (\s.east) -- (validation.west);}
-\draw[-{Latex[length=2.7mm]},ISISBlue,line width=1.1pt] (validation) -- (encoders);
-\draw[-{Latex[length=2.7mm]},ISISBlue,line width=1.1pt] (encoders) -- (fusion);
-\draw[-{Latex[length=2.7mm]},ISISBlue,line width=1.1pt] (fusion) -- (decision);
-\end{tikzpicture}%
-}
+\pipelinebox{Data quality\\validation}\pipelinearrow
+\pipelinebox{Modality\\encoders}\pipelinearrow
+\pipelinebox{Reliability-aware\\fusion}\pipelinearrow
+\pipelinebox{Prediction and\\explanation}
 \caption{Illustrative multimodal architecture.}
 \label{fig:m-architecture}
 \end{figure}
@@ -89,23 +74,13 @@ State dataset versions, preprocessing, hyperparameters, random seeds, hardware, 
 
 \begin{figure}[htbp]
 \centering
-\begin{tikzpicture}
-\begin{axis}[
-width=0.86\textwidth,height=6.3cm,
-xlabel={Missing-modality rate (\%)},ylabel={Macro F1 (\%)},
-xmin=0,xmax=50,ymin=60,ymax=100,
-legend pos=south west,
-legend style={draw=none,fill=none,font=\sffamily\small},
-axis line style={ISISLine},tick style={ISISLine},
-grid=major,grid style={ISISLine},
-label style={font=\sffamily\small,color=ISISMuted},
-tick label style={font=\sffamily\small,color=ISISInk}]
-\addplot[very thick,ISISMuted,mark=square*] coordinates {(0,93) (10,86) (20,78) (30,69) (40,63) (50,60)};
-\addplot[very thick,ISISBlue,mark=*] coordinates {(0,94.2) (10,92.5) (20,89.3) (30,85.1) (40,80.2) (50,74.4)};
-\legend{Baseline,Proposed}
-\end{axis}
-\end{tikzpicture}
-\caption{Illustrative robustness under missing modalities.}
+\begin{minipage}{0.84\textwidth}
+{\sffamily\bfseries\color{ISISDeepBlue}Macro F1 with 30\% missing modalities\par\vspace{3mm}}
+\demobar{Baseline}{55mm}{69.0\%}{ISISMuted}
+\demobar{Proposed}{68mm}{85.1\%}{ISISBlue}
+\end{minipage}
+\caption{Illustrative robustness comparison drawn without PGFPlots.}
+\label{fig:m-results}
 \end{figure}
 
 \begin{resultbox}[Main finding]
@@ -119,4 +94,4 @@ Discuss internal, construct, external, and conclusion validity. Report negative 
 Answer each research question explicitly, summarise the original contributions, and connect the findings to the broader research context. Separate evidence-supported conclusions from hypotheses for future work.
 
 \section{Future directions}
-Possible extensions include online adaptation, formal uncertainty guarantees, privacy-preserving learning, field deployment, and human-centred evaluation with operators.
+Possible extensions include online adaptation, formal uncertainty guarantees, privacy-aware learning, field deployment, and human-centred evaluation with operators.

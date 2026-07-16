@@ -1,98 +1,85 @@
-# ISISLab Unified Bachelor/Master Thesis - Overleaf pdfLaTeX Edition
-
-This is one LaTeX project for Bachelor and Master theses at the University of Salerno. It supports complete English/Italian switching and is intentionally built for Overleaf's default **pdfLaTeX** compiler.
+# ISISLab Unified Thesis Template 
+A single pdfLaTeX project for Bachelor and Master theses, with automatic English/Italian content selection and an ISISLab visual identity.
 
 ## Overleaf quick start
 
 1. Upload this ZIP as a new Overleaf project.
-2. Set `main.tex` as the **Main document**.
-3. In **Menu -> Compiler**, select **pdfLaTeX**.
+2. Keep `main.tex` as the Main document.
+3. Select **pdfLaTeX** as the compiler.
 4. Click **Recompile**.
 
-No XeLaTeX, LuaLaTeX, shell escape, `minted`, Biber, system fonts, or custom compilation command is required. The bibliography uses standard BibTeX; Overleaf runs the necessary bibliography pass automatically.
+The project uses the normal Overleaf build process. It contains no `.latexmkrc`, custom compiler command, shell escape, external fonts, or generated graphics.
 
 ## Select degree and language
 
-Open `configuration.tex` and change only these values:
+Edit only these two lines in `configuration.tex`:
 
 ```latex
 \providecommand{\ISISDegreeChoice}{master}      % bachelor | master
 \providecommand{\ISISLanguageChoice}{italian}  % english  | italian
 ```
 
-The direct command form is also available:
+The direct command form remains available:
 
 ```latex
 \thesisdegree{bachelor}
-\thesislanguage{italian}
+\thesislanguage{english}
 ```
 
-The default build is **Master + Italian**.
+Changing the language selects the matching demo front matter, chapters, cover labels, headings, declaration, acknowledgements, bibliography title, and interface text.
 
-Selecting `italian` automatically changes the supplied demo thesis content, cover labels, degree wording, abstract, declaration, acknowledgements, table/list names, captions, bibliography title, appendix labels, running headers, and PDF metadata. Short custom bilingual passages can use:
+The second-page ISISLab research profile is also translated automatically. It contains three concise lines based on the official ISISLab website: the laboratory's UniSA affiliation and founding year, its three main research areas, and its participation in more than 20 national and European projects.
 
-```latex
-\LangText{English text}{Testo italiano}
-```
+## Why this edition compiles faster
 
-Degree-dependent passages can use:
+The template was rebuilt to avoid expensive drawing and styling engines. It uses:
 
-```latex
-\IfBachelorTF{Bachelor content}{Master content}
-```
+- native LaTeX rules, boxes, and KOMA-Script headings;
+- lightweight `framed` callouts;
+- pre-optimized PNG logos;
+- a pre-baked transparent watermark reused as one image object;
+- standard BibTeX with the official `ACM-Reference-Format`;
+- no runtime chart generation.
 
-## Edit thesis information
+The removed heavy components include TikZ, PGFPlots, tcolorbox, minted, Biber, and external font loading. Demo diagrams and charts are built from simple boxes and rules.
+
+On the local verification system, a clean pdfLaTeX pass decreased from about **5.0 seconds** in the previous project to about **2.5 seconds** in this edition. Actual Overleaf times depend on server load and project size.
+
+## Edit thesis metadata
 
 Edit `metadata.tex` to set:
 
-- thesis title and subtitle;
+- title and subtitle;
+- author and student ID;
 - degree course and department;
-- candidate name and student ID;
 - supervisor and co-supervisor;
-- academic year, keywords, and ISISLab information.
+- academic year and keywords;
+- ISISLab name and website.
 
-The file contains separate metadata blocks for Bachelor/Master and English/Italian builds, so one project can retain all four configurations.
+The file keeps separate metadata blocks for Bachelor/Master and English/Italian variants.
 
 ## Bibliography
 
-Add entries to `references.bib` and cite them using normal commands such as:
+Add entries to `references.bib` and cite them normally:
 
 ```latex
 \cite{goodfellow2016deep}
 ```
 
-The template uses the standard `IEEEtran` BibTeX style. Overleaf's normal **Recompile** action handles the required sequence. For a local manual build, use:
-
-```bash
-pdflatex main.tex
-bibtex main
-pdflatex main.tex
-pdflatex main.tex
-```
-
-## Optional convenience entry points
-
-The four `variant-*.tex` files compile the same unified project without editing `configuration.tex`:
-
-- `variant-bachelor-english.tex`
-- `variant-bachelor-italian.tex`
-- `variant-master-english.tex`
-- `variant-master-italian.tex`
-
-Set one of them as Overleaf's Main document only when a fixed preview configuration is useful. For normal thesis writing, keep `main.tex` as the Main document.
+The bibliography uses the official ACM BibTeX style `ACM-Reference-Format` with lightweight `natbib` numeric, sorted, compressed citations. Overleaf handles it automatically with the normal Recompile button, and citations remain standard `\cite{...}` commands.
 
 ## Project structure
 
-- `main.tex` - main Overleaf entry point;
-- `configuration.tex` - degree, language, and accent switches;
-- `metadata.tex` - thesis and student information;
-- `isislab-thesis.sty` - modern visual system and automatic selectors;
-- `content/bachelor/` - Bachelor demo chapters in English and Italian;
-- `content/master/` - Master demo chapters in English and Italian;
-- `assets/` - UniSA and ISISLab logos;
+- `main.tex` - normal Overleaf entry point;
+- `configuration.tex` - degree, language, and accent selection;
+- `metadata.tex` - thesis and student data;
+- `isislab-thesis.sty` - lightweight visual system;
+- `content/bachelor/` - Bachelor demo content in both languages;
+- `content/master/` - Master demo content in both languages;
+- `assets/` - optimized UniSA and ISISLab logos;
 - `references.bib` - BibTeX database;
-- `demo-pdfs/` - four compiled previews.
+- `variant-*.tex` - optional fixed preview entry points.
 
 ## Submission note
 
-Before submitting, verify the official cover wording, declarations, degree-course name, roles, and formatting requirements against the current University of Salerno and degree-programme rules.
+Before submission, verify the official University of Salerno cover wording, declarations, degree-course name, roles, and formatting requirements required by the current programme.

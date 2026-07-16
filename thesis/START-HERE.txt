@@ -1,0 +1,15 @@
+ISISLab FAST THESIS TEMPLATE
+
+1. Upload the ZIP to Overleaf.
+2. Main document: main.tex
+3. Compiler: pdfLaTeX
+4. Edit configuration.tex:
+     master or bachelor
+     italian or english
+5. Edit metadata.tex with the real thesis information.
+
+This project intentionally has no TikZ, PGFPlots, tcolorbox, minted,
+Biber, shell escape, custom fonts, or custom compilation command.
+
+BIBLIOGRAPHY: ACM-Reference-Format via standard BibTeX.
+The ISISLab affiliation page is automatically available in English and Italian.

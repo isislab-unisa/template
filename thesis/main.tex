@@ -9,7 +9,6 @@
 
 \begin{document}
 
-% UniSA cover followed by the dedicated ISISLab affiliation page.
 \makecover
 \makelabpage
 \enableisiswatermark
@@ -24,16 +23,17 @@
 \mainmatter
 \inputdemochapters
 
-% Standard BibTeX bibliography: supported by Overleaf's default pdfLaTeX build.
-\bibliographystyle{acm}
+% Official ACM reference formatting via standard BibTeX.
+% This remains lightweight and works with Overleaf's normal pdfLaTeX build.
+\bibliographystyle{ACM-Reference-Format}
 \bibliography{references}
 
 \appendix
-\IfItalianTF{\chapter{Checklist di riproducibilità}}{\chapter{Reproducibility Checklist}}
+\IfItalianTF{\chapter{Checklist di riproducibilit\`a}}{\chapter{Reproducibility Checklist}}
 \begin{keypoint}[\IfItalianTF{Prima della consegna}{Before submission}]
 \LangText
-  {Replace all sample metadata, verify the official University of Salerno cover wording, validate the declaration required by the degree programme, check every citation, and compile the bibliography with BibTeX.}
-  {Sostituire tutti i metadati di esempio, verificare la formulazione ufficiale del frontespizio dell'Universit\`a degli Studi di Salerno, controllare la dichiarazione richiesta dal corso di studi, validare ogni citazione e compilare la bibliografia con BibTeX.}
+  {Replace all sample metadata, verify the official University of Salerno cover wording, check every citation, and compile the bibliography with BibTeX.}
+  {Sostituire tutti i metadati di esempio, verificare la formulazione ufficiale del frontespizio dell'Universit\`a degli Studi di Salerno, controllare ogni citazione e compilare la bibliografia con BibTeX.}
 \end{keypoint}
 
 \end{document}

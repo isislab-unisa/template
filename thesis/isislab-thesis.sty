@@ -1,24 +1,37 @@
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{isislab-thesis}[2026/07/16 Unified bilingual ISISLab thesis design for pdfLaTeX]
+\ProvidesPackage{isislab-thesis}[2026/07/16 Fast bilingual ISISLab thesis with ACM references for pdfLaTeX]
 
-% -----------------------------------------------------------------------------
-% Core typography and page geometry
-% -----------------------------------------------------------------------------
-% This template deliberately targets pdfLaTeX, the default Overleaf compiler.
-% It does not require XeLaTeX, LuaLaTeX, shell escape, minted, or external fonts.
+% =============================================================================
+% FAST DESIGN PRINCIPLES
+% - pdfLaTeX only: compatible with Overleaf's default compiler.
+% - no TikZ, PGFPlots, tcolorbox, minted, Biber, shell escape, or system fonts.
+% - logos are pre-optimized PNG files; the watermark transparency is pre-baked.
+% - visual components use native LaTeX rules, boxes, and the lightweight framed package.
+% =============================================================================
 \RequirePackage{iftex}
 \ifPDFTeX\else
-  \PackageError{isislab-thesis}{This project is configured for pdfLaTeX}{In Overleaf, open Menu -> Compiler and select pdfLaTeX.}
+  \PackageError{isislab-thesis}{This project requires pdfLaTeX}{In Overleaf choose Menu -> Compiler -> pdfLaTeX.}
 \fi
 \RequirePackage[T1]{fontenc}
 \RequirePackage[utf8]{inputenc}
 \RequirePackage[english,italian]{babel}
-\RequirePackage{libertinus}
-\RequirePackage[scaled=0.94]{sourcesanspro}
-\RequirePackage{microtype}
+\RequirePackage{lmodern}
+\RequirePackage[scaled=0.92]{helvet}
 \RequirePackage{geometry}
-\geometry{a4paper,inner=30mm,outer=24mm,top=27mm,bottom=28mm,headheight=18pt,headsep=8mm,footskip=12mm}
+\geometry{a4paper,inner=30mm,outer=24mm,top=27mm,bottom=28mm,headheight=17pt,headsep=8mm,footskip=12mm}
 \RequirePackage{xcolor}
+\RequirePackage{graphicx}
+\RequirePackage{eso-pic}
+\RequirePackage{booktabs}
+\RequirePackage{tabularx}
+\RequirePackage{array}
+\RequirePackage{framed}
+\RequirePackage{scrlayer-scrpage}
+\RequirePackage{etoolbox}
+% ACM-Reference-Format.bst is designed for natbib-compatible citations.
+% Numeric, sorted, compressed citations match the common ACM presentation.
+\RequirePackage[numbers,sort&compress]{natbib}
+\RequirePackage{hyperref}
 
 % ISISLab / UniSA palette
 \definecolor{ISISBlue}{RGB}{16,94,186}
@@ -29,72 +42,51 @@
 \definecolor{UNISAGold}{RGB}{250,190,0}
 \definecolor{ISISInk}{RGB}{25,35,48}
 \definecolor{ISISMuted}{RGB}{92,107,123}
-\definecolor{ISISPaper}{RGB}{250,252,254}
+\definecolor{ISISPaper}{RGB}{255,255,255}
 \definecolor{ISISLine}{RGB}{220,229,238}
+\colorlet{ThesisAccent}{ISISBlue}
 
-\RequirePackage{graphicx}
-\RequirePackage{tikz}
-\usetikzlibrary{calc,positioning,shapes.geometric,arrows.meta,fit,backgrounds}
-\RequirePackage{eso-pic}
-\RequirePackage{setspace}
-\RequirePackage{parskip}
+% Almost-white page background and readable default typography.
+\pagecolor{ISISPaper}
+\color{ISISInk}
+\linespread{1.16}
 \setlength{\parindent}{0pt}
-\setlength{\parskip}{0.65em}
-\onehalfspacing
-\RequirePackage{booktabs}
-\RequirePackage{tabularx}
-\RequirePackage{array}
-\RequirePackage{enumitem}
-\setlist{nosep,leftmargin=1.4em,label=\textcolor{ISISBlue}{\textbullet}}
-\RequirePackage{caption}
-\RequirePackage{subcaption}
-\captionsetup{font=small,labelfont={bf,sf,color=ISISDeepBlue},textfont={color=ISISInk}}
-\RequirePackage{pgfplots}
-\pgfplotsset{compat=1.18}
-\RequirePackage[most]{tcolorbox}
-\RequirePackage{titlesec}
-\RequirePackage{scrlayer-scrpage}
-\RequirePackage{etoolbox}
-\RequirePackage{listings}
-\RequirePackage{cite}
-\RequirePackage{hyperref}
+\setlength{\parskip}{0.62em}
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+\renewcommand{\arraystretch}{1.22}
+\renewcommand{\labelitemi}{\textcolor{ISISBlue}{\textbullet}}
+
 \hypersetup{
   colorlinks=true,
   linkcolor=ISISDeepBlue,
   citecolor=ISISBlue,
   urlcolor=ISISBlue,
-  pdfborder={0 0 0}
+  pdfborder={0 0 0},
+  bookmarksopen=false
 }
-\RequirePackage[nameinlink,noabbrev]{cleveref}
-
-\color{ISISInk}
-\renewcommand{\familydefault}{\rmdefault}
-\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
-\renewcommand{\arraystretch}{1.25}
-\AtBeginEnvironment{tabular}{\small}
 
 % -----------------------------------------------------------------------------
-% One-command project selection
+% Degree and language selector
 % -----------------------------------------------------------------------------
 \def\ISIS@degree{master}
 \def\ISIS@language{italian}
 
 \newcommand{\thesisdegree}[1]{%
-  \edef\ISIS@choice{#1}% expand configuration variables first
+  \edef\ISIS@choice{#1}%
   \ifdefstring{\ISIS@choice}{bachelor}{\def\ISIS@degree{bachelor}}{%
     \ifdefstring{\ISIS@choice}{master}{\def\ISIS@degree{master}}{%
-      \PackageError{isislab-thesis}{Unknown thesis degree '\ISIS@choice'}{Use \string\thesisdegree{bachelor} or \string\thesisdegree{master}.}%
+      \PackageError{isislab-thesis}{Unknown degree '\ISIS@choice'}{Use bachelor or master.}%
     }%
   }%
 }
 
 \newcommand{\thesislanguage}[1]{%
-  \edef\ISIS@choice{#1}% expand configuration variables first
+  \edef\ISIS@choice{#1}%
   \ifdefstring{\ISIS@choice}{english}{\def\ISIS@language{english}}{%
     \ifdefstring{\ISIS@choice}{en}{\def\ISIS@language{english}}{%
       \ifdefstring{\ISIS@choice}{italian}{\def\ISIS@language{italian}}{%
         \ifdefstring{\ISIS@choice}{it}{\def\ISIS@language{italian}}{%
-          \PackageError{isislab-thesis}{Unknown thesis language '\ISIS@choice'}{Use \string\thesislanguage{english} or \string\thesislanguage{italian}.}%
+          \PackageError{isislab-thesis}{Unknown language '\ISIS@choice'}{Use english or italian.}%
         }%
       }%
     }%
@@ -114,27 +106,12 @@
 }
 
 % -----------------------------------------------------------------------------
-% Automatically translated interface strings
+% Automatically translated strings
 % -----------------------------------------------------------------------------
-\newcommand{\ISISUniversity}{\LangText{University of Salerno}{Universit\`a degli Studi di Salerno}}
-\newcommand{\ISISCandidate}{\LangText{Candidate}{Candidato}}
-\newcommand{\ISISSupervisor}{\LangText{Supervisor}{Relatore}}
-\newcommand{\ISISCoSupervisor}{\LangText{Co-supervisor}{Correlatore}}
-\newcommand{\ISISStudentID}{\LangText{Student ID}{Matricola}}
 \newcommand{\ISISAcademicYear}{\LangText{Academic Year}{Anno Accademico}}
-\newcommand{\ISISResearchAffiliation}{\LangText{Research affiliation}{Affiliazione di ricerca}}
 \newcommand{\ISISLaboratory}{\LangText{Laboratory}{Laboratorio}}
 \newcommand{\ISISWebsite}{\LangText{Website}{Sito web}}
 \newcommand{\ISISKeywordsLabel}{\LangText{Keywords}{Parole chiave}}
-\newcommand{\ISISAbstractName}{\LangText{Abstract}{Sommario}}
-\newcommand{\ISISDeclarationName}{\LangText{Declaration}{Dichiarazione}}
-\newcommand{\ISISAcknowledgementsName}{\LangText{Acknowledgements}{Ringraziamenti}}
-\newcommand{\ISISPlaceDate}{\LangText{Place and date}{Luogo e data}}
-\newcommand{\ISISSignature}{\LangText{Signature}{Firma}}
-\newcommand{\ISISReferencesName}{\LangText{References}{Bibliografia}}
-\newcommand{\ISISAppendixChecklist}{\LangText{Reproducibility Checklist}{Checklist di riproducibilit\`a}}
-\newcommand{\ISISBeforeSubmission}{\LangText{Before submission}{Prima della consegna}}
-
 \newcommand{\ISISDefaultDegreeCourse}{%
   \IfBachelorTF
     {\LangText{Bachelor's Degree in Computer Science}{Corso di Laurea in Informatica}}
@@ -146,6 +123,21 @@
     {\LangText{Master Thesis}{Tesi di Laurea Magistrale}}%
 }
 \newcommand{\ISISDefaultDepartment}{\LangText{Department of Computer Science}{Dipartimento di Informatica}}
+\newcommand{\ISISLabAffiliationLine}{%
+  \LangText{Department of Computer Science, University of Salerno}%
+           {Dipartimento di Informatica, Universit\`a degli Studi di Salerno}%
+}
+\newcommand{\ISISLabDescription}{%
+  \LangText{%
+    \textcolor{ThesisAccent}{\textbullet}\quad ISISLab is a research laboratory of the Department of Computer Science at the University of Salerno, active since 1995.\\[2.2mm]
+    \textcolor{ThesisAccent}{\textbullet}\quad Its research spans distributed and parallel computing, collaborative and social computing, and visualization and interaction.\\[2.2mm]
+    \textcolor{ThesisAccent}{\textbullet}\quad The laboratory has contributed to more than 20 national and European research projects, including H2020 and open-data initiatives.%
+  }{%
+    \textcolor{ThesisAccent}{\textbullet}\quad ISISLab \`e un laboratorio di ricerca del Dipartimento di Informatica dell'Universit\`a degli Studi di Salerno, attivo dal 1995.\\[2.2mm]
+    \textcolor{ThesisAccent}{\textbullet}\quad La ricerca riguarda il calcolo distribuito e parallelo, il calcolo collaborativo e sociale, e la visualizzazione e interazione.\\[2.2mm]
+    \textcolor{ThesisAccent}{\textbullet}\quad Il laboratorio ha contribuito a oltre 20 progetti di ricerca nazionali ed europei, incluse iniziative H2020 e per gli open data.%
+  }%
+}
 
 % -----------------------------------------------------------------------------
 % Metadata API
@@ -164,7 +156,6 @@
 \newcommand{\laburl}[1]{\def\@laburl{#1}}
 \newcommand{\labname}[1]{\def\@labname{#1}}
 \newcommand{\thesisaccent}[1]{\colorlet{ThesisAccent}{#1}}
-\colorlet{ThesisAccent}{ISISBlue}
 
 \providecommand{\@thesistitle}{\LangText{Thesis title}{Titolo della tesi}}
 \providecommand{\@thesissubtitle}{}
@@ -181,84 +172,72 @@
 \providecommand{\@labname}{ISISLab}
 
 % -----------------------------------------------------------------------------
-% Utility commands and UI components
+% Lightweight UI helpers
 % -----------------------------------------------------------------------------
 \newcommand{\ui}[1]{{\sffamily\bfseries #1}}
 \newcommand{\accenttext}[1]{\textcolor{ISISBlue}{\sffamily\bfseries #1}}
 \newcommand{\coverfield}[2]{{\sffamily\scriptsize\color{ISISMuted}#1\par}\vspace{0.7mm}{\sffamily\bfseries\color{ISISInk}#2\par}}
 
-\lstdefinestyle{isiscode}{
-  basicstyle=\ttfamily\small,
-  keywordstyle=\bfseries\color{ISISBlue},
-  commentstyle=\itshape\color{ISISMuted},
-  stringstyle=\color{ISISRed},
-  backgroundcolor=\color{ISISPaper},
-  frame=single,
-  rulecolor=\color{ISISLine},
-  framesep=4mm,
-  breaklines=true,
-  showstringspaces=false,
-  numbers=left,
-  numberstyle=\scriptsize\color{ISISMuted},
-  xleftmargin=5mm,
-  framexleftmargin=4mm
+% Native-LaTeX pipeline blocks and demo bars: no TikZ or PGFPlots.
+\newcommand{\pipelinebox}[1]{%
+  \fcolorbox{ISISLine}{white}{\parbox[c][13mm][c]{25mm}{\centering\sffamily\bfseries\small\color{ISISDeepBlue}#1}}%
 }
-\lstset{style=isiscode}
+\newcommand{\pipelinearrow}{\hspace{1.5mm}\textcolor{ThesisAccent}{\sffamily\bfseries$\rightarrow$}\hspace{1.5mm}}
+\newcommand{\demobar}[4]{%
+  \noindent\makebox[32mm][l]{\sffamily\small #1}%
+  \textcolor{#4}{\rule{#2}{4mm}}\hspace{3mm}{\sffamily\small\bfseries #3}\par\vspace{1.4mm}%
+}
 
-% Running page furniture
+% Running page furniture, drawn with simple rules.
 \clearpairofpagestyles
 \ihead{\sffamily\small\textcolor{ISISMuted}{\headmark}}
 \ohead{\sffamily\small\textcolor{ISISBlue}{\@thesislevel}}
-\cfoot{\begin{tikzpicture}[baseline=-0.45ex]
-  \fill[ISISLine] (-2.1,0) rectangle (2.1,0.7pt);
-  \fill[ThesisAccent] (-2.1,0) rectangle (-0.6,0.7pt);
-\end{tikzpicture}\quad\sffamily\bfseries\textcolor{ISISDeepBlue}{\thepage}}
+\cfoot{\textcolor{ThesisAccent}{\rule{12mm}{1.1pt}}\textcolor{ISISLine}{\rule{22mm}{1.1pt}}\quad\sffamily\bfseries\textcolor{ISISDeepBlue}{\thepage}}
 \pagestyle{scrheadings}
 \renewcommand*{\chapterpagestyle}{scrheadings}
 \automark[section]{chapter}
 
-% Chapter and section typography
-\titleformat{\chapter}[display]
-  {\normalfont\sffamily\bfseries\color{ISISDeepBlue}}
-  {\begin{tikzpicture}[baseline=(n.base)]
-    \node[fill=ThesisAccent,rounded corners=3pt,minimum width=1.35cm,minimum height=1.05cm,text=white,font=\sffamily\bfseries\Large] (n) {\thechapter};
-   \end{tikzpicture}}
-  {0.7em}
-  {\Huge}
-  [\vspace{0.45em}\color{ISISLine}\titlerule]
-\titlespacing*{\chapter}{0pt}{-7pt}{28pt}
-\titleformat{\section}{\Large\sffamily\bfseries\color{ISISDeepBlue}}{\textcolor{ThesisAccent}{\thesection}}{0.8em}{}
-\titleformat{\subsection}{\large\sffamily\bfseries\color{ISISInk}}{\textcolor{ThesisAccent}{\thesubsection}}{0.8em}{}
+% Chapter and section typography using native KOMA-Script controls.
+\setkomafont{chapter}{\normalfont\sffamily\bfseries\Huge\color{ISISDeepBlue}}
+\setkomafont{section}{\normalfont\sffamily\bfseries\Large\color{ISISDeepBlue}}
+\setkomafont{subsection}{\normalfont\sffamily\bfseries\large\color{ISISInk}}
+\renewcommand*{\chapterformat}{%
+  \colorbox{ThesisAccent}{\color{white}\strut\hspace{4mm}\Large\thechapter\autodot\hspace{4mm}}%
+  \par\nobreak\vspace{0.7em}%
+}
+\renewcommand*{\sectionformat}{\textcolor{ThesisAccent}{\thesection\autodot}\enskip}
+\renewcommand*{\subsectionformat}{\textcolor{ThesisAccent}{\thesubsection\autodot}\enskip}
+\RedeclareSectionCommand[beforeskip=-7pt,afterskip=26pt]{chapter}
 
-% Small transparent mark on content pages
+% Pre-baked transparent logo on content pages. The image is a single reused PDF XObject.
 \newcommand{\enableisiswatermark}{%
   \AddToShipoutPictureBG{%
-    \begin{tikzpicture}[remember picture,overlay]
-      \node[anchor=south east,opacity=0.022,inner sep=0pt] at ($(current page.south east)+(-7mm,8mm)$)
-      {\includegraphics[width=55mm]{assets/isislab_logo.png}};
-    \end{tikzpicture}%
+    \AtPageLowerLeft{%
+      \put(\LenToUnit{\dimexpr\paperwidth-57mm\relax},\LenToUnit{8mm}){%
+        \includegraphics[width=50mm]{assets/isislab_watermark.png}%
+      }%
+    }%
   }%
 }
 
 % -----------------------------------------------------------------------------
 % Cover page
 % -----------------------------------------------------------------------------
+\newcommand{\ISISCoverBackground}{%
+  \AtPageLowerLeft{\color{ISISPaper}\rule{\paperwidth}{\paperheight}}%
+  \AtPageLowerLeft{\put(\LenToUnit{\dimexpr\paperwidth-22mm\relax},0){\color{ThesisAccent}\rule{14mm}{\paperheight}}}%
+  \AtPageLowerLeft{\put(\LenToUnit{\dimexpr\paperwidth-8mm\relax},0){\color{ISISDeepBlue}\rule{8mm}{\paperheight}}}%
+  \AtPageUpperLeft{\put(0,-\LenToUnit{8mm}){\color{UNISAGold}\rule{\dimexpr\paperwidth-22mm\relax}{3mm}}}%
+  \AtPageLowerLeft{\put(\LenToUnit{\dimexpr\paperwidth-118mm\relax},\LenToUnit{8mm}){\includegraphics[width=105mm]{assets/isislab_watermark.png}}}%
+}
+
 \newcommand{\makecover}{%
 \hypersetup{pageanchor=false}
+\AddToShipoutPictureBG*{\ISISCoverBackground}
 \begin{titlepage}
 \thispagestyle{empty}
-\begin{tikzpicture}[remember picture,overlay]
-  \fill[ISISPaper] (current page.south west) rectangle (current page.north east);
-  \fill[ThesisAccent] ($(current page.north east)+(-22mm,0)$) rectangle (current page.south east);
-  \fill[ISISDeepBlue] ($(current page.north east)+(-8mm,0)$) rectangle (current page.south east);
-  \fill[UNISAGold] ($(current page.north west)+(0,-8mm)$) rectangle ($(current page.north east)+(-22mm,-11mm)$);
-  \node[anchor=south east,opacity=0.050,inner sep=0pt] at ($(current page.south east)+(-5mm,8mm)$)
-    {\includegraphics[width=112mm]{assets/isislab_logo.png}};
-  \draw[ISISLine,line width=0.7pt] ($(current page.north west)+(19mm,-51mm)$) -- ($(current page.north east)+(-35mm,-51mm)$);
-\end{tikzpicture}
-
 \begin{minipage}[t]{0.18\textwidth}
-  \includegraphics[width=30mm]{assets/unisa_logo.png}
+  \includegraphics[width=28mm]{assets/unisa_logo.png}
 \end{minipage}
 \hfill
 \begin{minipage}[t]{0.72\textwidth}
@@ -269,89 +248,118 @@
   {\sffamily\small\color{ISISMuted}\@degreecourse\par}
 \end{minipage}
 
-\vspace{34mm}
+\vspace{31mm}
+\begin{minipage}{0.82\textwidth}
 {\sffamily\bfseries\small\color{white}\colorbox{ThesisAccent}{\hspace{4mm}\MakeUppercase{\@thesislevel}\hspace{4mm}}\par}
 \vspace{8mm}
-{\sffamily\bfseries\fontsize{28}{33}\selectfont\color{ISISDeepBlue}\@thesistitle\par}
+{\sffamily\bfseries\fontsize{26}{31}\selectfont\color{ISISDeepBlue}\@thesistitle\par}
 \ifstrempty{\@thesissubtitle}{}{\vspace{4mm}{\sffamily\Large\color{ISISMuted}\@thesissubtitle\par}}
 \vspace{7mm}
-\begin{tikzpicture}
-  \fill[ThesisAccent] (0,0) rectangle (32mm,1.8pt);
-  \fill[ISISLine] (32mm,0) rectangle (121mm,1.8pt);
-\end{tikzpicture}
+\textcolor{ThesisAccent}{\rule{32mm}{1.8pt}}\textcolor{ISISLine}{\rule{80mm}{1.8pt}}
+\end{minipage}
 
 \vfill
-\begin{tcolorbox}[enhanced,boxrule=0pt,arc=4mm,colback=white,shadow={0mm}{-1mm}{0mm}{black!8},left=6mm,right=6mm,top=5mm,bottom=5mm,width=0.87\textwidth]
+\begingroup
+\setlength{\fboxsep}{6mm}
+\noindent\fcolorbox{ISISLine}{white}{%
+\begin{minipage}{\dimexpr0.87\textwidth-12mm-2\fboxrule\relax}
 \begin{tabularx}{\linewidth}{@{}Y@{\hspace{8mm}}Y@{}}
 \coverfield{\IfItalianTF{CANDIDATO}{CANDIDATE}}{\@thesisauthor} & \coverfield{\IfItalianTF{RELATORE}{SUPERVISOR}}{\@supervisor}\\[3mm]
 \coverfield{\IfItalianTF{MATRICOLA}{STUDENT ID}}{\@studentid} & \coverfield{\IfItalianTF{CORRELATORE}{CO-SUPERVISOR}}{\@cosupervisor}\\
 \end{tabularx}
-\end{tcolorbox}
+\end{minipage}}
+\par\endgroup
 \vspace{5mm}
-{\sffamily\small\color{ISISMuted}\ISISAcademicYear\ \ui{\@academicyear}\par}
+\begin{minipage}{0.82\textwidth}{\sffamily\small\color{ISISMuted}\ISISAcademicYear\ \ui{\@academicyear}\par}\end{minipage}\par
 \end{titlepage}
 \clearpage}
 
 % -----------------------------------------------------------------------------
 % ISISLab affiliation page
 % -----------------------------------------------------------------------------
+\newcommand{\ISISLabBackground}{%
+  \AtPageLowerLeft{\color{ISISPaper}\rule{\paperwidth}{\paperheight}}%
+  \AtPageLowerLeft{\color{ThesisAccent}\rule{\paperwidth}{8mm}}%
+  \AtPageLowerLeft{\put(0,\LenToUnit{8mm}){\color{ISISDeepBlue}\rule{\paperwidth}{4mm}}}%
+  \AtPageUpperLeft{\put(\LenToUnit{\dimexpr\paperwidth-125mm\relax},-\LenToUnit{4mm}){\includegraphics[width=120mm]{assets/isislab_watermark.png}}}%
+}
+
 \newcommand{\makelabpage}{%
+\AddToShipoutPictureBG*{\ISISLabBackground}
 \begin{titlepage}
 \thispagestyle{empty}
-\begin{tikzpicture}[remember picture,overlay]
-  \fill[white] (current page.south west) rectangle (current page.north east);
-  \fill[ISISPaper] ($(current page.north west)+(0,-36mm)$) rectangle ($(current page.south east)+(0,22mm)$);
-  \fill[ThesisAccent] ($(current page.south west)+(0,0)$) rectangle ($(current page.south east)+(0,8mm)$);
-  \fill[ISISDeepBlue] ($(current page.south west)+(0,8mm)$) rectangle ($(current page.south east)+(0,12mm)$);
-  \node[anchor=north east,opacity=0.035,inner sep=0pt] at ($(current page.north east)+(-4mm,-4mm)$)
-    {\includegraphics[width=160mm]{assets/isislab_logo.png}};
-\end{tikzpicture}
-\vspace*{9mm}
+\vspace*{6mm}
 {\sffamily\bfseries\small\color{ThesisAccent}\IfItalianTF{AFFILIAZIONE DI RICERCA}{RESEARCH AFFILIATION}\par}
-\vspace{10mm}
+\vspace{9mm}
 \begin{center}
-\includegraphics[width=0.77\textwidth]{assets/isislab_logo.png}
+\includegraphics[width=0.72\textwidth]{assets/isislab_logo.png}
 \end{center}
 \vspace{8mm}
-\begin{tcolorbox}[enhanced,boxrule=0pt,arc=5mm,colback=white,shadow={0mm}{-1mm}{0mm}{black!8},left=8mm,right=8mm,top=7mm,bottom=7mm]
+\begingroup
+\setlength{\fboxsep}{7mm}
+\noindent\fcolorbox{ISISLine}{white}{%
+\begin{minipage}{\dimexpr\textwidth-14mm-2\fboxrule\relax}
 {\sffamily\bfseries\LARGE\color{ISISDeepBlue}\@labname\par}
 \vspace{2mm}
-{\sffamily\large\color{ISISMuted}Intelligent Systems and Information Security Laboratory\par}
+{\sffamily\large\color{ISISMuted}\ISISLabAffiliationLine\par}
 \vspace{5mm}
-\LangText
-  {This thesis was developed in the research environment of \@labname. The visual identity of the document is inspired by the laboratory's blue palette and combines a modern editorial system with subtle transparent logo treatments. Replace this paragraph with the official description of the research group, project, or collaboration.}
-  {Questa tesi \`e stata sviluppata nell'ambiente di ricerca di \@labname. L'identit\`a visiva del documento riprende la palette blu del laboratorio e combina un sistema editoriale moderno con richiami trasparenti al logo. Sostituire questo paragrafo con la descrizione ufficiale del gruppo, del progetto o della collaborazione.}
+{\sffamily\small\color{ISISInk}\setlength{\parskip}{0pt}\ISISLabDescription\par}
+\vspace{4mm}
+{\sffamily\scriptsize\color{ISISMuted}\LangText{Profile adapted from the official ISISLab website.}{Profilo adattato dal sito web ufficiale di ISISLab.}\par}
 \vspace{4mm}
 \begin{tabularx}{\linewidth}{>{\sffamily\bfseries\color{ISISBlue}}l X}
 \ISISLaboratory & \@labname\\
 \ISISWebsite & \href{\@laburl}{\@laburl}\\
 \ISISKeywordsLabel & \@keywords\\
 \end{tabularx}
-\end{tcolorbox}
+\end{minipage}}
+\endgroup
 \vfill
-{\small\color{ISISMuted}\sffamily\LangText{Retain or adapt this affiliation page according to the official ISISLab communication guidelines.}{Mantenere o adattare questa pagina di affiliazione secondo le linee guida ufficiali di comunicazione di ISISLab.}}
+{\small\color{ISISMuted}\sffamily\LangText{Research affiliation page generated automatically in English.}{Pagina di affiliazione alla ricerca generata automaticamente in italiano.}}
 \end{titlepage}
 \clearpage\hypersetup{pageanchor=true}}
 
 % -----------------------------------------------------------------------------
-% Front matter and reusable cards
+% Breakable lightweight callouts (framed package; no drawing engine)
 % -----------------------------------------------------------------------------
-\newtcolorbox{frontmatterbox}[1][]{enhanced,breakable,boxrule=0pt,arc=3mm,colback=ISISPaper,borderline west={3pt}{0pt}{ThesisAccent},left=6mm,right=6mm,top=4mm,bottom=4mm,#1}
-\newtcolorbox{keypoint}[1][\LangText{Key point}{Punto chiave}]{enhanced,breakable,colback=ISISLightBlue!6,colframe=ISISLightBlue!35,boxrule=0.6pt,arc=3mm,title={\sffamily\bfseries #1},coltitle=ISISDeepBlue,fonttitle=\sffamily\bfseries,left=5mm,right=5mm,top=4mm,bottom=4mm}
-\newtcolorbox{researchquestion}[1][\LangText{Research question}{Domanda di ricerca}]{enhanced,breakable,colback=ThesisAccent!6,colframe=ThesisAccent!45,boxrule=0.8pt,arc=3mm,title={\sffamily\bfseries #1},coltitle=ISISDeepBlue,fonttitle=\sffamily\bfseries,left=5mm,right=5mm,top=4mm,bottom=4mm,overlay unbroken={\node[anchor=north east,text=ThesisAccent!30,font=\sffamily\bfseries\fontsize{34}{34}\selectfont] at ([xshift=-4mm,yshift=-2mm]frame.north east) {?};}}
-\newtcolorbox{resultbox}[1][\LangText{Result}{Risultato}]{enhanced,breakable,colback=UNISAGold!10,colframe=UNISAGold!70!ISISDeepBlue,boxrule=0.8pt,arc=3mm,title={\sffamily\bfseries #1},coltitle=ISISDeepBlue,fonttitle=\sffamily\bfseries,left=5mm,right=5mm,top=4mm,bottom=4mm}
+\newenvironment{frontmatterbox}{%
+  \def\FrameCommand##1{\hspace{0pt}\textcolor{ThesisAccent}{\vrule width 3pt}\hspace{5mm}##1}%
+  \MakeFramed{\advance\hsize-8mm\FrameRestore}%
+}{\endMakeFramed}
+
+\newenvironment{keypoint}[1][\LangText{Key point}{Punto chiave}]{%
+  \par\medskip
+  \def\FrameCommand##1{\hspace{0pt}\textcolor{ISISLightBlue}{\vrule width 3pt}\hspace{5mm}##1}%
+  \MakeFramed{\advance\hsize-8mm\FrameRestore}%
+  \noindent{\sffamily\bfseries\color{ISISDeepBlue}#1}\par\smallskip
+}{\endMakeFramed\medskip}
+
+\newenvironment{researchquestion}[1][\LangText{Research question}{Domanda di ricerca}]{%
+  \par\medskip
+  \def\FrameCommand##1{\hspace{0pt}\textcolor{ThesisAccent}{\vrule width 4pt}\hspace{5mm}##1}%
+  \MakeFramed{\advance\hsize-9mm\FrameRestore}%
+  \noindent{\sffamily\bfseries\color{ISISDeepBlue}#1\hfill\textcolor{ThesisAccent}{?}}\par\smallskip
+}{\endMakeFramed\medskip}
+
+\newenvironment{resultbox}[1][\LangText{Result}{Risultato}]{%
+  \par\medskip
+  \def\FrameCommand##1{\hspace{0pt}\textcolor{UNISAGold}{\vrule width 4pt}\hspace{5mm}##1}%
+  \MakeFramed{\advance\hsize-9mm\FrameRestore}%
+  \noindent{\sffamily\bfseries\color{ISISDeepBlue}#1}\par\smallskip
+}{\endMakeFramed\medskip}
 
 \newcommand{\metric}[3]{%
-\begin{tcolorbox}[enhanced,boxrule=0pt,arc=3mm,colback=ISISPaper,left=4mm,right=4mm,top=3mm,bottom=3mm,halign=center]
-{\sffamily\bfseries\fontsize{22}{24}\selectfont\color{#3}#1\par}
-{\sffamily\small\color{ISISMuted}#2\par}
-\end{tcolorbox}}
+  \begingroup
+  \setlength{\fboxsep}{3mm}%
+  \fcolorbox{ISISLine}{white}{\parbox[c][18mm][c]{\dimexpr\linewidth-6mm-2\fboxrule\relax}{\centering
+    {\sffamily\bfseries\fontsize{21}{23}\selectfont\color{#3}#1\par}
+    {\sffamily\small\color{ISISMuted}#2\par}}}%
+  \endgroup
+}
 
 \newcommand{\thesisabstract}[1]{%
 \IfItalianTF{\chapter*{Sommario}\addcontentsline{toc}{chapter}{Sommario}}{\chapter*{Abstract}\addcontentsline{toc}{chapter}{Abstract}}%
-\begin{frontmatterbox}
-#1
-\end{frontmatterbox}
+\begin{frontmatterbox}#1\end{frontmatterbox}
 \vspace{4mm}
 {\small\sffamily\color{ISISMuted}\IfItalianTF{\textbf{Parole chiave:}}{\textbf{Keywords:}} \@keywords}
 }
@@ -367,9 +375,7 @@
 
 \newcommand{\acknowledgementspage}[1]{%
 \IfItalianTF{\chapter*{Ringraziamenti}\addcontentsline{toc}{chapter}{Ringraziamenti}}{\chapter*{Acknowledgements}\addcontentsline{toc}{chapter}{Acknowledgements}}%
-\begin{frontmatterbox}
-#1
-\end{frontmatterbox}
+\begin{frontmatterbox}#1\end{frontmatterbox}
 }
 
 % -----------------------------------------------------------------------------
@@ -380,7 +386,6 @@
     {\IfItalianTF{\input{content/bachelor/frontmatter-it.tex}}{\input{content/bachelor/frontmatter-en.tex}}}
     {\IfItalianTF{\input{content/master/frontmatter-it.tex}}{\input{content/master/frontmatter-en.tex}}}%
 }
-
 \newcommand{\inputdemochapters}{%
   \IfBachelorTF
     {\IfItalianTF{\input{content/bachelor/chapters-it.tex}}{\input{content/bachelor/chapters-en.tex}}}

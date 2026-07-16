@@ -1,9 +1,9 @@
 \chapter{Introduzione}
 \section{Motivazione}
-I dispositivi connessi intelligenti sono sempre più diffusi in abitazioni, laboratori e spazi industriali. La loro utilità aumenta quando riescono a interpretare i dati localmente; tuttavia, i vincoli di risorse e i requisiti di sicurezza rendono non banali le scelte progettuali \cite{shi2016edge,roman2018mobile}.
+I dispositivi connessi intelligenti sono sempre pi\`u diffusi in abitazioni, laboratori e spazi industriali. La loro utilit\`a aumenta quando riescono a interpretare i dati localmente; tuttavia, i vincoli di risorse e i requisiti di sicurezza rendono non banali le scelte progettuali \cite{shi2016edge,roman2018mobile}.
 
 \begin{researchquestion}
-Come può un dispositivo edge compatto offrire prestazioni di inferenza utili, mantenendo reattività e un confine di sicurezza chiaramente definito?
+Come pu\`o un dispositivo edge compatto offrire prestazioni di inferenza utili, mantenendo reattivit\`a e un confine di sicurezza chiaramente definito?
 \end{researchquestion}
 
 \section{Obiettivi}
@@ -20,43 +20,33 @@ Utilizzare il capitolo iniziale per presentare il contesto, definire il problema
 \end{keypoint}
 
 \section{Struttura del documento}
-Il \cref{ch:b-design} presenta la progettazione, il \cref{ch:b-evaluation} descrive la valutazione e il capitolo finale riassume i risultati principali.
+Il Capitolo~\ref{ch:b-design} presenta la progettazione, il Capitolo~\ref{ch:b-evaluation} descrive la valutazione e il capitolo finale riassume i risultati principali.
 
 \chapter{Progettazione del sistema}\label{ch:b-design}
 \section{Architettura}
-Il dimostratore separa acquisizione, inferenza, politiche di sicurezza e presentazione. Il diagramma in \cref{fig:b-architecture} è generato direttamente in TikZ e può essere sostituito con una figura specifica del progetto.
+Il dimostratore separa acquisizione, inferenza, politiche di sicurezza e presentazione. La Figura~\ref{fig:b-architecture} usa soltanto box LaTeX nativi, quindi viene compilata rapidamente e pu\`o essere sostituita con un'immagine specifica del progetto.
 
 \begin{figure}[htbp]
 \centering
-\begin{tikzpicture}[node distance=12mm and 9mm, every node/.style={font=\sffamily\small}]
-\tikzset{block/.style={rounded corners=3pt,minimum width=31mm,minimum height=13mm,align=center,draw=ISISLine,fill=ISISPaper,text=ISISDeepBlue,font=\sffamily\bfseries}}
-\node[block] (sensor) {Sensori\\e ingressi};
-\node[block,right=of sensor] (edge) {Motore di inferenza\\edge};
-\node[block,right=of edge] (policy) {Politica di\\sicurezza};
-\node[block,below=of policy] (ui) {Dashboard\\e avvisi};
-\draw[-{Latex[length=3mm]},line width=1.2pt,ISISLightBlue] (sensor) -- (edge);
-\draw[-{Latex[length=3mm]},line width=1.2pt,ISISBlue] (edge) -- (policy);
-\draw[-{Latex[length=3mm]},line width=1.2pt,ISISBlue] (policy) -- (ui);
-\draw[-{Latex[length=3mm]},line width=1.2pt,ISISMuted,dashed] (ui.west) -| (edge.south);
-\end{tikzpicture}
-\caption{Architettura dimostrativa per la tesi di laurea.}
+\pipelinebox{Sensori\\e ingressi}\pipelinearrow
+\pipelinebox{Inferenza\\edge}\pipelinearrow
+\pipelinebox{Politica di\\sicurezza}\pipelinearrow
+\pipelinebox{Dashboard\\e avvisi}
+\caption{Architettura dimostrativa leggera per la tesi di laurea.}
 \label{fig:b-architecture}
 \end{figure}
 
 \section{Note implementative}
-Descrivere hardware, moduli software, interfacce e principali scelte ingegneristiche. Per favorire la riproducibilità, registrare versioni e parametri di configurazione.
+Descrivere hardware, moduli software, interfacce e principali scelte ingegneristiche. Per favorire la riproducibilit\`a, registrare versioni e parametri di configurazione.
 
-\begin{lstlisting}[language=Python,caption={Wrapper di inferenza dimostrativo.},label={lst:b-code}]
+\begin{verbatim}
 def classify(sample, model, threshold=0.75):
     score = model.predict(sample)
-    return {
-        "label": int(score >= threshold),
-        "confidence": float(score),
-    }
-\end{lstlisting}
+    return int(score >= threshold), float(score)
+\end{verbatim}
 
 \begin{resultbox}[Scelta progettuale]
-Il prototipo adotta una pipeline modulare, così da poter verificare in modo indipendente il modello di inferenza e la politica di sicurezza.
+Il prototipo adotta una pipeline modulare, cos\`i da poter verificare in modo indipendente il modello di inferenza e la politica di sicurezza.
 \end{resultbox}
 
 \chapter{Valutazione sperimentale}\label{ch:b-evaluation}
@@ -65,22 +55,12 @@ Descrivere dataset o carico di lavoro, suddivisione train/test, baseline, metric
 
 \begin{figure}[htbp]
 \centering
-\begin{tikzpicture}
-\begin{axis}[
-width=0.84\textwidth,height=6.2cm,
-ybar,bar width=17pt,
-ymin=0,ymax=100,
-ylabel={Punteggio (\%)},
-symbolic x coords={Baseline,Prototipo,Ottimizzato},xtick=data,
-axis line style={ISISLine},tick style={ISISLine},
-ymajorgrids=true,grid style={ISISLine},
-legend style={draw=none,fill=none,font=\sffamily\small},
-label style={font=\sffamily\small,color=ISISMuted},
-tick label style={font=\sffamily\small,color=ISISInk}]
-\addplot[fill=ISISLightBlue,draw=ISISLightBlue] coordinates {(Baseline,72) (Prototipo,86) (Ottimizzato,91)};
-\end{axis}
-\end{tikzpicture}
-\caption{Risultato di valutazione illustrativo. Sostituire con i dati del progetto.}
+\begin{minipage}{0.82\textwidth}
+\demobar{Baseline}{58mm}{72\%}{ISISLightBlue}
+\demobar{Prototipo}{69mm}{86\%}{ISISBlue}
+\demobar{Ottimizzato}{73mm}{91\%}{ISISDeepBlue}
+\end{minipage}
+\caption{Risultato illustrativo disegnato con semplici regole LaTeX.}
 \label{fig:b-results}
 \end{figure}
 
@@ -100,11 +80,11 @@ Ottimizzato & \textbf{91.0\%} & \textbf{29 ms} & \textbf{241 MB}\\
 \end{table}
 
 \begin{keypoint}[Interpretazione]
-Discutere dimensione dell'effetto, incertezza, rilevanza pratica, minacce alla validità e ogni discrepanza tra comportamento atteso e osservato.
+Discutere dimensione dell'effetto, incertezza, rilevanza pratica, minacce alla validit\`a e ogni discrepanza tra comportamento atteso e osservato.
 \end{keypoint}
 
 \chapter{Conclusioni}
 Il progetto dimostra un percorso completo dalla definizione del problema all'implementazione e alla valutazione. Riassumere il contributo senza ripetere il sommario, quindi indicare limiti e sviluppi concreti.
 
 \section{Sviluppi futuri}
-Possibili estensioni includono un dataset più ampio, ulteriori modelli di minaccia, il deployment su hardware alternativo e uno studio utente dell'interfaccia di allerta.
+Possibili estensioni includono un dataset pi\`u ampio, ulteriori modelli di minaccia, il deployment su hardware alternativo e uno studio con utenti sull'interfaccia di allerta.

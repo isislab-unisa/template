@@ -1,0 +1,12 @@
+ISISLab profile source
+======================
+
+The three-line English and Italian descriptions on the research affiliation
+page are concise paraphrases of the official ISISLab website:
+https://www.isislab.it/
+
+Information used: laboratory of the Department of Computer Science at the
+University of Salerno; active since 1995; research in distributed and parallel
+computing, collaborative and social computing, and visualization and
+interaction; participation in more than 20 national and European projects.
+Source checked: 2026-07-16.

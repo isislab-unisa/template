@@ -1,27 +1,27 @@
 \chapter{Introduzione}
 \section{Contesto di ricerca}
-I sistemi cyber-fisici combinano acquisizione, calcolo, comunicazione e attuazione. L'apprendimento multimodale può migliorare la consapevolezza situazionale, ma introduce anche questioni di robustezza, interpretabilità, privacy e riproducibilità \cite{goodfellow2016deep,nist2023airmf}.
+I sistemi cyber-fisici combinano acquisizione, calcolo, comunicazione e attuazione. L'apprendimento multimodale pu\`o migliorare la consapevolezza situazionale, ma introduce anche questioni di robustezza, interpretabilit\`a, privacy e riproducibilit\`a \cite{goodfellow2016deep,nist2023airmf}.
 
 \begin{researchquestion}[RQ1 -- Robustezza]
-Come può un modello multimodale rimanere affidabile quando un flusso sensoriale è rumoroso, ritardato o non disponibile?
+Come pu\`o un modello multimodale rimanere affidabile quando un flusso sensoriale \`e rumoroso, ritardato o non disponibile?
 \end{researchquestion}
 
 \begin{researchquestion}[RQ2 -- Fiducia]
-Quali scelte progettuali e di valutazione rendono il comportamento del sistema più trasparente per operatori e auditor?
+Quali scelte progettuali e di valutazione rendono il comportamento del sistema pi\`u trasparente per operatori e auditor?
 \end{researchquestion}
 
 \section{Contributi}
 \begin{keypoint}[Contributi]
-\begin{enumerate}[label=\textcolor{ISISBlue}{\sffamily\bfseries C\arabic*.},leftmargin=2.2em]
+\begin{enumerate}
   \item Un'architettura di fusione modulare per flussi sensoriali eterogenei.
-  \item Una funzione obiettivo consapevole dell'affidabilità e un protocollo per modalità mancanti.
+  \item Una funzione obiettivo consapevole dell'affidabilit\`a e un protocollo per modalit\`a mancanti.
   \item Una suite di valutazione riproducibile per accuratezza, calibrazione, latenza e robustezza.
 \end{enumerate}
 \end{keypoint}
 
 \chapter{Fondamenti e stato dell'arte}
 \section{Apprendimento di rappresentazioni multimodali}
-Organizzare lo stato dell'arte per domanda di ricerca, evitando un semplice catalogo di articoli. Confrontare ipotesi, dataset, metriche e limiti. Una tabella di sintesi può aiutare il lettore a comprendere la lacuna affrontata dalla tesi.
+Organizzare lo stato dell'arte per domanda di ricerca, evitando un semplice catalogo di articoli. Confrontare ipotesi, dataset, metriche e limiti. Una tabella di sintesi pu\`o aiutare il lettore a comprendere la lacuna affrontata dalla tesi.
 
 \begin{table}[htbp]
 \centering
@@ -31,51 +31,36 @@ Organizzare lo stato dell'arte per domanda di ricerca, evitando un semplice cata
 Approccio & Fusione & Dati mancanti & Calibrazione & Adatto all'edge\\
 \midrule
 Fusione anticipata & Ingresso & Limitata & No & Parziale\\
-Fusione tardiva & Decisione & Moderata & Opzionale & Sì\\
-Metodo proposto & Ibrida & Esplicita & Sì & Sì\\
+Fusione tardiva & Decisione & Moderata & Opzionale & S\`i\\
+Metodo proposto & Ibrida & Esplicita & S\`i & S\`i\\
 \bottomrule
 \end{tabularx}
 \end{table}
 
 \section{Intelligenza artificiale affidabile}
-L'affidabilità è multidimensionale. In questa tesi, le definizioni operative devono essere collegate a proprietà misurabili, come errore di calibrazione, robustezza alle perturbazioni, limiti di latenza e configurazioni sperimentali tracciabili.
+L'affidabilit\`a \`e multidimensionale. In questa tesi, le definizioni operative devono essere collegate a propriet\`a misurabili, come errore di calibrazione, robustezza alle perturbazioni, limiti di latenza e configurazioni sperimentali tracciabili.
 
 \chapter{Metodologia}\label{ch:m-methodology}
 \section{Architettura del sistema}
-La \cref{fig:m-architecture} mostra una pipeline di ricerca dimostrativa con validazione dei dati, encoder specifici per modalità, fusione consapevole dell'affidabilità e un livello decisionale verificabile.
+La Figura~\ref{fig:m-architecture} mostra una pipeline di ricerca leggera. Utilizza box LaTeX nativi invece di un motore grafico.
 
 \begin{figure}[htbp]
 \centering
-\resizebox{0.98\textwidth}{!}{%
-\begin{tikzpicture}[node distance=10mm and 7mm, every node/.style={font=\sffamily\small}]
-\tikzset{
- source/.style={rounded corners=3pt,minimum width=27mm,minimum height=11mm,align=center,fill=ISISLightBlue!12,draw=ISISLightBlue!60,text=ISISDeepBlue,font=\sffamily\bfseries},
- core/.style={rounded corners=3pt,minimum width=34mm,minimum height=14mm,align=center,fill=ISISBlue!8,draw=ISISBlue!55,text=ISISDeepBlue,font=\sffamily\bfseries},
- outputblock/.style={rounded corners=3pt,minimum width=29mm,minimum height=12mm,align=center,fill=UNISAGold!16,draw=UNISAGold!80!ISISDeepBlue,text=ISISDeepBlue,font=\sffamily\bfseries}}
-\node[source] (vision) {Flusso visivo};
-\node[source,below=of vision] (telemetry) {Telemetria};
-\node[source,below=of telemetry] (context) {Contesto};
-\node[core,right=18mm of telemetry] (validation) {Validazione e\\stima qualità};
-\node[core,right=of validation] (encoders) {Encoder specifici\\per modalità};
-\node[core,right=of encoders] (fusion) {Fusione consapevole\\dell'affidabilità};
-\node[outputblock,right=of fusion] (decision) {Predizione e\\spiegazione};
-\foreach \s in {vision,telemetry,context}{\draw[-{Latex[length=2.7mm]},ISISLightBlue,line width=1.1pt] (\s.east) -- (validation.west);}
-\draw[-{Latex[length=2.7mm]},ISISBlue,line width=1.1pt] (validation) -- (encoders);
-\draw[-{Latex[length=2.7mm]},ISISBlue,line width=1.1pt] (encoders) -- (fusion);
-\draw[-{Latex[length=2.7mm]},ISISBlue,line width=1.1pt] (fusion) -- (decision);
-\end{tikzpicture}%
-}
+\pipelinebox{Validazione della\\qualit\`a}\pipelinearrow
+\pipelinebox{Encoder per\\modalit\`a}\pipelinearrow
+\pipelinebox{Fusione basata\\sull'affidabilit\`a}\pipelinearrow
+\pipelinebox{Predizione e\\spiegazione}
 \caption{Architettura multimodale illustrativa.}
 \label{fig:m-architecture}
 \end{figure}
 
 \section{Funzione obiettivo}
-Una funzione obiettivo semplificata combina la perdita sul task, la regolarizzazione della calibrazione e la consistenza in presenza di dropout delle modalità:
+Una funzione obiettivo semplificata combina la perdita sul task, la regolarizzazione della calibrazione e la consistenza in presenza di dropout delle modalit\`a:
 \begin{equation}
 \mathcal{L}=\mathcal{L}_{\mathrm{task}}+\lambda_{c}\mathcal{L}_{\mathrm{cal}}+\lambda_{m}\mathcal{L}_{\mathrm{missing}}.
 \end{equation}
 
-\begin{keypoint}[Riproducibilità]
+\begin{keypoint}[Riproducibilit\`a]
 Dichiarare versioni dei dataset, preprocessing, iperparametri, seed casuali, hardware, librerie software e criteri di arresto. Distinguere gli esperimenti esplorativi dalla valutazione confermativa.
 \end{keypoint}
 
@@ -89,34 +74,24 @@ Dichiarare versioni dei dataset, preprocessing, iperparametri, seed casuali, har
 
 \begin{figure}[htbp]
 \centering
-\begin{tikzpicture}
-\begin{axis}[
-width=0.86\textwidth,height=6.3cm,
-xlabel={Tasso di modalità mancanti (\%)},ylabel={Macro F1 (\%)},
-xmin=0,xmax=50,ymin=60,ymax=100,
-legend pos=south west,
-legend style={draw=none,fill=none,font=\sffamily\small},
-axis line style={ISISLine},tick style={ISISLine},
-grid=major,grid style={ISISLine},
-label style={font=\sffamily\small,color=ISISMuted},
-tick label style={font=\sffamily\small,color=ISISInk}]
-\addplot[very thick,ISISMuted,mark=square*] coordinates {(0,93) (10,86) (20,78) (30,69) (40,63) (50,60)};
-\addplot[very thick,ISISBlue,mark=*] coordinates {(0,94.2) (10,92.5) (20,89.3) (30,85.1) (40,80.2) (50,74.4)};
-\legend{Baseline,Proposto}
-\end{axis}
-\end{tikzpicture}
-\caption{Robustezza illustrativa in presenza di modalità mancanti.}
+\begin{minipage}{0.84\textwidth}
+{\sffamily\bfseries\color{ISISDeepBlue}Macro F1 con il 30\% di modalit\`a mancanti\par\vspace{3mm}}
+\demobar{Baseline}{55mm}{69.0\%}{ISISMuted}
+\demobar{Proposto}{68mm}{85.1\%}{ISISBlue}
+\end{minipage}
+\caption{Confronto di robustezza illustrativo senza PGFPlots.}
+\label{fig:m-results}
 \end{figure}
 
 \begin{resultbox}[Risultato principale]
-Il modello proposto conserva una quota maggiore delle prestazioni nominali al diminuire della disponibilità delle modalità. Sostituire questo testo con un'interpretazione statisticamente fondata degli esperimenti reali.
+Il modello proposto conserva una quota maggiore delle prestazioni nominali al diminuire della disponibilit\`a delle modalit\`a. Sostituire questo testo con un'interpretazione statisticamente fondata degli esperimenti reali.
 \end{resultbox}
 
-\section{Minacce alla validità}
-Discutere validità interna, di costrutto, esterna e delle conclusioni. Riportare risultati negativi e casi di fallimento quando migliorano la qualità del resoconto scientifico.
+\section{Minacce alla validit\`a}
+Discutere validit\`a interna, di costrutto, esterna e delle conclusioni. Riportare risultati negativi e casi di fallimento quando migliorano la qualit\`a del resoconto scientifico.
 
 \chapter{Conclusioni e prospettive}
-Rispondere esplicitamente a ciascuna domanda di ricerca, riassumere i contributi originali e collegare i risultati al contesto scientifico più ampio. Separare le conclusioni supportate dalle evidenze dalle ipotesi per lavori futuri.
+Rispondere esplicitamente a ciascuna domanda di ricerca, riassumere i contributi originali e collegare i risultati al contesto scientifico pi\`u ampio. Separare le conclusioni supportate dalle evidenze dalle ipotesi per lavori futuri.
 
 \section{Sviluppi futuri}
 Possibili estensioni includono adattamento online, garanzie formali sull'incertezza, apprendimento rispettoso della privacy, sperimentazione sul campo e valutazione human-centred con gli operatori.

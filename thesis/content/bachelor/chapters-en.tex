@@ -20,40 +20,30 @@ Use the opening chapter to establish context, define the problem, state objectiv
 \end{keypoint}
 
 \section{Document structure}
-\Cref{ch:b-design} presents the design, \cref{ch:b-evaluation} reports the evaluation, and the final chapter summarises the main findings.
+Chapter~\ref{ch:b-design} presents the design, Chapter~\ref{ch:b-evaluation} reports the evaluation, and the final chapter summarises the main findings.
 
 \chapter{System Design}\label{ch:b-design}
 \section{Architecture}
-The demonstrator separates sensing, inference, policy, and presentation. The diagram in \cref{fig:b-architecture} is generated directly in TikZ and can be replaced with a project-specific figure.
+The demonstrator separates sensing, inference, policy, and presentation. Figure~\ref{fig:b-architecture} uses only native LaTeX boxes, so it compiles quickly and can be replaced with a project-specific image.
 
 \begin{figure}[htbp]
 \centering
-\begin{tikzpicture}[node distance=12mm and 9mm, every node/.style={font=\sffamily\small}]
-\tikzset{block/.style={rounded corners=3pt,minimum width=31mm,minimum height=13mm,align=center,draw=ISISLine,fill=ISISPaper,text=ISISDeepBlue,font=\sffamily\bfseries}}
-\node[block] (sensor) {Sensors\\and inputs};
-\node[block,right=of sensor] (edge) {Edge inference\\engine};
-\node[block,right=of edge] (policy) {Security\\policy};
-\node[block,below=of policy] (ui) {Dashboard\\and alerts};
-\draw[-{Latex[length=3mm]},line width=1.2pt,ISISLightBlue] (sensor) -- (edge);
-\draw[-{Latex[length=3mm]},line width=1.2pt,ISISBlue] (edge) -- (policy);
-\draw[-{Latex[length=3mm]},line width=1.2pt,ISISBlue] (policy) -- (ui);
-\draw[-{Latex[length=3mm]},line width=1.2pt,ISISMuted,dashed] (ui.west) -| (edge.south);
-\end{tikzpicture}
-\caption{Demo architecture for the bachelor thesis.}
+\pipelinebox{Sensors\\and inputs}\pipelinearrow
+\pipelinebox{Edge inference\\engine}\pipelinearrow
+\pipelinebox{Security\\policy}\pipelinearrow
+\pipelinebox{Dashboard\\and alerts}
+\caption{Lightweight demo architecture for the bachelor thesis.}
 \label{fig:b-architecture}
 \end{figure}
 
 \section{Implementation notes}
 Describe hardware, software modules, interfaces, and key engineering choices. Keep reproducibility in mind by recording versions and configuration parameters.
 
-\begin{lstlisting}[language=Python,caption={Illustrative inference wrapper.},label={lst:b-code}]
+\begin{verbatim}
 def classify(sample, model, threshold=0.75):
     score = model.predict(sample)
-    return {
-        "label": int(score >= threshold),
-        "confidence": float(score),
-    }
-\end{lstlisting}
+    return int(score >= threshold), float(score)
+\end{verbatim}
 
 \begin{resultbox}[Design decision]
 The prototype uses a modular pipeline so that the inference model and the security policy can be tested independently.
@@ -65,22 +55,12 @@ Report the dataset or workload, train/test split, baseline, metrics, hardware, a
 
 \begin{figure}[htbp]
 \centering
-\begin{tikzpicture}
-\begin{axis}[
-width=0.84\textwidth,height=6.2cm,
-ybar,bar width=17pt,
-ymin=0,ymax=100,
-ylabel={Score (\%)},
-symbolic x coords={Baseline,Prototype,Optimised},xtick=data,
-axis line style={ISISLine},tick style={ISISLine},
-ymajorgrids=true,grid style={ISISLine},
-legend style={draw=none,fill=none,font=\sffamily\small},
-label style={font=\sffamily\small,color=ISISMuted},
-tick label style={font=\sffamily\small,color=ISISInk}]
-\addplot[fill=ISISLightBlue,draw=ISISLightBlue] coordinates {(Baseline,72) (Prototype,86) (Optimised,91)};
-\end{axis}
-\end{tikzpicture}
-\caption{Illustrative evaluation result. Replace with project data.}
+\begin{minipage}{0.82\textwidth}
+\demobar{Baseline}{58mm}{72\%}{ISISLightBlue}
+\demobar{Prototype}{69mm}{86\%}{ISISBlue}
+\demobar{Optimised}{73mm}{91\%}{ISISDeepBlue}
+\end{minipage}
+\caption{Illustrative evaluation result drawn with simple rules.}
 \label{fig:b-results}
 \end{figure}
 
