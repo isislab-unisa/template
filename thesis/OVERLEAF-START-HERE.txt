@@ -1,0 +1,9 @@
+ISISLab thesis template - Overleaf / pdfLaTeX
+
+1. Upload the whole ZIP to Overleaf.
+2. Main document: main.tex
+3. Compiler: pdfLaTeX
+4. Edit configuration.tex to select bachelor/master and english/italian.
+5. Edit metadata.tex, then press Recompile.
+
+The bibliography uses standard BibTeX and is handled automatically by Overleaf.

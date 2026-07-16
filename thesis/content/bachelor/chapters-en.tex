@@ -1,0 +1,110 @@
+\chapter{Introduction}
+\section{Motivation}
+Intelligent connected devices are increasingly deployed in homes, laboratories, and industrial spaces. Their usefulness grows with their ability to interpret data locally, yet resource constraints and security requirements make design decisions non-trivial \cite{shi2016edge,roman2018mobile}.
+
+\begin{researchquestion}
+How can a compact edge device deliver useful inference performance while preserving responsiveness and a clear security boundary?
+\end{researchquestion}
+
+\section{Objectives}
+The bachelor project follows four practical objectives:
+\begin{itemize}
+  \item define a measurable system requirement;
+  \item implement a modular prototype;
+  \item evaluate latency, accuracy, and resource use;
+  \item discuss limitations and future improvements.
+\end{itemize}
+
+\begin{keypoint}[Template guidance]
+Use the opening chapter to establish context, define the problem, state objectives, and preview the thesis structure. Avoid implementation details that belong in later chapters.
+\end{keypoint}
+
+\section{Document structure}
+\Cref{ch:b-design} presents the design, \cref{ch:b-evaluation} reports the evaluation, and the final chapter summarises the main findings.
+
+\chapter{System Design}\label{ch:b-design}
+\section{Architecture}
+The demonstrator separates sensing, inference, policy, and presentation. The diagram in \cref{fig:b-architecture} is generated directly in TikZ and can be replaced with a project-specific figure.
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[node distance=12mm and 9mm, every node/.style={font=\sffamily\small}]
+\tikzset{block/.style={rounded corners=3pt,minimum width=31mm,minimum height=13mm,align=center,draw=ISISLine,fill=ISISPaper,text=ISISDeepBlue,font=\sffamily\bfseries}}
+\node[block] (sensor) {Sensors\\and inputs};
+\node[block,right=of sensor] (edge) {Edge inference\\engine};
+\node[block,right=of edge] (policy) {Security\\policy};
+\node[block,below=of policy] (ui) {Dashboard\\and alerts};
+\draw[-{Latex[length=3mm]},line width=1.2pt,ISISLightBlue] (sensor) -- (edge);
+\draw[-{Latex[length=3mm]},line width=1.2pt,ISISBlue] (edge) -- (policy);
+\draw[-{Latex[length=3mm]},line width=1.2pt,ISISBlue] (policy) -- (ui);
+\draw[-{Latex[length=3mm]},line width=1.2pt,ISISMuted,dashed] (ui.west) -| (edge.south);
+\end{tikzpicture}
+\caption{Demo architecture for the bachelor thesis.}
+\label{fig:b-architecture}
+\end{figure}
+
+\section{Implementation notes}
+Describe hardware, software modules, interfaces, and key engineering choices. Keep reproducibility in mind by recording versions and configuration parameters.
+
+\begin{lstlisting}[language=Python,caption={Illustrative inference wrapper.},label={lst:b-code}]
+def classify(sample, model, threshold=0.75):
+    score = model.predict(sample)
+    return {
+        "label": int(score >= threshold),
+        "confidence": float(score),
+    }
+\end{lstlisting}
+
+\begin{resultbox}[Design decision]
+The prototype uses a modular pipeline so that the inference model and the security policy can be tested independently.
+\end{resultbox}
+
+\chapter{Experimental Evaluation}\label{ch:b-evaluation}
+\section{Protocol}
+Report the dataset or workload, train/test split, baseline, metrics, hardware, and repeated trials. The demo values below are placeholders.
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+width=0.84\textwidth,height=6.2cm,
+ybar,bar width=17pt,
+ymin=0,ymax=100,
+ylabel={Score (\%)},
+symbolic x coords={Baseline,Prototype,Optimised},xtick=data,
+axis line style={ISISLine},tick style={ISISLine},
+ymajorgrids=true,grid style={ISISLine},
+legend style={draw=none,fill=none,font=\sffamily\small},
+label style={font=\sffamily\small,color=ISISMuted},
+tick label style={font=\sffamily\small,color=ISISInk}]
+\addplot[fill=ISISLightBlue,draw=ISISLightBlue] coordinates {(Baseline,72) (Prototype,86) (Optimised,91)};
+\end{axis}
+\end{tikzpicture}
+\caption{Illustrative evaluation result. Replace with project data.}
+\label{fig:b-results}
+\end{figure}
+
+\begin{table}[htbp]
+\centering
+\caption{Example performance summary.}
+\begin{tabularx}{0.82\textwidth}{Yrrr}
+\toprule
+Configuration & Accuracy & Latency & Memory\\
+\midrule
+Baseline & 72.0\% & 84 ms & 410 MB\\
+Prototype & 86.0\% & 41 ms & 286 MB\\
+Optimised & \textbf{91.0\%} & \textbf{29 ms} & \textbf{241 MB}\\
+\bottomrule
+\end{tabularx}
+\label{tab:b-results}
+\end{table}
+
+\begin{keypoint}[Interpretation]
+Discuss effect size, uncertainty, practical relevance, threats to validity, and any discrepancy between expected and observed behaviour.
+\end{keypoint}
+
+\chapter{Conclusions}
+The project demonstrates a complete path from problem definition to implementation and evaluation. Summarise the contribution without repeating the abstract, then state limitations and concrete next steps.
+
+\section{Future work}
+Potential extensions include a broader dataset, additional threat models, deployment on alternative hardware, and a user study of the alert interface.

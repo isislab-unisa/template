@@ -1,0 +1,291 @@
+% ISISLab Beamer Theme
+% Clean almost-white scientific template with ISISLab blue accents.
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{isislabtheme}[2026/07/16 ISISLab Beamer theme]
+
+% Language option for fixed template labels.
+% Usage: \usepackage[italian]{isislabtheme} (aliases: italiano, ita)
+\newif\ifISISItalian
+\ISISItalianfalse
+\DeclareOption{english}{\ISISItalianfalse}
+\DeclareOption{italian}{\ISISItaliantrue}
+\DeclareOption{italiano}{\ISISItaliantrue}
+\DeclareOption{ita}{\ISISItaliantrue}
+\ProcessOptions\relax
+
+\newcommand{\ISISAgendaName}{\ifISISItalian Indice\else Agenda\fi}
+\newcommand{\ISISSectionName}{\ifISISItalian SEZIONE\else SECTION\fi}
+\newcommand{\ISISDepartmentName}{\ifISISItalian Dipartimento di Informatica\else Department of Computer Science\fi}
+\newcommand{\ISISUniversityName}{Università degli Studi di Salerno}
+
+\RequirePackage{tikz}
+\RequirePackage{graphicx}
+\RequirePackage{xcolor}
+\RequirePackage{calc}
+\RequirePackage{xparse}
+\RequirePackage{fontawesome5}
+\usetikzlibrary{positioning,arrows.meta,calc,shadows.blur,fit,backgrounds}
+
+\graphicspath{{assets/}}
+
+% Palette. ISISLogoBlue is sampled from the ISISLab logo and is used for the agenda/TOC.
+\definecolor{ISISBg}{HTML}{F8FBFF}
+\definecolor{ISISNavy}{HTML}{082E5F}
+\definecolor{ISISBlue}{HTML}{0B62C4}
+\definecolor{ISISLogoBlue}{HTML}{0098D5}
+\definecolor{ISISAzure}{HTML}{3B91D9}
+\definecolor{ISISCyan}{HTML}{59B8F7}
+\definecolor{ISISSteel}{HTML}{6E879E}
+\definecolor{ISISSilver}{HTML}{CAD3DD}
+\definecolor{ISISRed}{HTML}{D62828}
+\definecolor{ISISGold}{HTML}{F4D21E}
+\definecolor{ISISInk}{HTML}{0D1B2A}
+\definecolor{ISISMuted}{HTML}{556878}
+\definecolor{ISISGreen}{HTML}{2CA58D}
+\definecolor{ISISViolet}{HTML}{6457A6}
+
+\mode<presentation>{
+  \setbeamercolor{normal text}{fg=ISISInk,bg=ISISBg}
+  \setbeamercolor{frametitle}{fg=ISISInk,bg=ISISBg}
+  \setbeamercolor{title}{fg=ISISInk}
+  \setbeamercolor{subtitle}{fg=ISISMuted}
+  \setbeamercolor{structure}{fg=ISISBlue}
+  \setbeamercolor{block title}{fg=white,bg=ISISBlue}
+  \setbeamercolor{block body}{fg=ISISInk,bg=white}
+  \setbeamercolor{itemize item}{fg=ISISBlue}
+  \setbeamercolor{itemize subitem}{fg=ISISAzure}
+  \setbeamercolor{enumerate item}{fg=ISISBlue}
+  \setbeamercolor{section in toc}{fg=ISISLogoBlue}
+  \setbeamercolor{subsection in toc}{fg=ISISMuted}
+  \setbeamercolor{subsubsection in toc}{fg=ISISSteel}
+  \setbeamercovered{transparent}
+}
+
+\usefonttheme{professionalfonts}
+\renewcommand{\familydefault}{\sfdefault}
+
+% Requested defaults: 18pt body text and 24pt slide titles.
+\setbeamerfont{normal text}{size=\fontsize{18pt}{22pt}\selectfont}
+\setbeamerfont{frametitle}{size=\fontsize{24pt}{29pt}\selectfont,series=\bfseries}
+\setbeamerfont{title}{size=\fontsize{24pt}{29pt}\selectfont,series=\bfseries}
+\setbeamerfont{subtitle}{size=\fontsize{18pt}{22pt}\selectfont}
+\setbeamerfont{itemize/enumerate body}{size=\fontsize{18pt}{22pt}\selectfont}
+\setbeamerfont{block body}{size=\fontsize{18pt}{22pt}\selectfont}
+\setbeamerfont{footline}{size=\fontsize{6pt}{7pt}\selectfont}
+\setbeamerfont{section in toc}{size=\fontsize{10pt}{12pt}\selectfont,series=\bfseries}
+\setbeamerfont{subsection in toc}{size=\fontsize{8pt}{10pt}\selectfont}
+
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{itemize item}{\color{ISISBlue}\scriptsize\faCircle}
+\setbeamertemplate{itemize subitem}{\color{ISISAzure}\tiny\faCircle}
+
+% Agenda/TOC styles using the blue from the ISISLab logo.
+\setbeamertemplate{section in toc}{%
+  \leavevmode
+  \vbox{%
+    \hsize=\linewidth
+    \parindent=0pt
+    \leftskip=1.2em
+    \hangindent=2.6em
+    \hangafter=1
+    \fontsize{14pt}{18pt}\selectfont
+    \tikz[baseline=(n.base)]%
+      \node[
+        rounded corners=2mm,
+        fill=ISISBlue,
+        text=white,
+        inner xsep=1.8mm,
+        inner ysep=.7mm,
+        font=\fontsize{11pt}{13pt}\selectfont\bfseries
+      ] (n) {\inserttocsectionnumber};%
+    \hspace{.7em}%
+    \textcolor{ISISBlue}{\inserttocsection}\par
+  }%
+}
+
+\setbeamertemplate{subsection in toc}{%
+  \leavevmode
+  \vbox{%
+    \hsize=\linewidth
+    \parindent=0pt
+    \leftskip=4.1em
+    \hangindent=1.6em
+    \hangafter=1
+    \fontsize{14pt}{18pt}\selectfont
+    \textcolor{ISISMuted}{\fontsize{11pt}{13pt}\selectfont\faAngleRight}%
+    \hspace{.6em}%
+    \textcolor{ISISMuted}{\inserttocsubsection}\par
+  }%
+}
+
+\newcommand{\ISISAccentBars}{%
+  \begin{tikzpicture}[remember picture,overlay]
+    \fill[ISISBlue] (current page.north west) rectangle ([yshift=-1.6mm]current page.north east);
+    \fill[ISISGold] ([yshift=1.2mm]current page.south west) rectangle (current page.south east);
+  \end{tikzpicture}%
+}
+
+\setbeamertemplate{background canvas}{\color{ISISBg}\rule{\paperwidth}{\paperheight}}
+\setbeamertemplate{background}{%
+  \ISISAccentBars
+  \begin{tikzpicture}[remember picture,overlay]
+    \node[anchor=south west,opacity=.035] at ([xshift=1.5mm,yshift=5.2mm]current page.south west) {\includegraphics[width=.5\paperwidth]{logo_standard.png}};
+  \end{tikzpicture}%
+}
+
+\setbeamertemplate{frametitle}{%
+  \vspace{1.7mm}
+  \begin{beamercolorbox}[wd=\paperwidth,ht=10mm,dp=1mm,leftskip=6mm,rightskip=18mm]{frametitle}
+    {\fontsize{6pt}{7pt}\selectfont\bfseries\color{ISISBlue}ISISLAB}\par\vspace{.7mm}
+    \insertframetitle
+  \end{beamercolorbox}
+  \begin{tikzpicture}[remember picture,overlay]
+    \node[anchor=north east] at ([xshift=-5mm,yshift=-3mm]current page.north east) {\includegraphics[width=14mm]{topo.png}};
+    \draw[ISISSilver,line width=.50pt] ([xshift=6mm,yshift=-17.4mm]current page.north west) -- ([xshift=-6mm,yshift=-17.4mm]current page.north east);
+  \end{tikzpicture}
+    
+ 
+}
+
+\setbeamertemplate{footline}{%
+  \begin{tikzpicture}[remember picture,overlay]
+    \node[anchor=south west,text=ISISSteel] at ([xshift=6mm,yshift=2.6mm]current page.south west) {\inserttitle\quad\textperiodcentered\quad\insertsection};
+    \draw[ISISBlue,line width=1.1pt] ([xshift=-14mm,yshift=3.2mm]current page.south east) -- ([xshift=-8mm,yshift=3.2mm]current page.south east);
+    \node[anchor=south east,text=ISISBlue,font=\bfseries] at ([xshift=-3mm,yshift=2.3mm]current page.south east) {\insertframenumber};
+  \end{tikzpicture}%
+}
+
+% ------------------------- reusable visual components -------------------------
+
+\NewDocumentCommand{\ISISBadge}{O{ISISBlue} m}{%
+  \tikz[baseline=(x.base)]\node[rounded corners=1mm,fill=#1,text=white,inner xsep=1.6mm,inner ysep=.8mm,font=\fontsize{6pt}{7pt}\selectfont\bfseries] (x) {#2};%
+}
+
+\newcommand{\ISISCheck}{\tikz[baseline=-.5ex]\node[circle,fill=ISISBlue,text=white,inner sep=.6mm,font=\fontsize{5.5pt}{6pt}\selectfont\bfseries]{\checkmark};}
+
+% Card with optional accent color and width: \ISISCard[ISISBlue][.46\linewidth]{Title}{Body}
+\NewDocumentCommand{\ISISCard}{O{ISISBlue} O{.92\linewidth} m +m}{%
+  \begin{tikzpicture}
+    \node[fill=white,draw=ISISSilver!55,rounded corners=2.3mm,inner sep=0mm,drop shadow={shadow xshift=.6mm,shadow yshift=-.6mm,opacity=.08}] {%
+      \begin{minipage}{#2}
+        \colorbox{#1}{\begin{minipage}{\dimexpr\linewidth-2\fboxsep\relax}\color{white}\fontsize{8pt}{9pt}\selectfont\bfseries #3\end{minipage}}
+        \vspace{1.5mm}\hspace{2.3mm}\begin{minipage}{\dimexpr\linewidth-4.6mm\relax}\fontsize{9pt}{11pt}\selectfont #4\end{minipage}\vspace{2.1mm}
+      \end{minipage}};
+  \end{tikzpicture}%
+}
+
+% Metric card: \ISISMetricCard[ISISRed][.30\linewidth]{42 ms}{median latency}
+\NewDocumentCommand{\ISISMetricCard}{O{ISISBlue} O{.30\linewidth} m m}{%
+  \begin{tikzpicture}
+    \node[fill=white,draw=#1!45,rounded corners=2.3mm,inner sep=3mm,drop shadow={shadow xshift=.5mm,shadow yshift=-.5mm,opacity=.08}] {%
+      \begin{minipage}{#2}\centering
+      {\color{#1}\fontsize{21pt}{24pt}\selectfont\bfseries #3}\par\vspace{1mm}
+      {\color{ISISMuted}\fontsize{8.5pt}{10pt}\selectfont #4}
+      \end{minipage}};
+  \end{tikzpicture}%
+}
+
+% Visual list: \ISISVisualList[ISISBlue]{Claim, Evidence, Implication}
+\NewDocumentCommand{\ISISVisualList}{O{ISISBlue} m}{%
+  \begin{tikzpicture}[every node/.style={font=\fontsize{8.5pt}{10pt}\selectfont}]
+    \foreach \txt [count=\i] in {#2}{%
+      \pgfmathsetmacro{\y}{-(\i-1)*8.3}
+      \node[circle,fill=#1,text=white,inner sep=1.1mm,font=\fontsize{6pt}{7pt}\selectfont\bfseries] at (0,\y mm) {\i};
+      \node[anchor=west,text=ISISInk,text width=.80\linewidth] at (5mm,\y mm) {\txt};
+    }
+  \end{tikzpicture}%
+}
+
+% Bar chart; values expected on a 0-100 scale: \ISISBarChart[ISISBlue][75][34]{Baseline/58,Proposed/76}{Score}
+\NewDocumentCommand{\ISISBarChart}{O{ISISBlue} O{75} O{34} m m}{%
+  \begin{tikzpicture}[x=1mm,y=1mm,every node/.style={font=\fontsize{6pt}{7pt}\selectfont}]
+    \draw[ISISSilver!65,line width=.5pt] (0,0) -- (#2,0);
+    \foreach \lab/\val [count=\i] in {#4}{%
+      \pgfmathsetmacro{\x}{(\i-1)*(#2/4)+6}
+      \pgfmathsetmacro{\h}{\val*#3/100}
+      \fill[#1!25] (\x,0) rectangle +(8,#3);
+      \fill[#1] (\x,0) rectangle +(8,\h);
+      \node[below,text=ISISMuted] at (\x+4,-2) {\lab};
+      \node[above,text=#1,font=\fontsize{6pt}{7pt}\selectfont\bfseries] at (\x+4,\h+1) {\val};
+    }
+    \node[anchor=west,text=ISISMuted] at (0,-8) {#5};
+  \end{tikzpicture}%
+}
+
+% Line chart; coordinates use chart units directly: \ISISLineChart[ISISRed][75][34]{(0,7) (18,16) (38,22)}{Metric over time}
+\NewDocumentCommand{\ISISLineChart}{O{ISISRed} O{75} O{34} m m}{%
+  \begin{tikzpicture}[x=1mm,y=1mm,every node/.style={font=\fontsize{6pt}{7pt}\selectfont}]
+    \draw[ISISSilver!65,line width=.5pt] (0,0) -- (#2,0) -- (#2,#3);
+    \foreach \y in {0,0.33,0.66,1}{\draw[ISISSilver!30,line width=.3pt] (0,\y*#3) -- (#2,\y*#3);}
+    \draw[#1,line width=1.15pt] plot[smooth] coordinates {#4};
+    \node[anchor=west,text=ISISMuted] at (0,-8) {#5};
+  \end{tikzpicture}%
+}
+
+% Method pipeline: \ISISPipeline[2]{Input/Data, Model/Inference, Results/Metrics, Release/Artifacts}
+\NewDocumentCommand{\ISISPipeline}{O{2} m}{%
+  \begin{tikzpicture}[node distance=7mm,every node/.style={font=\fontsize{8pt}{9pt}\selectfont}]
+    \tikzset{isisstep/.style={rounded corners=2mm,draw=ISISSilver!65,fill=white,minimum width=24mm,minimum height=18mm,align=center,drop shadow={shadow xshift=.35mm,shadow yshift=-.35mm,opacity=.08}}}
+    \foreach \name/\desc [count=\i] in {#2}{%
+      \pgfmathsetmacro{\x}{(\i-1)*28}
+      \ifnum\i=#1
+        \node[isisstep,draw=ISISBlue,line width=.8pt] (step\i) at (\x mm,0) {\textbf{\name}\\[-.5mm]{\color{ISISMuted}\desc}};
+      \else
+        \node[isisstep] (step\i) at (\x mm,0) {\textbf{\name}\\[-.5mm]{\color{ISISMuted}\desc}};
+      \fi
+      \ifnum\i>1
+        \pgfmathtruncatemacro{\j}{\i-1}
+        \draw[-{Stealth[length=2mm]},line width=.8pt,ISISAzure] (step\j) -- (step\i);
+      \fi
+    }
+  \end{tikzpicture}%
+}
+
+% Section divider based on the style of slide 4 in the original demo.
+% Place this command immediately after each \section{...} declaration.
+% Parameters:
+%   [section number] {section title} [subtitle] [accent color] {custom content}
+% Example:
+%   \section{Method}
+%   \ISISSectionIntro[03]{Method}[From idea to algorithm][ISISGold]{Your custom note.}
+\NewDocumentCommand{\ISISSectionIntro}{O{\insertsectionnumber} m O{Section roadmap} O{ISISGold} +m}{%
+  \begin{frame}[plain]
+  \begin{tikzpicture}[remember picture,overlay]
+    \node[anchor=center,fill=ISISNavy,minimum width=1.06\paperwidth,minimum height=1.06\paperheight] at (current page.center) {};
+    \node[anchor=north,fill=ISISBlue,minimum width=1.06\paperwidth,minimum height=1.6mm] at (current page.north) {};
+    \node[anchor=south,fill=ISISGold,minimum width=1.06\paperwidth,minimum height=1.2mm] at (current page.south) {};
+    \node[anchor=north east,opacity=.18] at ([xshift=-8mm,yshift=-25mm]current page.north east) {\includegraphics[width=.37\paperwidth]{topo.png}};
+    \node[anchor=north west,opacity=.25] at ([xshift=11mm,yshift=-5mm]current page.north west) {\includegraphics[width=16mm]{logo_standard.png}};
+    \node[anchor=west,text=#4,font=\fontsize{8pt}{9pt}\selectfont\bfseries] at ([xshift=12mm,yshift=18mm]current page.west) {\ISISSectionName~#1};
+    \node[anchor=west,text=white,font=\fontsize{30pt}{34pt}\selectfont\bfseries] at ([xshift=12mm,yshift=5mm]current page.west) {#2};
+    \node[anchor=west,text=white!85,text width=.66\paperwidth,font=\fontsize{13pt}{16pt}\selectfont] at ([xshift=12mm,yshift=-10mm]current page.west) {#3};
+    \draw[#4,line width=1.2pt] ([xshift=12mm,yshift=-25mm]current page.west) -- ([xshift=46mm,yshift=-25mm]current page.west);
+    \node[anchor=south east,text=white!92,text width=.34\paperwidth,align=left,font=\fontsize{7.5pt}{9pt}\selectfont] at ([xshift=-10mm,yshift=11mm]current page.south east) {#5};
+  \end{tikzpicture}
+  \end{frame}%
+}
+
+% Backward-compatible alias for documents that used the previous command name.
+\NewDocumentCommand{\ISISSectionSlide}{O{\insertsectionnumber} m O{Section roadmap} O{ISISGold} +m}{%
+  \ISISSectionIntro[#1]{#2}[#3][#4]{#5}%
+}
+
+\setbeamertemplate{title page}{%
+
+  \begin{tikzpicture}[remember picture,overlay]
+    \fill[ISISBg] (current page.south west) rectangle (current page.north east);
+    \fill[ISISBlue] (current page.north west) rectangle ([yshift=-1.6mm]current page.north east);
+    \fill[ISISGold] ([yshift=1.2mm]current page.south west) rectangle (current page.south east);
+    \node[anchor=north west] at ([xshift=3mm,yshift=-3mm]current page.north west) {\includegraphics[width=18mm]{logo_standard_shadow.png}};
+    \node[anchor=north east] at ([xshift=-5mm,yshift=-4mm]current page.north east) {\includegraphics[width=16mm]{dipartimento_informatica_logo.png}};
+    \node[anchor=north east,opacity=.10] at ([xshift=0mm,yshift=-25mm]current page.north east) {\includegraphics[width=.5\paperwidth]{topo.png}};
+    \node at ([xshift=-115mm,yshift=-70mm]current page.north east) {\ISISBadge[ISISRed]{\ISISDepartmentName}\hspace{1mm}%
+  \ISISBadge[ISISGold]{\ISISUniversityName}};
+  \end{tikzpicture}
+
+  \vspace*{24mm}
+ 
+  {\usebeamerfont{title}\inserttitle}\par\vspace{3mm}
+  {\usebeamerfont{subtitle}\color{ISISMuted}\insertsubtitle}\par\vspace{7mm}
+  {\fontsize{8pt}{9pt}\selectfont\color{ISISSteel}\insertauthor\quad\textperiodcentered\quad\insertdate}\par
+}

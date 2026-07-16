@@ -1,0 +1,15 @@
+ISISLab Unified Thesis Template - Overleaf pdfLaTeX Edition
+================================================================
+
+Single-source project:
+- Bachelor or Master selection with \thesisdegree{...}
+- English or Italian selection with \thesislanguage{...}
+- automatically translated demo content and interface labels
+- UniSA front cover and ISISLab affiliation page
+- transparent ISISLab watermark and blue/gold design system
+- bibliography, charts, code listings, diagrams, tables, and callout boxes
+- compatible with Overleaf's default pdfLaTeX compiler
+- standard BibTeX bibliography; no Biber, XeLaTeX, LuaLaTeX, shell escape, or custom build command
+
+Compiled previews are available in demo-pdfs/.
+See OVERLEAF-START-HERE.txt and README.md for instructions.

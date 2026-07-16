@@ -1,0 +1,272 @@
+\documentclass[aspectratio=169,10pt]{beamer}
+\usepackage[italian]{babel}
+\usepackage[italian]{isislabtheme}
+\usepackage{hyperref}
+
+\title{Template per la presentazione di un articolo scientifico}
+\subtitle{Un tema Beamer riutilizzabile ISISLab/UNISA per uno storytelling scientifico chiaro}
+\author{Nome Relatore}
+\institute{Dipartimento di Informatica, Università degli Studi di Salerno}
+\date{\today}
+
+% Le slide di apertura delle sezioni sono esplicite, non automatiche.
+% Inserisci \ISISSectionIntro subito dopo ogni \section e personalizza:
+% [numero]{titolo}[sottotitolo][colore accento]{contenuto personalizzato}.
+
+\begin{document}
+
+% -----------------------------------------------------------------------------
+% Pagina del titolo: il logo del dipartimento è inserito dal tema in alto a destra.
+\begin{frame}[plain]
+  \titlepage
+
+\end{frame}
+
+\begin{frame}{\ISISAgendaName}
+\begin{columns}[T,onlytextwidth]
+  \begin{column}{.48\textwidth}
+    \tableofcontents[hideallsubsections,sections={1-3}]
+  \end{column}
+  \begin{column}{.48\textwidth}
+    \tableofcontents[hideallsubsections,sections={4-6}]
+  \end{column}
+\end{columns}
+\end{frame}
+
+\section{Motivazione e problema}
+\ISISSectionIntro[1]{Motivazione e problema}[Definire la domanda di ricerca e perché è importante][ISISGold]{%
+  \ISISBadge[ISISRed]{Problema}\quad Indica il divario, il pubblico e la conseguenza pratica.
+}
+\subsection{Storia della ricerca}
+
+\begin{frame}{Una storia di ricerca chiara}
+\begin{columns}[T,onlytextwidth]
+\begin{column}{.45\textwidth}
+\ISISCard[ISISLogoBlue][.92\linewidth]{Flusso narrativo}{%
+\ISISVisualList[ISISLogoBlue]{Questo è il problema, È importante per un pubblico chiaro, Esiste un divario nel lavoro attuale, La nostra idea affronta il divario}%
+}
+\end{column}
+\begin{column}{.51\textwidth}
+\ISISCard[ISISGreen][.94\linewidth]{Guida alla fonte}{%
+Un buon articolo di ricerca ruota attorno a un'idea riutilizzabile e rende esplicita la tesi. Questa demo segue la struttura di scrittura di Microsoft Research: problema, idea, evidenza, confronto, conclusione.\footnote{Ispirato da Simon Peyton Jones, \href{https://www.microsoft.com/en-us/research/wp-content/uploads/2016/07/How-to-write-a-great-research-paper.pdf}{\emph{How to write a great research paper}}, Microsoft Research, 2016.}%
+}
+\end{column}
+\end{columns}
+\end{frame}
+
+\subsection{Definizione del problema}
+\begin{frame}{Problema e contributi}
+\begin{columns}[T,onlytextwidth]
+\begin{column}{.48\textwidth}
+\ISISCard[ISISRed][.95\linewidth]{Problema}{%
+I sistemi esistenti sono accurati in ambienti controllati, ma le prestazioni degradano quando cambia la distribuzione dei dati. Questo produce risultati meno affidabili nelle applicazioni reali.
+}
+\vspace{3mm}
+\ISISCard[ISISLogoBlue][.95\linewidth]{Domanda di ricerca}{%
+Possiamo progettare un metodo che resti accurato, efficiente e interpretabile in presenza di cambiamenti realistici della distribuzione?
+}
+\end{column}
+\begin{column}{.48\textwidth}
+\ISISCard[ISISGreen][.95\linewidth]{Contributi}{%
+\ISISVisualList[ISISGreen]{Una nuova formulazione di apprendimento robusto, Un protocollo sperimentale riproducibile, Evidenza su tre scenari benchmark}%
+}
+\end{column}
+\end{columns}
+\end{frame}
+
+\section{Lavori correlati e divario}
+\ISISSectionIntro[02]{Lavori correlati e divario}[Posizionare il contributo senza trasformare il talk in una bibliografia][ISISCyan]{%
+  \ISISBadge[ISISCyan]{Posizionamento}\quad Confronta famiglie di approcci rispetto al divario ancora aperto.
+}
+\subsection{Posizionamento}
+\begin{frame}{Dove si colloca l'articolo}
+\begin{columns}[T,onlytextwidth]
+\begin{column}{.36\textwidth}
+\vspace{4mm}
+\ISISMetricCard[ISISLogoBlue][.78\linewidth]{12}{articoli chiave}\vspace{8mm}
+\ISISMetricCard[ISISViolet][.78\linewidth]{3}{famiglie principali}
+\end{column}
+\begin{column}{.60\textwidth}
+\ISISCard[ISISLogoBlue][.95\linewidth]{Logica di confronto}{%
+Evita di elencare troppo presto i lavori correlati. Spiega prima il problema e l'idea; poi confronta le alternative attorno al divario affrontato dall'articolo.
+}
+\vspace{3mm}
+\ISISCard[ISISViolet][.95\linewidth]{Enunciato del divario}{%
+I lavori precedenti ottimizzano l'accuratezza oppure la robustezza, ma non riportano congiuntamente affidabilità, costo computazionale e interpretabilità.
+}
+\end{column}
+\end{columns}
+\end{frame}
+
+\subsection{Piano dell'evidenza}
+\begin{frame}{Affermazioni ed evidenza}
+\centering
+\ISISPipeline[3]{Affermazione/Cosa promettiamo, Metodo/Come testiamo, Evidenza/Dati e analisi, Interpretazione/Cosa significa}
+\vspace{5mm}
+\ISISCard[ISISGreen][.76\linewidth]{Checklist dell'evidenza}{%
+Ogni affermazione introdotta nella prima parte della presentazione dovrebbe essere ripresa con una figura, una tabella, uno schizzo di prova o un esperimento nella sezione dei risultati.
+}
+\end{frame}
+
+\section{Metodo}
+\ISISSectionIntro[03]{Metodo}[Passare dall'intuizione a un algoritmo riproducibile][ISISGreen]{%
+  \ISISBadge[ISISGreen]{Idea centrale}\quad Spiega input, trasformazioni, assunzioni e output.
+}
+\subsection{Panoramica}
+\begin{frame}{Pipeline del metodo}
+\centering
+\ISISPipeline[2]{Input/Dati grezzi, Modello/Metodo proposto, Validazione/Metriche, Rilascio/Codice e dati}
+\vspace{5mm}
+\begin{columns}[T,onlytextwidth]
+\begin{column}{.47\textwidth}
+\ISISCard[ISISLogoBlue][.96\linewidth]{Principio di progettazione}{%
+Separa l'idea centrale dai dettagli implementativi. Mostra prima l'intuizione, poi la specifica formale o algoritmica.
+}
+\end{column}
+\begin{column}{.47\textwidth}
+\ISISCard[ISISRed][.96\linewidth]{Regola per la slide sul metodo}{%
+Una slide di pipeline dovrebbe spiegare come i dati diventano evidenza. Le slide successive possono approfondire ciascun modulo.
+}
+\end{column}
+\end{columns}
+\end{frame}
+
+\subsection{Dettaglio algoritmico}
+\begin{frame}{Componenti algoritmiche}
+\begin{columns}[T,onlytextwidth]
+\begin{column}{.32\textwidth}
+\ISISCard[ISISLogoBlue][.92\linewidth]{Passo 1}{Rappresentare ogni istanza con caratteristiche stabili e sensibili allo shift.}
+\end{column}
+\begin{column}{.32\textwidth}
+\ISISCard[ISISGreen][.92\linewidth]{Passo 2}{Ottimizzare un obiettivo robusto che penalizzi scorciatoie instabili.}
+\end{column}
+\begin{column}{.32\textwidth}
+\ISISCard[ISISViolet][.92\linewidth]{Passo 3}{Spiegare le decisioni con attribuzione a livello di componente.}
+\end{column}
+\end{columns}
+\vspace{4mm}
+\ISISCard[ISISRed][.86\linewidth]{Messaggio chiave}{Il metodo è progettato per preservare le prestazioni quando l'ambiente di test differisce dall'ambiente di training.}
+\end{frame}
+
+\section{Disegno sperimentale}
+\ISISSectionIntro[04]{Disegno sperimentale}[Rendere credibile l'evidenza prima di mostrare i risultati][ISISViolet]{%
+  \ISISBadge[ISISViolet]{Protocollo}\quad Specifica dati, baseline, metriche, controlli e riproducibilità.
+}
+\subsection{Dataset e metriche}
+\begin{frame}{Disegno sperimentale}
+\begin{columns}[T,onlytextwidth]
+\begin{column}{.47\textwidth}
+\ISISCard[ISISLogoBlue][.95\linewidth]{Matrice di valutazione}{%
+\ISISVisualList[ISISLogoBlue]{Tre dataset, Due shift di distribuzione, Metriche di accuratezza e robustezza, Runtime e calibrazione}%
+}
+\end{column}
+\begin{column}{.49\textwidth}
+\ISISCard[ISISGreen][.95\linewidth]{Protocollo}{%
+Usa le stesse partizioni di training, validazione e test per ogni baseline. Riporta media e varianza su esecuzioni ripetute.
+}
+\vspace{3mm}
+\ISISMetricCard[ISISLogoBlue][.36\linewidth]{3}{dataset}\hspace{2mm}
+\ISISMetricCard[ISISGreen][.36\linewidth]{5}{baseline}
+\end{column}
+\end{columns}
+\end{frame}
+
+\subsection{Riproducibilità}
+\begin{frame}{Pacchetto di riproducibilità}
+\centering
+\ISISPipeline[4]{Dati/Split, Codice/Script, Modelli/Checkpoint, Report/Figure}
+\vspace{6mm}
+\ISISCard[ISISViolet][.78\linewidth]{Policy degli artefatti}{%
+Fai puntare la presentazione agli stessi artefatti dell'articolo: repository, scheda dei dati, file di ambiente e script di valutazione.
+}
+\end{frame}
+
+\section{Risultati}
+\ISISSectionIntro[05]{Risultati}[Inizia dal risultato principale, poi verifica perché vale][ISISRed]{%
+  \ISISBadge[ISISRed]{Evidenza}\quad Risultato principale, ablazione, incertezza e casi di fallimento.
+}
+\subsection{Risultato quantitativo principale}
+\begin{frame}{Robustezza migliorata}
+\begin{columns}[T,onlytextwidth]
+\begin{column}{.34\textwidth}
+\vspace{5mm}
+\ISISMetricCard[ISISLogoBlue][.82\linewidth]{+18\%}{guadagno relativo di robustezza}\vspace{8mm}
+\ISISMetricCard[ISISRed][.82\linewidth]{42 ms}{latenza mediana}
+\end{column}
+\begin{column}{.62\textwidth}
+\ISISCard[ISISLogoBlue][.95\linewidth]{Grafico a barre demo}{%
+\centering\ISISBarChart[ISISLogoBlue][78][32]{Base/54,Aug/61,Nostro/72}{Accuratezza sotto shift}
+}
+\end{column}
+\end{columns}
+\end{frame}
+
+\subsection{Ablazione e trend}
+\begin{frame}{Ablazione e dinamiche di training}
+\begin{columns}[T,onlytextwidth]
+\begin{column}{.49\textwidth}
+\ISISCard[ISISGreen][.95\linewidth]{Ablazione}{%
+\centering\ISISBarChart[ISISGreen][70][30]{Completo/74,SenzaReg/66,SenzaExpl/69}{Accuratezza robusta}
+}
+\end{column}
+\begin{column}{.49\textwidth}
+\ISISCard[ISISRed][.95\linewidth]{Trend}{%
+\centering\ISISLineChart[ISISRed][70][30]{(0,7) (12,13) (24,19) (38,24) (52,27) (68,29)}{Punteggio di validazione per epoca}
+}
+\end{column}
+\end{columns}
+\end{frame}
+
+\section{Discussione e conclusione}
+\ISISSectionIntro[06]{Discussione e conclusione}[Interpretare l'evidenza e chiudere la storia della ricerca][ISISGold]{%
+  \ISISBadge[ISISGold]{Messaggio}\quad Limiti, implicazioni, lavoro futuro e messaggio finale.
+}
+\subsection{Limiti}
+\begin{frame}{Limiti e minacce alla validità}
+\begin{columns}[T,onlytextwidth]
+\begin{column}{.47\textwidth}
+\ISISCard[ISISRed][.95\linewidth]{Limiti}{%
+\ISISVisualList[ISISRed]{Solo dataset di scala media, Lo shift sintetico può non catturare tutti i casi di deployment, La metrica di interpretabilità dipende dal task}%
+}
+\end{column}
+\begin{column}{.47\textwidth}
+\ISISCard[ISISGreen][.95\linewidth]{Mitigazioni}{%
+\ISISVisualList[ISISGreen]{Rilasciare script per la replica, Includere baseline diverse, Riportare i casi di fallimento invece di nasconderli}%
+}
+\end{column}
+\end{columns}
+\end{frame}
+
+\subsection{Messaggi finali}
+\begin{frame}{Conclusione}
+\begin{columns}[T,onlytextwidth]
+\begin{column}{.48\textwidth}
+\ISISCard[ISISLogoBlue][.96\linewidth]{Risposta alla domanda di ricerca}{%
+Il metodo migliora la robustezza sotto shift di distribuzione mantenendo runtime pratico e spiegazioni ispezionabili.
+}
+\vspace{3mm}
+\ISISCard[ISISGreen][.96\linewidth]{Lavoro futuro}{%
+Scalare a dataset più grandi, validare con dati sul campo e aggiungere una valutazione human-centered delle spiegazioni.
+}
+\end{column}
+\begin{column}{.48\textwidth}
+\ISISCard[ISISViolet][.96\linewidth]{Messaggio finale}{%
+Una grande presentazione di ricerca rende memorabile un'idea, dichiara contributi confutabili e collega ogni risultato all'evidenza.
+}
+\vspace{3mm}
+\ISISBadge[ISISLogoBlue]{Problema}\hspace{1mm}\ISISBadge[ISISGreen]{Idea}\hspace{1mm}\ISISBadge[ISISRed]{Evidenza}\hspace{1mm}\ISISBadge[ISISViolet]{Impatto}
+\end{column}
+\end{columns}
+\end{frame}
+
+\begin{frame}{Riferimenti}
+\ISISCard[ISISLogoBlue][.92\linewidth]{Fonte citata del template}{%
+Simon Peyton Jones. \emph{How to write a great research paper}. Microsoft Research, 2016.\\[1mm]
+\href{https://www.microsoft.com/en-us/research/wp-content/uploads/2016/07/How-to-write-a-great-research-paper.pdf}{microsoft.com/en-us/research/wp-content/uploads/2016/07/How-to-write-a-great-research-paper.pdf}
+}
+\centering
+\includegraphics[width=.20\linewidth]{topo.png}\par\vspace{2mm}
+{\fontsize{13pt}{16pt}\selectfont\color{ISISMuted}Domande \textperiodcentered\ Discussione \textperiodcentered\ Prossimi passi}
+\end{frame}
+
+\end{document}

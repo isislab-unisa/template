@@ -1,0 +1,49 @@
+% =============================================================================
+% THESIS METADATA
+% =============================================================================
+% The selected degree and language determine which metadata block is activated.
+% Edit the four title/subtitle variants below to keep one project ready for all
+% Bachelor/Master and English/Italian builds.
+
+\IfBachelorTF{%
+  \IfItalianTF{%
+    \thesistitle{Un moderno prototipo Edge-AI per ambienti intelligenti sicuri}
+    \thesissubtitle{Progettazione, implementazione e validazione sperimentale}
+    \degreecourse{Corso di Laurea in Informatica}
+    \thesislevel{Tesi di Laurea}
+    \department{Dipartimento di Informatica}
+    \keywords{edge AI; sicurezza informatica; IoT; valutazione sperimentale}
+  }{%
+    \thesistitle{A Modern Edge-AI Prototype for Secure Smart Environments}
+    \thesissubtitle{Design, implementation, and experimental validation}
+    \degreecourse{Bachelor's Degree in Computer Science}
+    \thesislevel{Bachelor Thesis}
+    \department{Department of Computer Science}
+    \keywords{edge AI; cybersecurity; IoT; experimental evaluation}
+  }%
+}{%
+  \IfItalianTF{%
+    \thesistitle{Intelligenza multimodale affidabile per sistemi cyber-fisici}
+    \thesissubtitle{Architettura, metodologia e valutazione riproducibile}
+    \degreecourse{Corso di Laurea Magistrale in Informatica}
+    \thesislevel{Tesi di Laurea Magistrale}
+    \department{Dipartimento di Informatica}
+    \keywords{apprendimento multimodale; IA affidabile; sistemi cyber-fisici; riproducibilità}
+  }{%
+    \thesistitle{Reliable Multimodal Intelligence for Cyber-Physical Systems}
+    \thesissubtitle{Architecture, methodology, and reproducible evaluation}
+    \degreecourse{Master's Degree in Computer Science}
+    \thesislevel{Master Thesis}
+    \department{Department of Computer Science}
+    \keywords{multimodal learning; trustworthy AI; cyber-physical systems; reproducibility}
+  }%
+}
+
+% Shared fields
+\thesisauthor{Student Name / Nome Studente}
+\studentid{0123456789}
+\supervisor{Prof. Supervisor Name / Nome Relatore}
+\cosupervisor{Dr. Co-supervisor Name / Nome Correlatore}
+\academicyear{2025--2026}
+\labname{ISISLab}
+\laburl{https://www.isislab.it}

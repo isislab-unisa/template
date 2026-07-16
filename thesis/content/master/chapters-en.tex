@@ -1,0 +1,122 @@
+\chapter{Introduction}
+\section{Research context}
+Cyber-physical systems combine sensing, computation, networking, and actuation. Multimodal learning can improve situational awareness, but it also raises questions about robustness, interpretability, privacy, and reproducibility \cite{goodfellow2016deep,nist2023airmf}.
+
+\begin{researchquestion}[RQ1 -- Robustness]
+How can a multimodal model remain reliable when one sensor stream is noisy, delayed, or unavailable?
+\end{researchquestion}
+
+\begin{researchquestion}[RQ2 -- Trust]
+Which design and evaluation choices make system behaviour more transparent to operators and auditors?
+\end{researchquestion}
+
+\section{Contributions}
+\begin{keypoint}[Contributions]
+\begin{enumerate}[label=\textcolor{ISISBlue}{\sffamily\bfseries C\arabic*.},leftmargin=2.2em]
+  \item A modular fusion architecture for heterogeneous sensor streams.
+  \item A reliability-aware training objective and missing-modality protocol.
+  \item A reproducible evaluation suite covering accuracy, calibration, latency, and robustness.
+\end{enumerate}
+\end{keypoint}
+
+\chapter{Background and Related Work}
+\section{Multimodal representation learning}
+Organise related work by research question rather than as a catalogue of papers. Compare assumptions, datasets, metrics, and limitations. Use a synthesis table when it helps the reader understand the gap addressed by the thesis.
+
+\begin{table}[htbp]
+\centering
+\caption{Illustrative comparison of related approaches.}
+\begin{tabularx}{\textwidth}{Ycccc}
+\toprule
+Approach & Fusion & Missing data & Calibration & Edge-ready\\
+\midrule
+Early fusion & Input & Limited & No & Partial\\
+Late fusion & Decision & Moderate & Optional & Yes\\
+Proposed method & Hybrid & Explicit & Yes & Yes\\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{Trustworthy AI}
+Trustworthiness is multidimensional. In this thesis, operational definitions should be linked to measurable properties such as calibration error, robustness under perturbation, latency bounds, and traceable experiment configurations.
+
+\chapter{Methodology}\label{ch:m-methodology}
+\section{System architecture}
+\Cref{fig:m-architecture} shows a demo research pipeline with data validation, modality-specific encoders, reliability-aware fusion, and an auditable decision layer.
+
+\begin{figure}[htbp]
+\centering
+\resizebox{0.98\textwidth}{!}{%
+\begin{tikzpicture}[node distance=10mm and 7mm, every node/.style={font=\sffamily\small}]
+\tikzset{
+ source/.style={rounded corners=3pt,minimum width=27mm,minimum height=11mm,align=center,fill=ISISLightBlue!12,draw=ISISLightBlue!60,text=ISISDeepBlue,font=\sffamily\bfseries},
+ core/.style={rounded corners=3pt,minimum width=34mm,minimum height=14mm,align=center,fill=ISISBlue!8,draw=ISISBlue!55,text=ISISDeepBlue,font=\sffamily\bfseries},
+ outputblock/.style={rounded corners=3pt,minimum width=29mm,minimum height=12mm,align=center,fill=UNISAGold!16,draw=UNISAGold!80!ISISDeepBlue,text=ISISDeepBlue,font=\sffamily\bfseries}}
+\node[source] (vision) {Visual stream};
+\node[source,below=of vision] (telemetry) {Telemetry};
+\node[source,below=of telemetry] (context) {Context};
+\node[core,right=18mm of telemetry] (validation) {Validation and\\quality scoring};
+\node[core,right=of validation] (encoders) {Modality-specific\\encoders};
+\node[core,right=of encoders] (fusion) {Reliability-aware\\fusion};
+\node[outputblock,right=of fusion] (decision) {Prediction and\\explanation};
+\foreach \s in {vision,telemetry,context}{\draw[-{Latex[length=2.7mm]},ISISLightBlue,line width=1.1pt] (\s.east) -- (validation.west);}
+\draw[-{Latex[length=2.7mm]},ISISBlue,line width=1.1pt] (validation) -- (encoders);
+\draw[-{Latex[length=2.7mm]},ISISBlue,line width=1.1pt] (encoders) -- (fusion);
+\draw[-{Latex[length=2.7mm]},ISISBlue,line width=1.1pt] (fusion) -- (decision);
+\end{tikzpicture}%
+}
+\caption{Illustrative multimodal architecture.}
+\label{fig:m-architecture}
+\end{figure}
+
+\section{Learning objective}
+A simplified objective combines task loss, calibration regularisation, and consistency under modality dropout:
+\begin{equation}
+\mathcal{L}=\mathcal{L}_{\mathrm{task}}+\lambda_{c}\mathcal{L}_{\mathrm{cal}}+\lambda_{m}\mathcal{L}_{\mathrm{missing}}.
+\end{equation}
+
+\begin{keypoint}[Reproducibility]
+State dataset versions, preprocessing, hyperparameters, random seeds, hardware, software libraries, and stopping criteria. Distinguish exploratory experiments from confirmatory evaluation.
+\end{keypoint}
+
+\chapter{Results and Discussion}\label{ch:m-results}
+\section{Headline results}
+\begin{center}
+\begin{minipage}{0.30\textwidth}\metric{94.2\%}{macro F1}{ISISBlue}\end{minipage}\hfill
+\begin{minipage}{0.30\textwidth}\metric{0.031}{calibration error}{ISISLightBlue}\end{minipage}\hfill
+\begin{minipage}{0.30\textwidth}\metric{27 ms}{median latency}{ISISDeepBlue}\end{minipage}
+\end{center}
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+width=0.86\textwidth,height=6.3cm,
+xlabel={Missing-modality rate (\%)},ylabel={Macro F1 (\%)},
+xmin=0,xmax=50,ymin=60,ymax=100,
+legend pos=south west,
+legend style={draw=none,fill=none,font=\sffamily\small},
+axis line style={ISISLine},tick style={ISISLine},
+grid=major,grid style={ISISLine},
+label style={font=\sffamily\small,color=ISISMuted},
+tick label style={font=\sffamily\small,color=ISISInk}]
+\addplot[very thick,ISISMuted,mark=square*] coordinates {(0,93) (10,86) (20,78) (30,69) (40,63) (50,60)};
+\addplot[very thick,ISISBlue,mark=*] coordinates {(0,94.2) (10,92.5) (20,89.3) (30,85.1) (40,80.2) (50,74.4)};
+\legend{Baseline,Proposed}
+\end{axis}
+\end{tikzpicture}
+\caption{Illustrative robustness under missing modalities.}
+\end{figure}
+
+\begin{resultbox}[Main finding]
+The proposed model preserves a larger fraction of its nominal performance as modality availability decreases. Replace this placeholder with a statistically grounded interpretation of real experiments.
+\end{resultbox}
+
+\section{Threats to validity}
+Discuss internal, construct, external, and conclusion validity. Report negative results and failure cases where they improve the scientific account.
+
+\chapter{Conclusions and Outlook}
+Answer each research question explicitly, summarise the original contributions, and connect the findings to the broader research context. Separate evidence-supported conclusions from hypotheses for future work.
+
+\section{Future directions}
+Possible extensions include online adaptation, formal uncertainty guarantees, privacy-preserving learning, field deployment, and human-centred evaluation with operators.

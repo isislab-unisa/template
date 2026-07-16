@@ -1,0 +1,275 @@
+\documentclass[aspectratio=169,10pt]{beamer}
+\usepackage{isislabtheme}
+\usepackage{hyperref}
+
+\title{Research Paper Presentation Template}
+\subtitle{A reusable ISISLab/UNISA Beamer theme for clear scientific storytelling}
+\author{Presenter Name}
+\institute{Department of Computer Science, Università degli Studi di Salerno}
+\date{\today}
+
+% Section-opening slides are intentionally explicit, not automatic.
+% Put \ISISSectionIntro immediately after each \section declaration and customize:
+% [number]{title}[subtitle][accent color]{custom content}.
+
+\begin{document}
+
+% -----------------------------------------------------------------------------
+% Title page: department logo is inserted from the theme at top-right.
+\begin{frame}[plain]
+  \titlepage
+
+\end{frame}
+
+\begin{frame}{\ISISAgendaName}
+\begin{columns}[T,onlytextwidth]
+  \begin{column}{.48\textwidth}
+    \tableofcontents[hideallsubsections,sections={1-3}]
+  \end{column}
+  \begin{column}{.48\textwidth}
+    \tableofcontents[hideallsubsections,sections={4-6}]
+  \end{column}
+\end{columns}
+\end{frame}
+
+\section{Motivation and Problem}
+\ISISSectionIntro[1]{Motivation and Problem}[Define the research question and why it matters][ISISGold]{%
+  \ISISBadge[ISISRed]{Problem}\quad State the gap, audience, and practical consequence.
+}
+\subsection{Research story}
+
+\begin{frame}{One clear research story}
+\begin{columns}[T,onlytextwidth]
+\begin{column}{.45\textwidth}
+\ISISCard[ISISLogoBlue][.92\linewidth]{Narrative flow}{%
+\ISISVisualList[ISISLogoBlue]{Here is the problem, It matters to a clear audience, There is a gap in current work, Our idea addresses the gap}%
+}
+\end{column}
+\begin{column}{.51\textwidth}
+\ISISCard[ISISGreen][.94\linewidth]{Source guidance}{%
+A strong research paper centers on one reusable idea and makes the claim explicit. This demo follows the Microsoft Research writing structure: problem, idea, evidence, comparison, conclusion.\footnote{Inspired by Simon Peyton Jones, \href{https://www.microsoft.com/en-us/research/wp-content/uploads/2016/07/How-to-write-a-great-research-paper.pdf}{\emph{How to write a great research paper}}, Microsoft Research, 2016.}%
+}
+\end{column}
+\end{columns}
+\end{frame}
+
+\subsection{Problem statement}
+\begin{frame}{Problem and contributions}
+\begin{columns}[T,onlytextwidth]
+\begin{column}{.48\textwidth}
+\ISISCard[ISISRed][.95\linewidth]{Problem}{%
+Existing systems are accurate in controlled settings, but performance degrades when the data distribution changes. This creates unreliable outcomes in real deployments.
+}
+\vspace{3mm}
+\ISISCard[ISISLogoBlue][.95\linewidth]{Research question}{%
+Can we design a method that remains accurate, efficient, and interpretable under realistic distribution shifts?
+}
+\end{column}
+\begin{column}{.48\textwidth}
+\ISISCard[ISISGreen][.95\linewidth]{Contributions}{%
+\ISISVisualList[ISISGreen]{A new robust learning formulation, A reproducible experimental protocol, Evidence across three benchmark scenarios}%
+}
+\end{column}
+\end{columns}
+\end{frame}
+
+\section{Related Work and Gap}
+\ISISSectionIntro[02]{Related Work and Gap}[Position the contribution without turning the talk into a bibliography][ISISCyan]{%
+  \ISISBadge[ISISCyan]{Positioning}\quad Compare families of approaches around the unresolved gap.
+}
+\subsection{Positioning}
+\begin{frame}{Where the paper fits}
+\begin{columns}[T,onlytextwidth]
+\begin{column}{.36\textwidth}
+\vspace{4mm}
+\ISISMetricCard[ISISLogoBlue][.78\linewidth]{12}{core papers}\vspace{8mm}
+\ISISMetricCard[ISISViolet][.78\linewidth]{3}{main families}
+\end{column}
+\begin{column}{.60\textwidth}
+\ISISCard[ISISLogoBlue][.95\linewidth]{Comparison logic}{%
+Avoid listing related work too early. First explain the problem and the idea; then compare alternatives around the gap the paper addresses.
+}
+\vspace{3mm}
+\ISISCard[ISISViolet][.95\linewidth]{Gap statement}{%
+Prior work optimizes either accuracy or robustness, but does not jointly report reliability, computational cost, and interpretability.
+}
+\end{column}
+\end{columns}
+\end{frame}
+
+\subsection{Evidence plan}
+\begin{frame}{Claims must map to evidence}
+\centering
+\ISISPipeline[3]{Claim/What we promise, Method/How we test, Evidence/Data and analysis, Interpretation/What it means}
+\vspace{5mm}
+\ISISCard[ISISGreen][.76\linewidth]{Evidence checklist}{%
+Every claim introduced in the first part of the presentation should be revisited with a figure, table, proof sketch, or experiment in the results section.
+}
+\end{frame}
+
+\section{Method}
+\ISISSectionIntro[03]{Method}[Move from intuition to a reproducible algorithm][ISISGreen]{%
+  \ISISBadge[ISISGreen]{Core idea}\quad Explain inputs, transformations, assumptions, and outputs.
+}
+\subsection{Overview}
+\begin{frame}{Method pipeline}
+\centering
+\ISISPipeline[2]{Input/Raw data, Model/Proposed method, Validation/Metrics, Release/Code and data}
+\vspace{5mm}
+\begin{columns}[T,onlytextwidth]
+\begin{column}{.47\textwidth}
+\ISISCard[ISISLogoBlue][.96\linewidth]{Design principle}{%
+Separate the core idea from implementation details. Show the intuition first, then the formal or algorithmic specification.
+}
+\end{column}
+\begin{column}{.47\textwidth}
+\ISISCard[ISISRed][.96\linewidth]{Method slide rule}{%
+One pipeline slide should explain how data becomes evidence. Later slides can zoom into each module.
+}
+\end{column}
+\end{columns}
+\end{frame}
+
+\subsection{Algorithmic detail}
+\begin{frame}{Algorithmic components}
+\begin{columns}[T,onlytextwidth]
+\begin{column}{.32\textwidth}
+\ISISCard[ISISLogoBlue][.92\linewidth]{Step 1}{Represent each instance with stable and shift-sensitive features.}
+\end{column}
+\begin{column}{.32\textwidth}
+\ISISCard[ISISGreen][.92\linewidth]{Step 2}{Optimize a robust objective that penalizes unstable shortcuts.}
+\end{column}
+\begin{column}{.32\textwidth}
+\ISISCard[ISISViolet][.92\linewidth]{Step 3}{Explain decisions with component-level attribution.}
+\end{column}
+\end{columns}
+\vspace{4mm}
+\ISISCard[ISISRed][.86\linewidth]{Take-home message}{The method is designed to preserve performance when the test environment differs from the training environment.}
+\end{frame}
+
+\section{Experimental Design}
+\ISISSectionIntro[04]{Experimental Design}[Make the evidence credible before showing the results][ISISViolet]{%
+  \ISISBadge[ISISViolet]{Protocol}\quad Specify data, baselines, metrics, controls, and reproducibility.
+}
+\subsection{Datasets and metrics}
+\begin{frame}{Experimental design}
+\begin{columns}[T,onlytextwidth]
+\begin{column}{.47\textwidth}
+\ISISCard[ISISLogoBlue][.95\linewidth]{Evaluation matrix}{%
+\ISISVisualList[ISISLogoBlue]{Three datasets, Two distribution shifts, Accuracy and robustness metrics, Runtime and calibration}%
+}
+\end{column}
+\begin{column}{.49\textwidth}
+\ISISCard[ISISGreen][.95\linewidth]{Protocol}{%
+Use the same train, validation, and test partitions for every baseline. Report average and variance across repeated runs.
+}
+\vspace{3mm}
+\ISISMetricCard[ISISLogoBlue][.36\linewidth]{3}{datasets}\hspace{2mm}
+\ISISMetricCard[ISISGreen][.36\linewidth]{5}{baselines}
+\end{column}
+\end{columns}
+\end{frame}
+
+\subsection{Reproducibility}
+\begin{frame}{Reproducibility package}
+\centering
+\ISISPipeline[4]{Data/Splits, Code/Scripts, Models/Checkpoints, Report/Figures}
+\vspace{6mm}
+\ISISCard[ISISViolet][.78\linewidth]{Artifact policy}{%
+Make the presentation point to the same artifacts as the paper: repository, data card, environment file, and evaluation scripts.
+}
+\end{frame}
+
+\section{Results}
+\ISISSectionIntro[05]{Results}[Lead with the main finding, then test why it holds][ISISRed]{%
+  \ISISBadge[ISISRed]{Evidence}\quad Main result, ablation, uncertainty, and failure cases.
+}
+\subsection{Main quantitative result}
+\begin{frame}{Main result: robustness improves}
+\begin{columns}[T,onlytextwidth]
+\begin{column}{.34\textwidth}
+\vspace{5mm}
+\ISISMetricCard[ISISLogoBlue][.82\linewidth]{+18\%}{relative robustness gain}\vspace{8mm}
+\ISISMetricCard[ISISRed][.82\linewidth]{42 ms}{median latency}
+\end{column}
+\begin{column}{.62\textwidth}
+\ISISCard[ISISLogoBlue][.95\linewidth]{Demo bar chart}{%
+\centering\ISISBarChart[ISISLogoBlue][78][32]{Base/54,Aug/61,Ours/72}{Accuracy under shift}
+}
+\end{column}
+\end{columns}
+\end{frame}
+
+\subsection{Ablation and trend}
+\begin{frame}{Ablation and training dynamics}
+\begin{columns}[T,onlytextwidth]
+\begin{column}{.49\textwidth}
+\ISISCard[ISISGreen][.95\linewidth]{Ablation}{%
+\centering\ISISBarChart[ISISGreen][70][30]{Full/74,NoReg/66,NoExpl/69}{Robust accuracy}
+}
+\end{column}
+\begin{column}{.49\textwidth}
+\ISISCard[ISISRed][.95\linewidth]{Trend}{%
+\centering\ISISLineChart[ISISRed][70][30]{(0,7) (12,13) (24,19) (38,24) (52,27) (68,29)}{Validation score over epochs}
+}
+\end{column}
+\end{columns}
+\end{frame}
+
+
+
+\section{Discussion and Conclusion}
+\ISISSectionIntro[06]{Discussion and Conclusion}[Interpret the evidence and close the research story][ISISGold]{%
+  \ISISBadge[ISISGold]{Takeaway}\quad Limitations, implications, future work, and final message.
+}
+\subsection{Limitations}
+\begin{frame}{Limitations and threats to validity}
+\begin{columns}[T,onlytextwidth]
+\begin{column}{.47\textwidth}
+\ISISCard[ISISRed][.95\linewidth]{Limitations}{%
+\ISISVisualList[ISISRed]{Only medium-scale datasets, Synthetic shift may not capture all deployment cases, Interpretability metric is task dependent}%
+}
+\end{column}
+\begin{column}{.47\textwidth}
+\ISISCard[ISISGreen][.95\linewidth]{Mitigations}{%
+\ISISVisualList[ISISGreen]{Release scripts for replication, Include diverse baselines, Report failure cases rather than hiding them}%
+}
+\end{column}
+\end{columns}
+\end{frame}
+
+
+\subsection{Takeaways}
+\begin{frame}{Conclusion}
+\begin{columns}[T,onlytextwidth]
+\begin{column}{.48\textwidth}
+\ISISCard[ISISLogoBlue][.96\linewidth]{Answer to the research question}{%
+The method improves robustness under distribution shift while keeping runtime practical and explanations inspectable.
+}
+\vspace{3mm}
+\ISISCard[ISISGreen][.96\linewidth]{Future work}{%
+Scale to larger datasets, validate with field data, and add human-centered evaluation of explanations.
+}
+\end{column}
+\begin{column}{.48\textwidth}
+\ISISCard[ISISViolet][.96\linewidth]{Final message}{%
+A great research presentation makes one idea memorable, states refutable contributions, and connects every result back to evidence.
+}
+\vspace{3mm}
+\ISISBadge[ISISLogoBlue]{Problem}\hspace{1mm}\ISISBadge[ISISGreen]{Idea}\hspace{1mm}\ISISBadge[ISISRed]{Evidence}\hspace{1mm}\ISISBadge[ISISViolet]{Impact}
+\end{column}
+\end{columns}
+\end{frame}
+
+\begin{frame}{References}
+\ISISCard[ISISLogoBlue][.92\linewidth]{Cited template source}{%
+Simon Peyton Jones. \emph{How to write a great research paper}. Microsoft Research, 2016.\\[1mm]
+\href{https://www.microsoft.com/en-us/research/wp-content/uploads/2016/07/How-to-write-a-great-research-paper.pdf}{microsoft.com/en-us/research/wp-content/uploads/2016/07/How-to-write-a-great-research-paper.pdf}
+}
+\centering
+\includegraphics[width=.20\linewidth]{topo.png}\par\vspace{2mm}
+{\fontsize{13pt}{16pt}\selectfont\color{ISISMuted}Questions \textperiodcentered\ Discussion \textperiodcentered\ Next steps}
+\end{frame}
+
+
+\end{document}
