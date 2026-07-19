@@ -16,7 +16,7 @@
 \newcommand{\ISISAgendaName}{\ifISISItalian Indice\else Agenda\fi}
 \newcommand{\ISISSectionName}{\ifISISItalian SEZIONE\else SECTION\fi}
 \newcommand{\ISISDepartmentName}{\ifISISItalian Dipartimento di Informatica\else Department of Computer Science\fi}
-\newcommand{\ISISUniversityName}{Università degli Studi di Salerno}
+\newcommand{\ISISUniversityName}{\ifISISItalian Università degli Studi di Salerno\else Università degli Studi di Salerno (Italy) \fi}
 
 \RequirePackage{tikz}
 \RequirePackage{graphicx}
@@ -140,18 +140,39 @@
     \insertframetitle
   \end{beamercolorbox}
   \begin{tikzpicture}[remember picture,overlay]
-    \node[anchor=north east] at ([xshift=-5mm,yshift=-3mm]current page.north east) {\includegraphics[width=14mm]{topo.png}};
-    \draw[ISISSilver,line width=.50pt] ([xshift=6mm,yshift=-17.4mm]current page.north west) -- ([xshift=-6mm,yshift=-17.4mm]current page.north east);
+   \node[anchor=north east] at ([xshift=-5mm,yshift=-1mm]current page.north east){%
+   	\includegraphics[width=10mm]{topo.png}
+    };
+    \draw[ISISSilver,line width=.50pt] ([xshift=6mm,yshift=-14mm]current page.north west) -- ([xshift=-6mm,yshift=-14mm]current page.north east);
   \end{tikzpicture}
     
  
 }
 
+
+\newcommand{\drawclock}[1]{
+\begin{tikzpicture}[line cap=round,line width=1pt]
+\filldraw [fill=white] (0,0) circle (0.25cm);
+\foreach \angle in
+{0, 30, 60, 90, 120, 150, 180,
+210, 240, 270, 300, 330}
+{
+\draw[line width=0.5pt] (\angle:0.225cm) -- (\angle:0.25cm);
+}
+\foreach \angle in {0,90,180,270}
+\draw[line width=0.5pt] (\angle:0.2cm) -- (\angle:0.25cm);
+\draw (0,0) -- (#1:0.2cm); % percentage over the total
+\end{tikzpicture}
+}
+
+
 \setbeamertemplate{footline}{%
   \begin{tikzpicture}[remember picture,overlay]
-    \node[anchor=south west,text=ISISSteel] at ([xshift=6mm,yshift=2.6mm]current page.south west) {\inserttitle\quad\textperiodcentered\quad\insertsection};
-    \draw[ISISBlue,line width=1.1pt] ([xshift=-14mm,yshift=3.2mm]current page.south east) -- ([xshift=-8mm,yshift=3.2mm]current page.south east);
-    \node[anchor=south east,text=ISISBlue,font=\bfseries] at ([xshift=-3mm,yshift=2.3mm]current page.south east) {\insertframenumber};
+    \node[anchor=south west,text=ISISSteel] at ([xshift=1mm,yshift=0.5mm]current page.south west) {\inserttitle\quad\textperiodcentered\quad\insertsection};
+%    \draw[ISISBlue,line width=1.1pt] ([xshift=-14mm,yshift=3.2mm]current page.south east) -- ([xshift=-8mm,yshift=3.2mm]current page.south east);
+%    \node[anchor=south east,text=ISISBlue,font=\bfseries] at ([xshift=-3mm,yshift=2.3mm]current page.south east) {\insertframenumber};
+\pgfmathsetmacro{\xdkl}{90-(\theframenumber/\inserttotalframenumber)*360}
+    \node[anchor=south east,text=ISISSteel] at ([xshift=+0mm,yshift=0.5mm]current page.south east) {\theframenumber/\inserttotalframenumber\drawclock{\xdkl}} ;
   \end{tikzpicture}%
 }
 
@@ -169,7 +190,7 @@
     \node[fill=white,draw=ISISSilver!55,rounded corners=2.3mm,inner sep=0mm,drop shadow={shadow xshift=.6mm,shadow yshift=-.6mm,opacity=.08}] {%
       \begin{minipage}{#2}
         \colorbox{#1}{\begin{minipage}{\dimexpr\linewidth-2\fboxsep\relax}\color{white}\fontsize{8pt}{9pt}\selectfont\bfseries #3\end{minipage}}
-        \vspace{1.5mm}\hspace{2.3mm}\begin{minipage}{\dimexpr\linewidth-4.6mm\relax}\fontsize{9pt}{11pt}\selectfont #4\end{minipage}\vspace{2.1mm}
+        \vspace{1.5mm}\hspace{2.3mm}\begin{minipage}{\dimexpr\linewidth-4.6mm\relax}\fontsize{9pt}{11pt}\selectfont \vspace{1.5mm}#4\end{minipage}\vspace{1.1mm}
       \end{minipage}};
   \end{tikzpicture}%
 }
@@ -279,8 +300,11 @@
     \node[anchor=north west] at ([xshift=3mm,yshift=-3mm]current page.north west) {\includegraphics[width=18mm]{logo_standard_shadow.png}};
     \node[anchor=north east] at ([xshift=-5mm,yshift=-4mm]current page.north east) {\includegraphics[width=16mm]{dipartimento_informatica_logo.png}};
     \node[anchor=north east,opacity=.10] at ([xshift=0mm,yshift=-25mm]current page.north east) {\includegraphics[width=.5\paperwidth]{topo.png}};
-    \node at ([xshift=-115mm,yshift=-70mm]current page.north east) {\ISISBadge[ISISRed]{\ISISDepartmentName}\hspace{1mm}%
-  \ISISBadge[ISISGold]{\ISISUniversityName}};
+  \node at ([xshift=-105mm,yshift=-70mm]current page.north east) {%
+     \ISISBadge[ISISLogoBlue]{ISISLab}\hspace{1mm}%
+     \ISISBadge[ISISRed]{\ISISDepartmentName}\hspace{1mm}%
+     \ISISBadge[ISISGold]{\ISISUniversityName}%
+  };
   \end{tikzpicture}
 
   \vspace*{24mm}

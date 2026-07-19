@@ -2,7 +2,7 @@
 \usepackage{isislabtheme}
 \usepackage{hyperref}
 
-\title{Research Paper Presentation Templatex}
+\title{Research Paper Presentation Template}
 \subtitle{A reusable ISISLab/UNISA Beamer theme for clear scientific storytelling}
 \author{Presenter Name}
 \institute{Department of Computer Science, Università degli Studi di Salerno}
@@ -39,10 +39,11 @@
 \subsection{Research story}
 
 \begin{frame}{One clear research story}
+\vspace*{-1truecm}% manual positioning for dense slides
 \begin{columns}[T,onlytextwidth]
 \begin{column}{.45\textwidth}
 \ISISCard[ISISLogoBlue][.92\linewidth]{Narrative flow}{%
-\ISISVisualList[ISISLogoBlue]{Here is the problem, It matters to a clear audience, There is a gap in current work, Our idea addresses the gap}%
+\ISISVisualList[ISISLogoBlue]{Here is the problem, It matters to a clear audience, There is a gap in current work}%
 }
 \end{column}
 \begin{column}{.51\textwidth}
@@ -55,12 +56,14 @@ A strong research paper centers on one reusable idea and makes the claim explici
 
 \subsection{Problem statement}
 \begin{frame}{Problem and contributions}
+\vspace*{-1truecm}% manual positioning for dense slides
 \begin{columns}[T,onlytextwidth]
 \begin{column}{.48\textwidth}
 \ISISCard[ISISRed][.95\linewidth]{Problem}{%
 Existing systems are accurate in controlled settings, but performance degrades when the data distribution changes. This creates unreliable outcomes in real deployments.
 }
-\vspace{3mm}
+\medskip
+
 \ISISCard[ISISLogoBlue][.95\linewidth]{Research question}{%
 Can we design a method that remains accurate, efficient, and interpretable under realistic distribution shifts?
 }
@@ -79,17 +82,21 @@ Can we design a method that remains accurate, efficient, and interpretable under
 }
 \subsection{Positioning}
 \begin{frame}{Where the paper fits}
+\vspace*{-1truecm}% manual positioning for dense slides
 \begin{columns}[T,onlytextwidth]
 \begin{column}{.36\textwidth}
-\vspace{4mm}
-\ISISMetricCard[ISISLogoBlue][.78\linewidth]{12}{core papers}\vspace{8mm}
+\medskip %\vspace{4mm} % use it and tune it if you need more space
+\ISISMetricCard[ISISLogoBlue][.78\linewidth]{12}{core papers}
+\medskip %\vspace{4mm} % use it and tune it if you need more space
+
 \ISISMetricCard[ISISViolet][.78\linewidth]{3}{main families}
 \end{column}
 \begin{column}{.60\textwidth}
 \ISISCard[ISISLogoBlue][.95\linewidth]{Comparison logic}{%
 Avoid listing related work too early. First explain the problem and the idea; then compare alternatives around the gap the paper addresses.
 }
-\vspace{3mm}
+\medskip
+
 \ISISCard[ISISViolet][.95\linewidth]{Gap statement}{%
 Prior work optimizes either accuracy or robustness, but does not jointly report reliability, computational cost, and interpretability.
 }
@@ -101,7 +108,8 @@ Prior work optimizes either accuracy or robustness, but does not jointly report 
 \begin{frame}{Claims must map to evidence}
 \centering
 \ISISPipeline[3]{Claim/What we promise, Method/How we test, Evidence/Data and analysis, Interpretation/What it means}
-\vspace{5mm}
+\medskip %\vspace{4mm} % use it and tune it if you need more space
+
 \ISISCard[ISISGreen][.76\linewidth]{Evidence checklist}{%
 Every claim introduced in the first part of the presentation should be revisited with a figure, table, proof sketch, or experiment in the results section.
 }
