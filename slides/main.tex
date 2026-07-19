@@ -22,6 +22,7 @@
 \end{frame}
 
 \begin{frame}{\ISISAgendaName}
+\vspace*{-2truecm}% manual positioning for dense slides
 \begin{columns}[T,onlytextwidth]
   \begin{column}{.48\textwidth}
     \tableofcontents[hideallsubsections,sections={1-3}]
@@ -43,7 +44,7 @@
 \begin{columns}[T,onlytextwidth]
 \begin{column}{.45\textwidth}
 \ISISCard[ISISLogoBlue][.92\linewidth]{Narrative flow}{%
-\ISISVisualList[ISISLogoBlue]{Here is the problem, It matters to a clear audience, There is a gap in current work}%
+\ISISVisualList[ISISLogoBlue]{Here is the problem, It matters to a clear audience, There is a gap in current work}
 }
 \end{column}
 \begin{column}{.51\textwidth}
@@ -85,9 +86,10 @@ Can we design a method that remains accurate, efficient, and interpretable under
 \vspace*{-1truecm}% manual positioning for dense slides
 \begin{columns}[T,onlytextwidth]
 \begin{column}{.36\textwidth}
-\medskip %\vspace{4mm} % use it and tune it if you need more space
+\medskip % use \bigskip or \vspace{4mm} (and tune it) if you need more space
+
 \ISISMetricCard[ISISLogoBlue][.78\linewidth]{12}{core papers}
-\medskip %\vspace{4mm} % use it and tune it if you need more space
+\bigskip % use \bigskip or \vspace{4mm} (and tune it) if you need more space
 
 \ISISMetricCard[ISISViolet][.78\linewidth]{3}{main families}
 \end{column}
@@ -106,9 +108,10 @@ Prior work optimizes either accuracy or robustness, but does not jointly report 
 
 \subsection{Evidence plan}
 \begin{frame}{Claims must map to evidence}
+\vspace*{-1truecm}% manual positioning for dense slides
 \centering
 \ISISPipeline[3]{Claim/What we promise, Method/How we test, Evidence/Data and analysis, Interpretation/What it means}
-\medskip %\vspace{4mm} % use it and tune it if you need more space
+\medskip % use \bigskip or \vspace{4mm} (and tune it) if you need more space
 
 \ISISCard[ISISGreen][.76\linewidth]{Evidence checklist}{%
 Every claim introduced in the first part of the presentation should be revisited with a figure, table, proof sketch, or experiment in the results section.
@@ -121,9 +124,11 @@ Every claim introduced in the first part of the presentation should be revisited
 }
 \subsection{Overview}
 \begin{frame}{Method pipeline}
+\vspace*{-1truecm}% manual positioning for dense slides
 \centering
 \ISISPipeline[2]{Input/Raw data, Model/Proposed method, Validation/Metrics, Release/Code and data}
-\vspace{5mm}
+\medskip % use \bigskip or \vspace{4mm} (and tune it) if you need more space
+
 \begin{columns}[T,onlytextwidth]
 \begin{column}{.47\textwidth}
 \ISISCard[ISISLogoBlue][.96\linewidth]{Design principle}{%
@@ -140,19 +145,21 @@ One pipeline slide should explain how data becomes evidence. Later slides can zo
 
 \subsection{Algorithmic detail}
 \begin{frame}{Algorithmic components}
+\vspace*{-1truecm}% manual positioning for dense slides
 \begin{columns}[T,onlytextwidth]
 \begin{column}{.32\textwidth}
-\ISISCard[ISISLogoBlue][.92\linewidth]{Step 1}{Represent each instance with stable and shift-sensitive features.}
+\ISISCard[ISISLogoBlue-Bright-Light1][.92\linewidth]{Step 1}{Represent each instance with stable and shift-sensitive features.}
 \end{column}
 \begin{column}{.32\textwidth}
-\ISISCard[ISISGreen][.92\linewidth]{Step 2}{Optimize a robust objective that penalizes unstable shortcuts.}
+\ISISCard[ISISLogoBlue-Bright-Light2][.92\linewidth]{Step 2}{Optimize a robust objective that penalizes unstable shortcuts.}
 \end{column}
 \begin{column}{.32\textwidth}
-\ISISCard[ISISViolet][.92\linewidth]{Step 3}{Explain decisions with component-level attribution.}
+\ISISCard[ISISLogoBlue-Bright-Dark2][.92\linewidth]{Step 3}{Explain decisions with component-level attribution.}
 \end{column}
 \end{columns}
-\vspace{4mm}
-\ISISCard[ISISRed][.86\linewidth]{Take-home message}{The method is designed to preserve performance when the test environment differs from the training environment.}
+\medskip % use \bigskip or \vspace{4mm} (and tune it) if you need more space
+
+\ISISCard[ISISRed][.975\linewidth]{Take-home message}{The method is designed to preserve performance when the test environment differs from the training environment.}
 \end{frame}
 
 \section{Experimental Design}
@@ -161,6 +168,7 @@ One pipeline slide should explain how data becomes evidence. Later slides can zo
 }
 \subsection{Datasets and metrics}
 \begin{frame}{Experimental design}
+\vspace*{-1truecm}% manual positioning for dense slides
 \begin{columns}[T,onlytextwidth]
 \begin{column}{.47\textwidth}
 \ISISCard[ISISLogoBlue][.95\linewidth]{Evaluation matrix}{%
@@ -171,7 +179,8 @@ One pipeline slide should explain how data becomes evidence. Later slides can zo
 \ISISCard[ISISGreen][.95\linewidth]{Protocol}{%
 Use the same train, validation, and test partitions for every baseline. Report average and variance across repeated runs.
 }
-\vspace{3mm}
+\medskip % use \bigskip or \vspace{4mm} (and tune it) if you need more space
+
 \ISISMetricCard[ISISLogoBlue][.36\linewidth]{3}{datasets}\hspace{2mm}
 \ISISMetricCard[ISISGreen][.36\linewidth]{5}{baselines}
 \end{column}
@@ -180,9 +189,11 @@ Use the same train, validation, and test partitions for every baseline. Report a
 
 \subsection{Reproducibility}
 \begin{frame}{Reproducibility package}
+\vspace*{-1truecm}% manual positioning for dense slides
 \centering
 \ISISPipeline[4]{Data/Splits, Code/Scripts, Models/Checkpoints, Report/Figures}
-\vspace{6mm}
+\medskip % use \bigskip or \vspace{4mm} (and tune it) if you need more space
+
 \ISISCard[ISISViolet][.78\linewidth]{Artifact policy}{%
 Make the presentation point to the same artifacts as the paper: repository, data card, environment file, and evaluation scripts.
 }
@@ -194,10 +205,14 @@ Make the presentation point to the same artifacts as the paper: repository, data
 }
 \subsection{Main quantitative result}
 \begin{frame}{Main result: robustness improves}
+\vspace*{-1truecm}% manual positioning for dense slides
 \begin{columns}[T,onlytextwidth]
 \begin{column}{.34\textwidth}
-\vspace{5mm}
-\ISISMetricCard[ISISLogoBlue][.82\linewidth]{+18\%}{relative robustness gain}\vspace{8mm}
+\medskip % use \bigskip or \vspace{4mm} (and tune it) if you need more space
+
+\ISISMetricCard[ISISLogoBlue][.82\linewidth]{+18\%}{relative robustness gain}
+\medskip % use \bigskip or \vspace{4mm} (and tune it) if you need more space
+
 \ISISMetricCard[ISISRed][.82\linewidth]{42 ms}{median latency}
 \end{column}
 \begin{column}{.62\textwidth}
@@ -210,15 +225,16 @@ Make the presentation point to the same artifacts as the paper: repository, data
 
 \subsection{Ablation and trend}
 \begin{frame}{Ablation and training dynamics}
+\vspace*{-1truecm}% manual positioning for dense slides
 \begin{columns}[T,onlytextwidth]
 \begin{column}{.49\textwidth}
 \ISISCard[ISISGreen][.95\linewidth]{Ablation}{%
-\centering\ISISBarChart[ISISGreen][70][30]{Full/74,NoReg/66,NoExpl/69}{Robust accuracy}
+\centering\ISISBarChart[ISISGreen][60][30]{Full/74,NoReg/66,NoExpl/69}{Robust accuracy}
 }
 \end{column}
 \begin{column}{.49\textwidth}
 \ISISCard[ISISRed][.95\linewidth]{Trend}{%
-\centering\ISISLineChart[ISISRed][70][30]{(0,7) (12,13) (24,19) (38,24) (52,27) (68,29)}{Validation score over epochs}
+\centering\ISISLineChart[ISISRed][60][30]{(0,7) (12,13) (24,19) (38,24) (52,27) (60,29)}{Validation score over epochs}
 }
 \end{column}
 \end{columns}
@@ -232,6 +248,7 @@ Make the presentation point to the same artifacts as the paper: repository, data
 }
 \subsection{Limitations}
 \begin{frame}{Limitations and threats to validity}
+\vspace*{-1truecm}% manual positioning for dense slides
 \begin{columns}[T,onlytextwidth]
 \begin{column}{.47\textwidth}
 \ISISCard[ISISRed][.95\linewidth]{Limitations}{%
@@ -249,12 +266,14 @@ Make the presentation point to the same artifacts as the paper: repository, data
 
 \subsection{Takeaways}
 \begin{frame}{Conclusion}
+\vspace*{-1truecm}% manual positioning for dense slides
 \begin{columns}[T,onlytextwidth]
 \begin{column}{.48\textwidth}
 \ISISCard[ISISLogoBlue][.96\linewidth]{Answer to the research question}{%
 The method improves robustness under distribution shift while keeping runtime practical and explanations inspectable.
 }
-\vspace{3mm}
+\medskip % use \bigskip or \vspace{4mm} (and tune it) if you need more space
+
 \ISISCard[ISISGreen][.96\linewidth]{Future work}{%
 Scale to larger datasets, validate with field data, and add human-centered evaluation of explanations.
 }
@@ -263,7 +282,8 @@ Scale to larger datasets, validate with field data, and add human-centered evalu
 \ISISCard[ISISViolet][.96\linewidth]{Final message}{%
 A great research presentation makes one idea memorable, states refutable contributions, and connects every result back to evidence.
 }
-\vspace{3mm}
+\medskip % use \bigskip or \vspace{4mm} (and tune it) if you need more space
+
 \ISISBadge[ISISLogoBlue]{Problem}\hspace{1mm}\ISISBadge[ISISGreen]{Idea}\hspace{1mm}\ISISBadge[ISISRed]{Evidence}\hspace{1mm}\ISISBadge[ISISViolet]{Impact}
 \end{column}
 \end{columns}

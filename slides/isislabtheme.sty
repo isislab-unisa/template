@@ -33,6 +33,7 @@
 \definecolor{ISISNavy}{HTML}{082E5F}
 \definecolor{ISISBlue}{HTML}{0B62C4}
 \definecolor{ISISLogoBlue}{HTML}{0098D5}
+\definecolor{ISISLogoLightBlue}{HTML}{3386cd}
 \definecolor{ISISAzure}{HTML}{3B91D9}
 \definecolor{ISISCyan}{HTML}{59B8F7}
 \definecolor{ISISSteel}{HTML}{6E879E}
@@ -43,6 +44,23 @@
 \definecolor{ISISMuted}{HTML}{556878}
 \definecolor{ISISGreen}{HTML}{2CA58D}
 \definecolor{ISISViolet}{HTML}{6457A6}
+
+% Color palette compatible with ISISLogoBlue
+\definecolor{ISISLogoBlue-Bright-Dark1}{HTML}{030A8C}
+\definecolor{ISISLogoBlue-Bright-Dark2}{HTML}{0511F2}
+\definecolor{ISISLogoBlue-Bright-Light1}{HTML}{0B6BBF}
+\definecolor{ISISLogoBlue-Bright-Light2}{HTML}{3B9CD9}
+
+\definecolor{ISISLogoBlue-Colourful-Dark1}{HTML}{072359}
+\definecolor{ISISLogoBlue-Colourful-Dark2}{HTML}{030A8C}
+\definecolor{ISISLogoBlue-Colourful-Light1}{HTML}{0B6BBF}
+\definecolor{ISISLogoBlue-Colourful-Light2}{HTML}{3B9CD9}
+
+\definecolor{ISISLogoBlue-Deep-Dark1}{HTML}{020659}
+\definecolor{ISISLogoBlue-Deep-Dark2}{HTML}{072359}
+\definecolor{ISISLogoBlue-Deep-Light1}{HTML}{0B6BBF}
+\definecolor{ISISLogoBlue-Deep-Light2}{HTML}{3B9CD9}
+
 
 \mode<presentation>{
   \setbeamercolor{normal text}{fg=ISISInk,bg=ISISBg}
@@ -120,8 +138,8 @@
 
 \newcommand{\ISISAccentBars}{%
   \begin{tikzpicture}[remember picture,overlay]
-    \fill[ISISBlue] (current page.north west) rectangle ([yshift=-1.6mm]current page.north east);
-    \fill[ISISGold] ([yshift=1.2mm]current page.south west) rectangle (current page.south east);
+    \fill[ISISLogoBlue] (current page.north west) rectangle ([yshift=-1.6mm]current page.north east);
+    \fill[ISISLogoLightBlue] ([yshift=1.2mm]current page.south west) rectangle (current page.south east);
   \end{tikzpicture}%
 }
 
