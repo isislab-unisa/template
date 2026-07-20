@@ -28,7 +28,7 @@
     \tableofcontents[hideallsubsections,sections={1-3}]
   \end{column}
   \begin{column}{.48\textwidth}
-    \tableofcontents[hideallsubsections,sections={4-6}]
+    \tableofcontents[hideallsubsections,sections={4-7}]
   \end{column}
 \end{columns}
 \end{frame}
@@ -289,6 +289,212 @@ A great research presentation makes one idea memorable, states refutable contrib
 \end{columns}
 \end{frame}
 
+
+
+\section{Slide Layout Templates}
+\ISISSectionIntro[07]{Slide Layout Templates}[Copy, replace the images, and keep the same visual grammar][ISISLogoBlue]{%
+  \ISISBadge[ISISLogoBlue]{Templates}\quad Ready-made layouts for figures, evidence, comparison, and summary slides.
+}
+\subsection{Figure and text layouts}
+
+\begin{frame}{Template: figure left, story right}
+\vspace*{-1truecm}% manual positioning for dense slides
+\begin{columns}[T,onlytextwidth]
+\begin{column}{.50\textwidth}
+\ISISCard[ISISLogoBlue][.95\linewidth]{Hero figure}{%
+\centering
+\includegraphics[height=35mm]{topo_shadow.png}\\[-1mm]
+{\fontsize{7.5pt}{9pt}\selectfont\color{ISISMuted}Replace with the main diagram, model overview, or result figure.}
+}
+\end{column}
+\begin{column}{.46\textwidth}
+\ISISCard[ISISGreen][.96\linewidth]{Right-side narrative}{%
+\ISISVisualList[ISISGreen]{Name the visual, State the key message, Explain why it matters}%
+}
+\medskip
+\ISISCard[ISISGold][.96\linewidth]{Design cue}{%
+Use one large image on the left when the audience should inspect the figure before reading the interpretation.
+}
+\end{column}
+\end{columns}
+\end{frame}
+
+\begin{frame}{Template: story left, figure right}
+\vspace*{-1truecm}% manual positioning for dense slides
+\begin{columns}[T,onlytextwidth]
+\begin{column}{.46\textwidth}
+\ISISCard[ISISRed][.96\linewidth]{Left-side claim}{%
+Start with a short claim, then use the figure as evidence. This layout works well for ablations, examples, and qualitative results.
+}
+\medskip
+\ISISMetricCard[ISISLogoBlue][.42\linewidth]{1}{claim}\hspace{2mm}
+\ISISMetricCard[ISISGreen][.42\linewidth]{1}{figure}
+\end{column}
+\begin{column}{.50\textwidth}
+\ISISCard[ISISLogoBlue][.95\linewidth]{Supporting figure}{%
+\centering
+\includegraphics[height=35mm]{logo_standard_shadow.png}\\[-1mm]
+{\fontsize{7.5pt}{9pt}\selectfont\color{ISISMuted}Replace with evidence that supports the claim.}
+}
+\end{column}
+\end{columns}
+\end{frame}
+
+\begin{frame}{Template: two figures comparison}
+\vspace*{-1truecm}% manual positioning for dense slides
+\begin{columns}[T,onlytextwidth]
+\begin{column}{.49\textwidth}
+\ISISCard[ISISLogoBlue][.95\linewidth]{Before / baseline}{%
+\centering
+\includegraphics[height=28mm]{topo_soft.png}\\[-1mm]
+{\fontsize{7.5pt}{9pt}\selectfont\color{ISISMuted}Describe the reference condition.}
+}
+\end{column}
+\begin{column}{.49\textwidth}
+\ISISCard[ISISGreen][.95\linewidth]{After / proposed}{%
+\centering
+\includegraphics[height=28mm]{topo.png}\\[-1mm]
+{\fontsize{7.5pt}{9pt}\selectfont\color{ISISMuted}Describe the improved condition.}
+}
+\end{column}
+\end{columns}
+\medskip
+\centering
+\ISISBadge[ISISLogoBlue]{Baseline}\hspace{3mm}\ISISBadge[ISISGreen]{Proposed}\hspace{3mm}\ISISBadge[ISISRed]{Difference}
+\end{frame}
+
+
+\begin{frame}{Template: two figures comparison}
+\vspace*{-1truecm}% manual positioning for dense slides
+\begin{columns}[T,onlytextwidth]
+\begin{column}{.49\textwidth}
+\ISISCard[ISISLogoBlue][.95\linewidth]{Before / baseline}{%
+\centering
+\includegraphics[height=28mm]{topo_soft.png}\\[-1mm]
+{\fontsize{7.5pt}{9pt}\selectfont\color{ISISMuted}Describe the reference condition.}
+}
+\end{column}
+\begin{column}{.49\textwidth}
+\centering
+\includegraphics[height=28mm]{topo.png}\\[-1mm]
+\end{column}
+\end{columns}
+\medskip
+\centering
+\ISISBadge[ISISLogoBlue]{Baseline}\hspace{3mm}\ISISBadge[ISISGreen]{Proposed}\hspace{3mm}\ISISBadge[ISISRed]{Difference}
+\end{frame}
+
+\begin{frame}{Template: four figure gallery}
+\vspace*{-1truecm}% manual positioning for dense slides
+\centering
+\begin{columns}[T,onlytextwidth]
+\begin{column}{.49\textwidth}
+\ISISCard[ISISLogoBlue][.95\linewidth]{Panel A}{% 
+\centering\includegraphics[height=16mm]{topo_soft.png}\\[-1mm]
+{\fontsize{7pt}{8pt}\selectfont\color{ISISMuted}Data or task example.}}
+\medskip
+\ISISCard[ISISGreen][.95\linewidth]{Panel C}{%
+\centering\includegraphics[height=16mm]{logo_standard_soft.png}\\[-1mm]
+{\fontsize{7pt}{8pt}\selectfont\color{ISISMuted}Ablation or variant.}}
+\end{column}
+\begin{column}{.49\textwidth}
+\ISISCard[ISISViolet][.95\linewidth]{Panel B}{%
+\centering\includegraphics[height=16mm]{topo.png}\\[-1mm]
+{\fontsize{7pt}{8pt}\selectfont\color{ISISMuted}Model output or case study.}}
+\medskip
+\ISISCard[ISISRed][.95\linewidth]{Panel D}{%
+\centering\includegraphics[height=16mm]{logo_standard_shadow.png}\\[-1mm]
+{\fontsize{7pt}{8pt}\selectfont\color{ISISMuted}Failure case or insight.}}
+\end{column}
+\end{columns}
+\end{frame}
+
+\subsection{Evidence and summary layouts}
+
+\begin{frame}{Template: figure}
+\vspace*{-1truecm}% manual positioning for dense slides
+\begin{columns}[T,onlytextwidth]
+\begin{column}{.56\textwidth}
+\ISISCard[ISISLogoBlue][.96\linewidth]{Central figure}{%
+\centering
+\includegraphics[height=34mm]{topo_watermark.png}\\[-1mm]
+{\fontsize{7.5pt}{9pt}\selectfont\color{ISISMuted}Use for architecture diagrams, experimental setup, or explanatory graphics.}
+}
+\end{column}
+\begin{column}{.40\textwidth}
+\ISISMetricCard[ISISGreen][.42\linewidth]{+18\%}{gain}\hspace{1mm}
+\ISISMetricCard[ISISRed][.42\linewidth]{42 ms}{latency}
+\medskip
+\ISISCard[ISISViolet][.96\linewidth]{Interpretation}{%
+One sentence connects the figure to the main result. One sentence states the limitation.
+}
+\end{column}
+\end{columns}
+\end{frame}
+
+\begin{frame}{Template: metrics plus chart}
+\vspace*{-1truecm}% manual positioning for dense slides
+\begin{columns}[T,onlytextwidth]
+\begin{column}{.34\textwidth}
+\ISISMetricCard[ISISLogoBlue][.82\linewidth]{74}{score}
+\medskip
+\ISISMetricCard[ISISGreen][.82\linewidth]{5}{baselines}
+\medskip
+\ISISMetricCard[ISISRed][.82\linewidth]{3}{datasets}
+\end{column}
+\begin{column}{.62\textwidth}
+\ISISCard[ISISLogoBlue][.95\linewidth]{Result chart}{%
+\centering\ISISBarChart[ISISLogoBlue][78][32]{A/54,B/61,C/72}{Replace labels and values}
+}
+\medskip
+\ISISBadge[ISISGreen]{Main result}\hspace{2mm}\ISISBadge[ISISGold]{Confidence}\hspace{2mm}\ISISBadge[ISISRed]{Caveat}
+\end{column}
+\end{columns}
+\end{frame}
+
+\begin{frame}{Template: process with output figure}
+\vspace*{-1truecm}% manual positioning for dense slides
+\centering
+\ISISPipeline[2]{Input/Raw source, Transform/Core method, Output/Figure or table, Decision/Action}
+\medskip
+\begin{columns}[T,onlytextwidth]
+\begin{column}{.47\textwidth}
+\ISISCard[ISISGreen][.95\linewidth]{How to use}{%
+Explain the process in the pipeline, then show the concrete output in the neighboring figure.
+}
+\end{column}
+\begin{column}{.47\textwidth}
+\ISISCard[ISISLogoBlue][.95\linewidth]{Output figure}{%
+\centering\includegraphics[height=20mm]{logo_standard.png}\\[-1mm]
+{\fontsize{7pt}{8pt}\selectfont\color{ISISMuted}Replace with the artifact produced by the method.}}
+\end{column}
+\end{columns}
+\end{frame}
+
+\begin{frame}{Template: summary and next steps}
+\vspace*{-1truecm}% manual positioning for dense slides
+\begin{columns}[T,onlytextwidth]
+\begin{column}{.48\textwidth}
+\ISISCard[ISISLogoBlue][.96\linewidth]{Takeaway}{%
+The strongest message should fit in two short sentences and repeat the paper's central contribution.
+}
+\medskip
+\ISISCard[ISISGreen][.96\linewidth]{Next step}{%
+State the immediate action: reproduce, deploy, validate, extend, or compare.
+}
+\end{column}
+\begin{column}{.48\textwidth}
+\ISISCard[ISISViolet][.96\linewidth]{Style tokens}{%
+\ISISBadge[ISISLogoBlue]{Problem}\hspace{1mm}\ISISBadge[ISISGreen]{Method}\hspace{1mm}\ISISBadge[ISISRed]{Result}\hspace{1mm}\ISISBadge[ISISGold]{Impact}\\[2mm]
+Use badges for status labels, metric cards for numbers, and regular cards for reasoning.
+}
+\medskip
+\ISISCard[ISISRed][.96\linewidth]{Do not overload}{%
+One slide should communicate one job: compare, explain, quantify, or summarize.
+}
+\end{column}
+\end{columns}
+\end{frame}
 \begin{frame}{References}
 \ISISCard[ISISLogoBlue][.92\linewidth]{Cited template source}{%
 Simon Peyton Jones. \emph{How to write a great research paper}. Microsoft Research, 2016.\\[1mm]

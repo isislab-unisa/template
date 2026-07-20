@@ -28,7 +28,7 @@
     \tableofcontents[hideallsubsections,sections={1-3}]
   \end{column}
   \begin{column}{.48\textwidth}
-    \tableofcontents[hideallsubsections,sections={4-6}]
+    \tableofcontents[hideallsubsections,sections={4-7}]
   \end{column}
 \end{columns}
 \end{frame}
@@ -259,6 +259,191 @@ Una grande presentazione di ricerca rende memorabile un'idea, dichiara contribut
 \end{columns}
 \end{frame}
 
+
+
+\section{Template di layout per slide}
+\ISISSectionIntro[07]{Template di layout per slide}[Copia, sostituisci le immagini e mantieni la stessa grammatica visiva][ISISLogoBlue]{%
+  \ISISBadge[ISISLogoBlue]{Template}\quad Layout pronti per figure, evidenza, confronto e sintesi.
+}
+\subsection{Layout con figure e testo}
+
+\begin{frame}{Template: figura a sinistra, testo a destra}
+\vspace*{-1truecm}% posizionamento manuale per slide dense
+\begin{columns}[T,onlytextwidth]
+\begin{column}{.50\textwidth}
+\ISISCard[ISISLogoBlue][.95\linewidth]{Figura principale}{%
+\centering
+\includegraphics[height=35mm]{topo_shadow.png}\\[-1mm]
+{\fontsize{7.5pt}{9pt}\selectfont\color{ISISMuted}Sostituisci con il diagramma principale, la panoramica del modello o il risultato.}
+}
+\end{column}
+\begin{column}{.46\textwidth}
+\ISISCard[ISISGreen][.96\linewidth]{Narrazione a destra}{%
+\ISISVisualList[ISISGreen]{Nomina la visualizzazione, Indica il messaggio chiave, Spiega perché è importante}%
+}
+\medskip
+\ISISCard[ISISGold][.96\linewidth]{Suggerimento di design}{%
+Usa una grande immagine a sinistra quando il pubblico deve osservare la figura prima dell'interpretazione.
+}
+\end{column}
+\end{columns}
+\end{frame}
+
+\begin{frame}{Template: testo a sinistra, figura a destra}
+\vspace*{-1truecm}% posizionamento manuale per slide dense
+\begin{columns}[T,onlytextwidth]
+\begin{column}{.46\textwidth}
+\ISISCard[ISISRed][.96\linewidth]{Tesi a sinistra}{%
+Inizia con una tesi breve, poi usa la figura come evidenza. Questo layout funziona bene per ablation, esempi e risultati qualitativi.
+}
+\medskip
+\ISISMetricCard[ISISLogoBlue][.42\linewidth]{1}{tesi}\hspace{2mm}
+\ISISMetricCard[ISISGreen][.42\linewidth]{1}{figura}
+\end{column}
+\begin{column}{.50\textwidth}
+\ISISCard[ISISLogoBlue][.95\linewidth]{Figura di supporto}{%
+\centering
+\includegraphics[height=35mm]{logo_standard_shadow.png}\\[-1mm]
+{\fontsize{7.5pt}{9pt}\selectfont\color{ISISMuted}Sostituisci con l'evidenza che sostiene la tesi.}
+}
+\end{column}
+\end{columns}
+\end{frame}
+
+\begin{frame}{Template: confronto tra due figure}
+\vspace*{-1truecm}% posizionamento manuale per slide dense
+\begin{columns}[T,onlytextwidth]
+\begin{column}{.49\textwidth}
+\ISISCard[ISISLogoBlue][.95\linewidth]{Prima / baseline}{%
+\centering
+\includegraphics[height=28mm]{topo_soft.png}\\[-1mm]
+{\fontsize{7.5pt}{9pt}\selectfont\color{ISISMuted}Descrivi la condizione di riferimento.}
+}
+\end{column}
+\begin{column}{.49\textwidth}
+\ISISCard[ISISGreen][.95\linewidth]{Dopo / proposto}{%
+\centering
+\includegraphics[height=28mm]{topo.png}\\[-1mm]
+{\fontsize{7.5pt}{9pt}\selectfont\color{ISISMuted}Descrivi la condizione migliorata.}
+}
+\end{column}
+\end{columns}
+\medskip
+\centering
+\ISISBadge[ISISLogoBlue]{Baseline}\hspace{3mm}\ISISBadge[ISISGreen]{Proposto}\hspace{3mm}\ISISBadge[ISISRed]{Differenza}
+\end{frame}
+
+\begin{frame}{Template: galleria con quattro figure}
+\vspace*{-1truecm}% posizionamento manuale per slide dense
+\centering
+\begin{columns}[T,onlytextwidth]
+\begin{column}{.49\textwidth}
+\ISISCard[ISISLogoBlue][.95\linewidth]{Pannello A}{% 
+\centering\includegraphics[height=16mm]{topo_soft.png}\\[-1mm]
+{\fontsize{7pt}{8pt}\selectfont\color{ISISMuted}Dato o esempio di task.}}
+\medskip
+\ISISCard[ISISGreen][.95\linewidth]{Pannello C}{%
+\centering\includegraphics[height=16mm]{logo_standard_soft.png}\\[-1mm]
+{\fontsize{7pt}{8pt}\selectfont\color{ISISMuted}Ablation o variante.}}
+\end{column}
+\begin{column}{.49\textwidth}
+\ISISCard[ISISViolet][.95\linewidth]{Pannello B}{%
+\centering\includegraphics[height=16mm]{topo.png}\\[-1mm]
+{\fontsize{7pt}{8pt}\selectfont\color{ISISMuted}Output del modello o caso studio.}}
+\medskip
+\ISISCard[ISISRed][.95\linewidth]{Pannello D}{%
+\centering\includegraphics[height=16mm]{logo_standard_shadow.png}\\[-1mm]
+{\fontsize{7pt}{8pt}\selectfont\color{ISISMuted}Caso di fallimento o insight.}}
+\end{column}
+\end{columns}
+\end{frame}
+
+\subsection{Layout per evidenza e sintesi}
+
+\begin{frame}{Template: figura con schede di evidenza}
+\vspace*{-1truecm}% posizionamento manuale per slide dense
+\begin{columns}[T,onlytextwidth]
+\begin{column}{.56\textwidth}
+\ISISCard[ISISLogoBlue][.96\linewidth]{Figura centrale}{%
+\centering
+\includegraphics[height=34mm]{topo_watermark.png}\\[-1mm]
+{\fontsize{7.5pt}{9pt}\selectfont\color{ISISMuted}Usa per architetture, setup sperimentali o grafici esplicativi.}
+}
+\end{column}
+\begin{column}{.40\textwidth}
+\ISISMetricCard[ISISGreen][.42\linewidth]{+18\%}{guadagno}\hspace{1mm}
+\ISISMetricCard[ISISRed][.42\linewidth]{42 ms}{latenza}
+\medskip
+\ISISCard[ISISViolet][.96\linewidth]{Interpretazione}{%
+Una frase collega la figura al risultato principale. Una frase dichiara il limite.
+}
+\end{column}
+\end{columns}
+\end{frame}
+
+\begin{frame}{Template: metriche più grafico}
+\vspace*{-1truecm}% posizionamento manuale per slide dense
+\begin{columns}[T,onlytextwidth]
+\begin{column}{.34\textwidth}
+\ISISMetricCard[ISISLogoBlue][.82\linewidth]{74}{score}
+\medskip
+\ISISMetricCard[ISISGreen][.82\linewidth]{5}{baseline}
+\medskip
+\ISISMetricCard[ISISRed][.82\linewidth]{3}{dataset}
+\end{column}
+\begin{column}{.62\textwidth}
+\ISISCard[ISISLogoBlue][.95\linewidth]{Grafico dei risultati}{%
+\centering\ISISBarChart[ISISLogoBlue][78][32]{A/54,B/61,C/72}{Sostituisci etichette e valori}
+}
+\medskip
+\ISISBadge[ISISGreen]{Risultato}\hspace{2mm}\ISISBadge[ISISGold]{Confidenza}\hspace{2mm}\ISISBadge[ISISRed]{Nota critica}
+\end{column}
+\end{columns}
+\end{frame}
+
+\begin{frame}{Template: processo con figura di output}
+\vspace*{-1truecm}% posizionamento manuale per slide dense
+\centering
+\ISISPipeline[2]{Input/Sorgente grezza, Trasforma/Metodo centrale, Output/Figura o tabella, Decisione/Azione}
+\medskip
+\begin{columns}[T,onlytextwidth]
+\begin{column}{.47\textwidth}
+\ISISCard[ISISGreen][.95\linewidth]{Come usarlo}{%
+Spiega il processo nella pipeline, poi mostra l'output concreto nella figura accanto.
+}
+\end{column}
+\begin{column}{.47\textwidth}
+\ISISCard[ISISLogoBlue][.95\linewidth]{Figura di output}{%
+\centering\includegraphics[height=20mm]{logo_standard.png}\\[-1mm]
+{\fontsize{7pt}{8pt}\selectfont\color{ISISMuted}Sostituisci con l'artefatto prodotto dal metodo.}}
+\end{column}
+\end{columns}
+\end{frame}
+
+\begin{frame}{Template: sintesi e prossimi passi}
+\vspace*{-1truecm}% posizionamento manuale per slide dense
+\begin{columns}[T,onlytextwidth]
+\begin{column}{.48\textwidth}
+\ISISCard[ISISLogoBlue][.96\linewidth]{Messaggio chiave}{%
+Il messaggio più forte dovrebbe stare in due frasi brevi e ripetere il contributo centrale dell'articolo.
+}
+\medskip
+\ISISCard[ISISGreen][.96\linewidth]{Prossimo passo}{%
+Indica l'azione immediata: riprodurre, distribuire, validare, estendere o confrontare.
+}
+\end{column}
+\begin{column}{.48\textwidth}
+\ISISCard[ISISViolet][.96\linewidth]{Token di stile}{%
+\ISISBadge[ISISLogoBlue]{Problema}\hspace{1mm}\ISISBadge[ISISGreen]{Metodo}\hspace{1mm}\ISISBadge[ISISRed]{Risultato}\hspace{1mm}\ISISBadge[ISISGold]{Impatto}\\[2mm]
+Usa badge per etichette di stato, schede metriche per i numeri e card regolari per il ragionamento.
+}
+\medskip
+\ISISCard[ISISRed][.96\linewidth]{Non sovraccaricare}{%
+Una slide dovrebbe svolgere un solo compito: confrontare, spiegare, quantificare o sintetizzare.
+}
+\end{column}
+\end{columns}
+\end{frame}
 \begin{frame}{Riferimenti}
 \ISISCard[ISISLogoBlue][.92\linewidth]{Fonte citata del template}{%
 Simon Peyton Jones. \emph{How to write a great research paper}. Microsoft Research, 2016.\\[1mm]
